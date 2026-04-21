@@ -4,7 +4,7 @@ def get_child_terms(concept_id):
 
     print("\n--- CHILD TERMS ---")
 
-    if concept_id == "13645005":  # COPD
+    if concept_id == "13645005":  # COPD CONDITION
 
         children = [
             {"code": "195951007", "display": "Acute exacerbation of COPD"},
