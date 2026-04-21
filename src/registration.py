@@ -14,7 +14,7 @@ SCOPE = "openid offline_access api:oemr api:fhir api:port user/allergy.read user
 
 data_dir = Path.cwd() / 'data'
 
-STUDENT_NAME = "aishwarya_mohanraj"
+STUDENT_NAME = "sathvika"
 
 
 def generate_random_string(length=12):

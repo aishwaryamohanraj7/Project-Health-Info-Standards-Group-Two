@@ -1,5 +1,3 @@
-CONCEPT_ID
-
 import json
 import requests
 from pathlib import Path

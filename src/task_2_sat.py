@@ -3,38 +3,31 @@ import json
 
 BASE_URL = "http://159.203.105.138:8080/fhir"
 
-headers = {
-    "Content-Type": "application/fhir+json"
-}
+def create_child_condition(patient_id):
 
-# 🔴 SAME patient ID you used earlier
-PATIENT_ID = "383"
-
-
-def validate_condition():
-    url = f"{BASE_URL}/Condition/$validate"
+    url = f"{BASE_URL}/Condition"
 
     condition_resource = {
         "resourceType": "Condition",
 
-        # ✅ REQUIRED: meta profile
+        # ✅ REQUIRED FOR VALIDATION
         "meta": {
             "profile": [
                 "http://hl7.org/fhir/StructureDefinition/Condition"
             ]
         },
 
-        # ✅ Narrative (removes warning)
+        # ✅ NARRATIVE (UPDATED)
         "text": {
             "status": "generated",
-            "div": "<div xmlns='http://www.w3.org/1999/xhtml'>Acute exacerbation of chronic obstructive pulmonary disease</div>"
+            "div": "<div>Acute exacerbation of chronic obstructive pulmonary disease</div>"
         },
 
         "subject": {
-            "reference": f"Patient/{PATIENT_ID}"
+            "reference": f"Patient/{patient_id}"
         },
 
-        # ✅ CHILD COPD CONCEPT
+        # ✅ CHILD CONCEPT (COPD)
         "code": {
             "coding": [
                 {
@@ -46,6 +39,7 @@ def validate_condition():
             "text": "Acute exacerbation of chronic obstructive pulmonary disease"
         },
 
+        # ✅ CATEGORY
         "category": [
             {
                 "coding": [
@@ -58,11 +52,13 @@ def validate_condition():
             }
         ],
 
+        # ✅ STATUS
         "clinicalStatus": {
             "coding": [
                 {
                     "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-                    "code": "active"
+                    "code": "active",
+                    "display": "Active"
                 }
             ]
         },
@@ -71,11 +67,13 @@ def validate_condition():
             "coding": [
                 {
                     "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                    "code": "confirmed"
+                    "code": "confirmed",
+                    "display": "Confirmed"
                 }
             ]
         },
 
+        # ✅ SEVERITY (appropriate for exacerbation)
         "severity": {
             "coding": [
                 {
@@ -86,6 +84,7 @@ def validate_condition():
             ]
         },
 
+        # ✅ BODY SITE (COPD-specific)
         "bodySite": [
             {
                 "coding": [
@@ -98,15 +97,27 @@ def validate_condition():
             }
         ],
 
+        # ✅ ONSET
         "onsetDateTime": "2024-01-01T00:00:00Z"
     }
 
-    response = requests.post(url, headers=headers, json=condition_resource)
+    response = requests.post(
+        url,
+        headers={"Content-Type": "application/fhir+json"},
+        json=condition_resource
+    )
 
-    print("\n--- CONDITION VALIDATION ---")
+    print("\n--- COPD CHILD CONDITION CREATED ---")
     print("Status Code:", response.status_code)
-    print(json.dumps(response.json(), indent=2))
+
+    data = response.json()
+
+    print("Condition ID:", data.get("id"))
+    print("Patient Ref :", data.get("subject", {}).get("reference"))
+    print("Condition   :", data.get("code", {}).get("coding", [{}])[0].get("display"))
+
+    return data.get("id")
 
 
 if __name__ == "__main__":
-    validate_condition()
+    create_child_condition("383")

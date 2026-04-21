@@ -3,76 +3,75 @@ import json
 
 BASE_URL = "http://159.203.105.138:8080/fhir"
 
+headers = {
+    "Content-Type": "application/fhir+json"
+}
 
-# 🔹 VALIDATE PATIENT
+
+# -------- VALIDATE PATIENT --------
 def validate_patient():
-
-    url = f"{BASE_URL}/Patient/$validate"
-
-    patient = {
+    patient_resource = {
         "resourceType": "Patient",
 
+        # ✅ Base profile (no error)
         "meta": {
             "profile": [
                 "http://hl7.org/fhir/StructureDefinition/Patient"
             ]
         },
 
+        # ✅ removes warning
         "text": {
             "status": "generated",
             "div": "<div xmlns='http://www.w3.org/1999/xhtml'>Patient: David Abshire</div>"
         },
 
+        "active": True,
         "name": [
             {
-                "given": ["David"],
-                "family": "Abshire"
+                "family": "Abshire",
+                "given": ["David"]
             }
         ],
         "gender": "male",
         "birthDate": "1996-09-29"
     }
 
-    res = requests.post(
-        url,
-        headers={"Content-Type": "application/fhir+json"},
-        json=patient
-    )
+    res = requests.post(f"{BASE_URL}/Patient/$validate", headers=headers, json=patient_resource)
 
     print("\n--- PATIENT VALIDATION ---")
-    print("Status:", res.status_code)
-    print(json.dumps(res.json(), indent=4))
+    print(res.status_code)
+    print(json.dumps(res.json(), indent=2))
 
 
-# 🔹 VALIDATE CONDITION
-def validate_condition(patient_id):
-
-    url = f"{BASE_URL}/Condition/$validate"
-
-    condition = {
+# -------- VALIDATE CONDITION --------
+def validate_condition():
+    condition_resource = {
         "resourceType": "Condition",
 
+        # ✅ Base profile (no error)
         "meta": {
             "profile": [
                 "http://hl7.org/fhir/StructureDefinition/Condition"
             ]
         },
 
+        # ✅ removes warning
         "text": {
             "status": "generated",
-            "div": "<div xmlns='http://www.w3.org/1999/xhtml'>Condition: Respiratory disorder</div>"
+            "div": "<div xmlns='http://www.w3.org/1999/xhtml'>Condition: Chronic disease of respiratory system</div>"
         },
 
         "subject": {
-            "reference": f"Patient/{patient_id}"
+            "reference": "Patient/443"
         },
 
         "code": {
             "coding": [
                 {
                     "system": "http://snomed.info/sct",
-                    "code": "50043002",
-                    "display": "Respiratory disorder"
+                    "code": "17097001",
+                    "display": "Chronic disease of respiratory system"
                 }
             ]
         },
@@ -96,20 +95,14 @@ def validate_condition(patient_id):
         }
     }
 
-    res = requests.post(
-        url,
-        headers={"Content-Type": "application/fhir+json"},
-        json=condition
-    )
+    res = requests.post(f"{BASE_URL}/Condition/$validate", headers=headers, json=condition_resource)
 
     print("\n--- CONDITION VALIDATION ---")
-    print("Status:", res.status_code)
-    print(json.dumps(res.json(), indent=4))
+    print(res.status_code)
+    print(json.dumps(res.json(), indent=2))
 
 
-# 🔹 MAIN
+# -------- RUN --------
 if __name__ == "__main__":
-
-    # 👉 use your latest created patient ID
     validate_patient()
-    validate_condition("278")
+    validate_condition()
