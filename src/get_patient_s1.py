@@ -48,7 +48,7 @@ def search_specific_patient():
 
 # -------- 2. FILTERED SEARCH QUERY --------
 def filtered_search():
-    url = f"{BASE_URL}/Patient?name=Abshire&birthdate=gt1990-01-01"
+    url = f"{BASE_URL}/Patient?name=Abshire&birthdate=gt1996-09-29"
     response = requests.get(url, headers=get_headers())
 
     print("\n--- Filtered Search Query ---")

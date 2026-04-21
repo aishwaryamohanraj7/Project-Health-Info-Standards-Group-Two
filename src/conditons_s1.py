@@ -5,7 +5,7 @@ from src.registration import data_dir
 
 BASE_URL = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 
-# ✅ COPD SNOMED CT Concept
+# COPD SNOMED CT Concept
 COPD_CONCEPT_ID = "13645005"
 COPD_DISPLAY = "Chronic obstructive pulmonary disease"
 
@@ -56,7 +56,7 @@ def get_patient_conditions(patient_id):
             if display:
                 print(f"- {display}")
 
-    # ✅ Directly print COPD concept (required for assignment)
+    # Directly print COPD concept
     print("\n--- Selected Clinical Condition ---")
     print(f"Condition: {COPD_DISPLAY}")
     print(f"Concept ID (SNOMED): {COPD_CONCEPT_ID}")

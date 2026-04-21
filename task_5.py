@@ -4,13 +4,13 @@ from pathlib import Path
 from datetime import datetime
 
 # ==============================
-# 🔹 BASE URL
+# BASE URL
 # ==============================
 OPENEMR_FHIR = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 
 
 # ==============================
-# 🔹 TOKEN
+# TOKEN
 # ==============================
 def get_access_token():
     file_path = Path(__file__).resolve().parent / "src" / "data" / "access_token.json"
@@ -26,7 +26,7 @@ HEADERS = {
 
 
 # ==============================
-# 🔹 STEP 1: SEARCH PATIENT
+# STEP 1: SEARCH PATIENT
 # ==============================
 def search_patient():
 
@@ -49,7 +49,7 @@ def search_patient():
 
 
 # ==============================
-# 🔹 STEP 2: GET CONDITION
+# STEP 2: GET CONDITION
 # ==============================
 def get_condition(patient_id):
 
@@ -59,7 +59,7 @@ def get_condition(patient_id):
     data = res.json()
 
     if "entry" not in data:
-        print("⚠️ No condition → using COPD fallback")
+        print("No condition → using COPD fallback")
 
         return {
             "code": {
@@ -74,7 +74,7 @@ def get_condition(patient_id):
 
 
 # ==============================
-# 🔹 STEP 3: SAFE EXTRACT SNOMED
+# STEP 3: SAFE EXTRACT SNOMED
 # ==============================
 def extract_snomed(condition):
 
@@ -89,7 +89,7 @@ def extract_snomed(condition):
 
 
 # ==============================
-# 🔹 STEP 4: SNOMED → ICD
+# STEP 4: SNOMED → ICD
 # ==============================
 def snomed_to_icd(code):
 
@@ -107,7 +107,7 @@ def snomed_to_icd(code):
 
 
 # ==============================
-# 🔹 STEP 5: BUILD HL7
+# STEP 5: BUILD HL7
 # ==============================
 def build_hl7(patient, condition_display, icd):
 
@@ -131,18 +131,18 @@ def build_hl7(patient, condition_display, icd):
 
 
 # ==============================
-# 🔹 STEP 6: SAVE FILE
+# STEP 6: SAVE FILE
 # ==============================
 def save_hl7(msg):
 
     with open("hl7_message.txt", "w") as f:
         f.write(msg)
 
-    print("\n✅ HL7 FILE SAVED")
+    print("\nHL7 FILE SAVED")
 
 
 # ==============================
-# 🔹 MAIN
+# MAIN
 # ==============================
 if __name__ == "__main__":
 
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     patient = search_patient()
 
     if not patient:
-        print("❌ Patient not found")
+        print(" Patient not found")
         exit()
 
     patient_id = patient["id"]
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     print("SNOMED:", snomed)
     print("ICD:", icd)
 
-    # STEP 5 (🔥 FIXED — hl7 always defined)
+    # STEP 5 (FIXED — hl7 always defined)
     hl7 = build_hl7(patient, display, icd)
 
     print("\n--- HL7 MESSAGE ---")

@@ -10,14 +10,14 @@ def create_child_condition(patient_id):
     condition_resource = {
         "resourceType": "Condition",
 
-        # ✅ REQUIRED FOR VALIDATION
+        # REQUIRED FOR VALIDATION
         "meta": {
             "profile": [
                 "http://hl7.org/fhir/StructureDefinition/Condition"
             ]
         },
 
-        # ✅ NARRATIVE (UPDATED)
+        # NARRATIVE (UPDATED)
         "text": {
             "status": "generated",
             "div": "<div>Acute exacerbation of chronic obstructive pulmonary disease</div>"
@@ -27,7 +27,7 @@ def create_child_condition(patient_id):
             "reference": f"Patient/{patient_id}"
         },
 
-        # ✅ CHILD CONCEPT (COPD)
+        # CHILD CONCEPT (COPD)
         "code": {
             "coding": [
                 {
@@ -39,7 +39,7 @@ def create_child_condition(patient_id):
             "text": "Acute exacerbation of chronic obstructive pulmonary disease"
         },
 
-        # ✅ CATEGORY
+        # CATEGORY
         "category": [
             {
                 "coding": [
@@ -73,7 +73,7 @@ def create_child_condition(patient_id):
             ]
         },
 
-        # ✅ SEVERITY (appropriate for exacerbation)
+        # SEVERITY (appropriate for exacerbation)
         "severity": {
             "coding": [
                 {
@@ -84,7 +84,7 @@ def create_child_condition(patient_id):
             ]
         },
 
-        # ✅ BODY SITE (COPD-specific)
+        # BODY SITE (COPD-specific)
         "bodySite": [
             {
                 "coding": [
@@ -97,7 +97,7 @@ def create_child_condition(patient_id):
             }
         ],
 
-        # ✅ ONSET
+        # ONSET
         "onsetDateTime": "2024-01-01T00:00:00Z"
     }
 

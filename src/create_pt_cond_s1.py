@@ -1,115 +1,56 @@
 import requests
-import json
 
-BASE_URL = "http://159.203.105.138:8080/fhir"
+# SNOMED API BASE
+SNOMED_API = "http://159.203.121.13:8080/v1/snomed/concepts"
 
-headers = {
-    "Content-Type": "application/fhir+json"
-}
-
-# ✅ Your Patient Resource ID
-PATIENT_ID = "443"
+# COPD SNOMED
+COPD_CODE = "13645005"
 
 
-def create_condition():
-    condition_data = {
-        "resourceType": "Condition",
-        "meta": {
-            "profile": [
-                "http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition"
-            ]
-        },
+def get_child_terms(concept_id):
+    print("\n--- CHILD TERMS FROM SNOMED API ---")
 
-        # ✅ Clinical Status
-        "clinicalStatus": {
-            "coding": [
-                {
-                    "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-                    "code": "active",
-                    "display": "Active"
-                }
-            ]
-        },
+    url = f"{SNOMED_API}/{concept_id}/children"
 
-        # ✅ Verification Status
-        "verificationStatus": {
-            "coding": [
-                {
-                    "system": "http://terminology.hl7.org/CodeSystem/condition-ver-status",
-                    "code": "confirmed",
-                    "display": "Confirmed"
-                }
-            ]
-        },
-
-        # ✅ CORRECT CATEGORY (Encounter Diagnosis)
-        "category": [
-            {
-                "coding": [
-                    {
-                        "system": "http://terminology.hl7.org/CodeSystem/condition-category",
-                        "code": "encounter-diagnosis",
-                        "display": "Encounter Diagnosis"
-                    }
-                ]
-            }
-        ],
-
-        # ✅ Parent SNOMED Concept
-        "code": {
-            "coding": [
-                {
-                    "system": "http://snomed.info/sct",
-                    "code": "17097001",
-                    "display": "Chronic disease of respiratory system"
-                }
-            ],
-            "text": "Chronic disease of respiratory system"
-        },
-
-        # ✅ Severity
-        "severity": {
-            "coding": [
-                {
-                    "system": "http://snomed.info/sct",
-                    "code": "24484000",
-                    "display": "Severe"
-                }
-            ]
-        },
-
-        # ✅ Body Site
-        "bodySite": [
-            {
-                "coding": [
-                    {
-                        "system": "http://snomed.info/sct",
-                        "code": "39607008",
-                        "display": "Lung structure"
-                    }
-                ]
-            }
-        ],
-
-        # ✅ Onset
-        "onsetDateTime": "2023-01-01T00:00:00Z",
-
-        # ✅ Link to Patient
-        "subject": {
-            "reference": f"Patient/{PATIENT_ID}"
-        }
+    params = {
+        "catalog": "SYM_SNO_INT_USEXT",
+        "contentModel": "4ef5b2c1-7e75-433a-84a7-57d02df2c0d7"
     }
 
-    response = requests.post(
-        f"{BASE_URL}/Condition",
-        headers=headers,
-        json=condition_data
-    )
+    response = requests.get(url, params=params)
 
-    print("\n--- Condition Created ---")
-    print("Status Code:", response.status_code)
-    print("Response:", response.json())
+    print("URL:", response.url)
+
+    if response.status_code != 200:
+        print("❌ Error fetching child terms")
+        print(response.text)
+        return None
+
+    data = response.json()
+
+    if not data:
+        print("⚠️ No child terms found")
+        return None
+
+    children = []
+
+    for item in data:
+        term = item.get("RelatedTerm", {})
+
+        code = term.get("TermSourceCode")
+        display = term.get("TermDescription")
+
+        if code and display:
+            print(f"{display} (SNOMED: {code})")
+
+            children.append({
+                "code": code,
+                "display": display
+            })
+
+    return children
 
 
+# -------- MAIN --------
 if __name__ == "__main__":
-    create_condition()
+    get_child_terms(COPD_CODE)

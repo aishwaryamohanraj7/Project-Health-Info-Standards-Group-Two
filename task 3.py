@@ -54,7 +54,7 @@ def fetch_bp():
             print(" BP found in OpenEMR")
             return
 
-    print("⚠️ BP not found")
+    print("BP not found")
 
 
 # ==============================
