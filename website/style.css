@@ -32,12 +32,13 @@ nav a:hover {
 
 /* HERO */
 .hero {
-    padding: 80px 40px;
-    background: linear-gradient(to right, #020617, #0f172a);
+    padding: 100px 40px;
+    background: radial-gradient(circle at top right, #22c55e33, transparent 40%),
+                linear-gradient(to right, #020617, #0f172a);
 }
 
 .hero h1 {
-    font-size: 40px;
+    font-size: 42px;
 }
 
 .hero span {
@@ -55,10 +56,11 @@ nav a:hover {
 }
 
 .btn {
-    padding: 10px 20px;
+    padding: 12px 22px;
     text-decoration: none;
     margin-right: 10px;
-    border-radius: 8px;
+    border-radius: 10px;
+    transition: 0.3s;
 }
 
 .primary {
@@ -66,14 +68,24 @@ nav a:hover {
     color: black;
 }
 
+.primary:hover {
+    background: #16a34a;
+    box-shadow: 0 0 15px #22c55e;
+}
+
 .secondary {
     border: 1px solid #22c55e;
     color: #22c55e;
 }
 
+.secondary:hover {
+    background: #22c55e;
+    color: black;
+}
+
 /* FEATURES */
 .features {
-    padding: 50px 40px;
+    padding: 60px 40px;
     text-align: center;
 }
 
@@ -83,15 +95,18 @@ nav a:hover {
     margin-top: 30px;
 }
 
+/* PREMIUM CARD DESIGN */
 .card {
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 12px;
+    background: rgba(30, 41, 59, 0.7);
+    padding: 25px;
+    border-radius: 15px;
     flex: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
     transition: 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    background: #334155;
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
