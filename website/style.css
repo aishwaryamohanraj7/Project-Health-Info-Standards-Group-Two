@@ -1,8 +1,7 @@
-/* RESET */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #0f172a;
+    background: #020617;
     color: white;
 }
 
@@ -10,8 +9,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
+    padding: 20px 50px;
     background: #020617;
 }
 
@@ -20,7 +18,7 @@ header {
 }
 
 nav a {
-    margin-left: 20px;
+    margin-left: 25px;
     text-decoration: none;
     color: white;
     transition: 0.3s;
@@ -32,13 +30,19 @@ nav a:hover {
 
 /* HERO */
 .hero {
-    padding: 100px 40px;
-    background: radial-gradient(circle at top right, #22c55e33, transparent 40%),
-                linear-gradient(to right, #020617, #0f172a);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 50px;
+    background: radial-gradient(circle at right, #22c55e22, transparent 40%);
+}
+
+.hero-left {
+    max-width: 500px;
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 45px;
 }
 
 .hero span {
@@ -47,20 +51,14 @@ nav a:hover {
 
 .hero p {
     margin: 20px 0;
-    max-width: 500px;
 }
 
 /* BUTTONS */
-.buttons {
-    margin-top: 20px;
-}
-
 .btn {
     padding: 12px 22px;
+    border-radius: 10px;
     text-decoration: none;
     margin-right: 10px;
-    border-radius: 10px;
-    transition: 0.3s;
 }
 
 .primary {
@@ -68,24 +66,27 @@ nav a:hover {
     color: black;
 }
 
-.primary:hover {
-    background: #16a34a;
-    box-shadow: 0 0 15px #22c55e;
-}
-
 .secondary {
     border: 1px solid #22c55e;
     color: #22c55e;
 }
 
-.secondary:hover {
-    background: #22c55e;
-    color: black;
+/* HERO VISUAL */
+.hero-right {
+    position: relative;
+}
+
+.circle {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #22c55e, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
 }
 
 /* FEATURES */
 .features {
-    padding: 60px 40px;
+    padding: 60px 50px;
     text-align: center;
 }
 
@@ -95,18 +96,16 @@ nav a:hover {
     margin-top: 30px;
 }
 
-/* PREMIUM CARD DESIGN */
 .card {
-    background: rgba(30, 41, 59, 0.7);
+    background: rgba(30, 41, 59, 0.6);
     padding: 25px;
     border-radius: 15px;
     flex: 1;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
     transition: 0.3s;
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
