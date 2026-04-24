@@ -9,15 +9,37 @@
 <div style="display:flex; height:100vh;">
 
     <!-- SIDEBAR -->
-    <div style="width:260px; background:#111827; padding:20px;">
-        <h2>ETL Tasks</h2>
+    <div style="
+    width:260px;
+    background: linear-gradient(180deg, #020617, #052e2b);
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+">
 
-        <p onclick="showTask('task1')" style="cursor:pointer;">Task 1: Extraction & Patient</p>
-        <p onclick="showTask('task2')" style="cursor:pointer;">Task 2: Condition (SNOMED)</p>
-        <p onclick="showTask('task3')" style="cursor:pointer;">Task 3: Observation</p>
-        <p onclick="showTask('task4')" style="cursor:pointer;">Task 4: Procedure</p>
-        <p onclick="showTask('task5')" style="cursor:pointer;">Task 5: HL7 Message</p>
+    <h2 style="color:#22c55e; margin-bottom:30px;">ETL Tasks</h2>
+
+    <div class="menu-item active" onclick="showTask('task1'); setActive(this)">
+        Task 1: Extraction & Patient
     </div>
+
+    <div class="menu-item" onclick="showTask('task2'); setActive(this)">
+        Task 2: Condition (SNOMED)
+    </div>
+
+    <div class="menu-item" onclick="showTask('task3'); setActive(this)">
+        Task 3: Observation
+    </div>
+
+    <div class="menu-item" onclick="showTask('task4'); setActive(this)">
+        Task 4: Procedure
+    </div>
+
+    <div class="menu-item" onclick="showTask('task5'); setActive(this)">
+        Task 5: HL7 Message
+    </div>
+
+</div>
 
     <!-- CONTENT -->
     <div style="flex:1; padding:40px; overflow-y:auto;">
@@ -177,3 +199,26 @@ function showTask(taskId) {
 
 </body>
 </html>
+<script>
+function showTask(taskId) {
+    let tasks = document.getElementsByClassName("task");
+
+    for (let i = 0; i < tasks.length; i++) {
+        tasks[i].style.display = "none";
+    }
+
+    document.getElementById(taskId).style.display = "block";
+}
+</script>
+
+<script>
+function setActive(element){
+    let items = document.getElementsByClassName("menu-item");
+
+    for(let i=0;i<items.length;i++){
+        items[i].classList.remove("active");
+    }
+
+    element.classList.add("active");
+}
+</script>
