@@ -6,3 +6,83 @@
   <a href="insights.html">Insights</a>
 </nav>
 <hr>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ETL Pipeline</title>
+</head>
+
+<body style="margin:0; font-family:Arial; background:#0b1220; color:white;">
+
+<!-- Header -->
+<div style="padding:20px; text-align:center;">
+    <h1>ETL Pipeline Implementation</h1>
+</div>
+
+<!-- Content -->
+<div style="width:85%; margin:auto;">
+
+    <!-- Task 1 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>Task 1: Patient Retrieval</h2>
+        <p>
+            A specific patient (David Abshire) was retrieved from the FHIR server using query parameters
+            including name and gender. The system successfully extracted patient details such as ID, gender, and birth date.
+        </p>
+        <p><b>Result:</b> Patient successfully retrieved from OpenEMR FHIR API.</p>
+    </div>
+
+    <!-- Task 2 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>Task 2: Condition Extraction</h2>
+        <p>
+            Patient conditions were retrieved and analyzed. Chronic Obstructive Pulmonary Disease (COPD)
+            was selected as the primary clinical condition using SNOMED CT code <b>13645005</b>.
+        </p>
+    </div>
+
+    <!-- Task 3 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>Task 3: Patient Creation</h2>
+        <p>
+            A new patient record was created in the target FHIR server with demographic details.
+        </p>
+        <p><b>Status:</b> 201 Created</p>
+    </div>
+
+    <!-- Task 4 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>Task 4: SNOMED Parent Concepts</h2>
+        <p>
+            Parent concepts for COPD were retrieved, including:
+        </p>
+        <ul>
+            <li>Tracheobronchial disorder</li>
+            <li>Chronic disease of respiratory system</li>
+        </ul>
+    </div>
+
+    <!-- Task 5 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>Task 5: Condition Creation</h2>
+        <p>
+            A condition resource was created and linked to the patient using SNOMED CT coding.
+        </p>
+        <p><b>Status:</b> 201 Created</p>
+    </div>
+
+    <!-- HL7 -->
+    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
+        <h2>HL7 Message Generation</h2>
+        <pre style="background:black; padding:15px; overflow:auto;">
+MSH|^~\&|OpenEMR|Hospital|PrimaryCare|System|20260423233958||ADT^A01|MSG00001|P|2.5
+PID|1||9d03b032||Abshire^David||1996-09-29|male
+PV1|1|O|Clinic
+DG1|1||J44.9^COPD
+        </pre>
+    </div>
+
+</div>
+
+</body>
+</html>
