@@ -23,6 +23,23 @@ body {
     z-index: 1100;
 }
 
+/* ===== OVERLAY (blur background) ===== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    display: none;
+    z-index: 900;
+}
+
+.overlay.active {
+    display: block;
+}
+
 /* ===== TOP NAV ===== */
 .top-nav {
     position: fixed;
@@ -39,7 +56,6 @@ body {
     color: white;
     margin-left: 25px;
     text-decoration: none;
-    transition: 0.2s;
 }
 
 .top-nav a:hover {
@@ -50,7 +66,7 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -260px;   /* FIXED */
+    left: -100%;   /* FULLY HIDDEN */
     width: 260px;
     height: 100%;
     background: linear-gradient(180deg, #022c22, #020617);
@@ -64,9 +80,9 @@ body {
     left: 0;
 }
 
+/* ===== SIDEBAR LINKS ===== */
 .sidebar h2 {
     color: #22c55e;
-    margin-bottom: 20px;
 }
 
 .sidebar a {
@@ -77,7 +93,6 @@ body {
     border: 1px solid #22c55e;
     color: white;
     text-decoration: none;
-    transition: 0.2s;
 }
 
 .sidebar a:hover {
@@ -90,14 +105,12 @@ body {
     color: black;
 }
 
-/* ===== MAIN CONTENT ===== */
+/* ===== MAIN ===== */
 .main {
     padding: 120px 60px;
-    margin-left: 0;
-    transition: margin-left 0.3s;
 }
 
-/* ===== TASK CONTENT ===== */
+/* ===== TASK ===== */
 .task {
     display: none;
 }
@@ -119,11 +132,6 @@ h1 {
 
 p {
     color: #d1d5db;
-    line-height: 1.6;
-}
-
-ul {
-    margin-left: 20px;
 }
 </style>
 </head>
@@ -132,6 +140,9 @@ ul {
 
 <!-- MENU BUTTON -->
 <div id="menuToggle" onclick="toggleMenu()">☰</div>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
 <!-- TOP NAV -->
 <header class="top-nav">
@@ -147,7 +158,7 @@ ul {
 
     <h2>ETL Tasks</h2>
 
-    <!-- ETL PHASES -->
+    <!-- ETL -->
     <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
     <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
     <a href="#" onclick="showTask(event,'load')">📤 Load</a>
@@ -163,96 +174,57 @@ ul {
 
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
-    <!-- EXTRACT -->
-    <div id="extract" class="task task-box">
-        <h1>Extract Phase</h1>
-        <p>Retrieve patient data from OpenEMR FHIR API.</p>
-    </div>
-
-    <!-- TRANSFORM -->
-    <div id="transform" class="task task-box">
-        <h1>Transform Phase</h1>
-        <p>Apply SNOMED CT mappings and clean data.</p>
-    </div>
-
-    <!-- LOAD -->
-    <div id="load" class="task task-box">
-        <h1>Load Phase</h1>
-        <p>Send data to Primary Care EHR and generate HL7.</p>
-    </div>
-
-    <!-- TASK 1 -->
     <div id="task1" class="task task-box active">
-        <h1>Task 1: Patient Extraction and Loading</h1>
-        <p>Patient retrieved from OpenEMR FHIR server.</p>
-        <p>COPD (SNOMED CT: <b>13645005</b>) selected.</p>
-        <ul>
-            <li>Tracheobronchial disorder</li>
-            <li>Chronic respiratory disease</li>
-        </ul>
-        <p>Patient created in Primary Care EHR.</p>
+        <h1>Task 1</h1>
+        <p>Patient retrieved and loaded.</p>
     </div>
 
-    <!-- TASK 2 -->
     <div id="task2" class="task task-box">
-        <h1>Task 2: Condition Transformation</h1>
-        <p>Child SNOMED codes added.</p>
+        <h1>Task 2</h1>
+        <p>Condition transformation.</p>
     </div>
 
-    <!-- TASK 3 -->
     <div id="task3" class="task task-box">
-        <h1>Task 3: Observation</h1>
-        <p>Blood pressure observation created.</p>
+        <h1>Task 3</h1>
+        <p>Observation added.</p>
     </div>
 
-    <!-- TASK 4 -->
     <div id="task4" class="task task-box">
-        <h1>Task 4: Procedure</h1>
-        <p>Chest X-ray added.</p>
+        <h1>Task 4</h1>
+        <p>Procedure added.</p>
     </div>
 
-    <!-- TASK 5 -->
     <div id="task5" class="task task-box">
-        <h1>Task 5: HL7 Message</h1>
-        <p>HL7 ADT message generated.</p>
+        <h1>Task 5</h1>
+        <p>HL7 message generated.</p>
     </div>
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 
 function toggleMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const main = document.querySelector(".main");
-
-    sidebar.classList.toggle("active");
-
-    if (sidebar.classList.contains("active")) {
-        main.style.marginLeft = "260px";
-    } else {
-        main.style.marginLeft = "0";
-    }
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
 }
 
-function showTask(event, taskId) {
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
 
-    // hide all
+function showTask(event, id) {
+
     document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
 
-    // show selected
-    document.getElementById(taskId).classList.add("active");
-
-    // highlight
-    document.querySelectorAll(".sidebar a").forEach(l => l.classList.remove("active"));
+    document.querySelectorAll(".sidebar a").forEach(a => a.classList.remove("active"));
     event.target.classList.add("active");
 
-    // auto close
-    document.getElementById("sidebar").classList.remove("active");
-    document.querySelector(".main").style.marginLeft = "0";
+    closeMenu();  // auto close
 }
 
 </script>
