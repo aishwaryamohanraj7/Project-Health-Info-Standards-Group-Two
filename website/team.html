@@ -1,22 +1,170 @@
-<nav>
-  <a href="index.html">Home</a> |
-  <a href="about.html">About</a> |
-  <a href="team.html">Team</a> |
-  <a href="etl.html">ETL</a> |
-    <a href="insights.html">Insights</a>|
-</nav>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Team Contributions</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>FHIR ETL Pipeline - Team</title>
+
+<style>
+
+/* ===== GLOBAL ===== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #000814, #001d3d);
+    color: white;
+}
+
+/* ===== HEADER ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(0,0,0,0.6);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    color: #00ff88;
+}
+
+nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #00ff88;
+}
+
+/* ===== MENU BUTTON ===== */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #00ff88;
+}
+
+/* ===== TOP DROPDOWN ===== */
+.dropdown {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(14px);
+
+    padding: 30px 50px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: 0.3s ease;
+
+    z-index: 9999;
+}
+
+.dropdown.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* ===== MENU BOX ===== */
+.menu-box {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    padding: 18px;
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.15),
+        inset 0 0 10px rgba(255,255,255,0.05);
+
+    transition: 0.25s;
+}
+
+.menu-box:hover {
+    transform: translateY(-5px);
+}
+
+.menu-box h3 {
+    color: #00ff88;
+}
+
+.menu-box a {
+    display: block;
+    color: white;
+    padding: 6px 0;
+    text-decoration: none;
+}
+
+.menu-box a:hover {
+    color: #00ff88;
+}
+
+/* ===== CONTENT ===== */
+.features {
+    padding: 40px;
+}
+
+.features h2 {
+    text-align: center;
+    color: #00ff88;
+}
+
+/* ===== TABLE ===== */
+.team-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.15);
+}
+
+.team-table th, .team-table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.team-table th {
+    background: rgba(0,255,136,0.15);
+}
+
+.team-table tr:nth-child(even) {
+    background: rgba(255,255,255,0.03);
+}
+
+ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+</style>
 </head>
 
 <body>
 
+<!-- ===== HEADER ===== -->
 <header>
-    <h2 class="logo">Healthcare ETL Project</h2>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <h2 class="logo">FHIR ETL Pipeline</h2>
+
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -26,8 +174,45 @@
     </nav>
 </header>
 
+<!-- ===== DROPDOWN MENU ===== -->
+<div id="dropdown" class="dropdown">
+
+    <div class="menu-box">
+        <h3>🏠 Home</h3>
+        <a href="index.html">Project Overview</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>⚙️ ETL Pipeline</h3>
+        <a href="etl.html">Extraction</a>
+        <a href="etl.html">Transformation</a>
+        <a href="etl.html">Loading</a>
+        <a href="etl.html">Five Tasks</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>📊 Insights</h3>
+        <a href="insights.html">Key Insights</a>
+        <a href="insights.html">Challenges</a>
+        <a href="insights.html">Lessons Learned</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>👥 Team</h3>
+        <a href="team.html">Team Contribution</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>📄 About</h3>
+        <a href="about.html">Presentation Content</a>
+    </div>
+
+</div>
+
+<!-- ===== CONTENT ===== -->
 <section class="features">
-    <h2>Team Contributions</h2>
+
+    <h2>👥 Team Contributions</h2>
 
     <table class="team-table">
 
@@ -38,7 +223,6 @@
             <th>Reflections</th>
         </tr>
 
-        <!-- MEMBER 1 -->
         <tr>
             <td>Aishwarya Mohanraj</td>
             <td>Data Extraction Lead</td>
@@ -46,49 +230,68 @@
                 <ul>
                     <li>Retrieved patient data from FHIR API</li>
                     <li>Implemented API requests using Python</li>
-                    <li>Used search parameters to filter patient data</li>
+                    <li>Used search parameters</li>
                 </ul>
             </td>
-            <td>
-                Learned how to work with healthcare APIs and handle errors during data extraction.
-            </td>
+            <td>Learned API handling and error management.</td>
         </tr>
 
-        <!-- MEMBER 2 -->
         <tr>
             <td>Partha Pratim Seal</td>
             <td>Data Transformation Lead</td>
             <td>
                 <ul>
-                    <li>Cleaned and transformed healthcare data</li>
-                    <li>Performed SNOMED concept mapping</li>
-                    <li>Handled missing and inconsistent data fields</li>
+                    <li>Cleaned healthcare data</li>
+                    <li>SNOMED mapping</li>
+                    <li>Handled missing data</li>
                 </ul>
             </td>
-            <td>
-                Gained experience in transforming raw healthcare data into standardized formats.
-            </td>
+            <td>Improved transformation and standardization skills.</td>
         </tr>
 
-        <!-- MEMBER 3 -->
         <tr>
             <td>Sathvika Neeruddula</td>
             <td>Visualization & Documentation</td>
             <td>
                 <ul>
-                    <li>Created ETL diagrams and visualizations</li>
-                    <li>Prepared project documentation and insights</li>
-                    <li>Supported presentation content</li>
+                    <li>Created ETL diagrams</li>
+                    <li>Prepared documentation</li>
+                    <li>Supported presentation</li>
                 </ul>
             </td>
-            <td>
-                Improved skills in presenting technical content clearly through diagrams and documentation.
-            </td>
+            <td>Improved technical storytelling skills.</td>
         </tr>
 
     </table>
 
 </section>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+
+const dropdown = document.getElementById("dropdown");
+
+function toggleMenu() {
+    dropdown.classList.toggle("active");
+}
+
+/* AUTO CLOSE */
+document.querySelectorAll(".dropdown a").forEach(link => {
+    link.addEventListener("click", function() {
+        dropdown.classList.remove("active");
+    });
+});
+
+/* CLICK OUTSIDE CLOSE */
+document.addEventListener("click", function(e) {
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+        dropdown.classList.remove("active");
+    }
+});
+
+</script>
 
 </body>
 </html>
