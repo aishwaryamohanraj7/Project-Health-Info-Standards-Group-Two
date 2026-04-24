@@ -1,130 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>FHIR ETL Pipeline</title>
+<meta charset="UTF-8">
+<title>FHIR ETL Pipeline</title>
 
-    <style>
-        body {
-            margin:0;
-            font-family:Arial;
-            display:flex;
-            background:#020617;
-            color:white;
-        }
+<style>
 
-        /* SIDEBAR */
-        .sidebar {
-            width:280px;
-            background: linear-gradient(180deg, #020617, #052e2b);
-            padding:25px;
-            min-height:100vh;
-        }
+body {
+    margin:0;
+    font-family:Arial;
+    display:flex;
+    background:#020617;
+    color:white;
+}
 
-        .logo {
-            color:#22c55e;
-        }
+/* SIDEBAR (COMPACT FIXED) */
+.sidebar {
+    width:250px;
+    background: linear-gradient(180deg, #020617, #052e2b);
+    padding:20px;
+    min-height:100vh;
+}
 
-        .subtitle {
-            font-size:13px;
-            color:#94a3af;
-            margin-bottom:30px;
-        }
+.logo {
+    color:#22c55e;
+    margin-bottom:5px;
+}
 
-        .nav-item {
-            margin-top:15px;
-        }
+.subtitle {
+    font-size:12px;
+    color:#94a3af;
+    margin-bottom:20px;
+}
 
-        .nav-item a {
-            color:white;
-            text-decoration:none;
-            display:block;
-            padding:8px;
-            border-radius:6px;
-        }
+.nav-item {
+    margin-top:10px;
+}
 
-        .nav-item a:hover {
-            background:rgba(34,197,94,0.2);
-        }
+.nav-item a {
+    color:white;
+    text-decoration:none;
+    display:block;
+    padding:6px;
+    border-radius:5px;
+}
 
-        .submenu {
-            margin-left:15px;
-            font-size:14px;
-        }
+.nav-item a:hover {
+    background:rgba(34,197,94,0.2);
+}
 
-        .submenu a {
-            color:white;
-            text-decoration:none;
-        }
+/* MAIN */
+.main {
+    flex:1;
+}
 
-        /* MAIN */
-        .main {
-            flex:1;
-        }
+/* TOP NAV */
+header {
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
+}
 
-        header {
-            display:flex;
-            justify-content:space-between;
-            padding:20px 40px;
-        }
+header h2 {
+    color:#22c55e;
+}
 
-        header h2 {
-            color:#22c55e;
-        }
+nav a {
+    margin-left:20px;
+    color:white;
+    text-decoration:none;
+    padding:6px;
+}
 
-        nav a {
-            margin-left:20px;
-            color:white;
-            text-decoration:none;
-        }
+nav a:hover {
+    color:#22c55e;
+}
 
-        /* HERO TEXT */
-        .content {
-            padding:40px;
-            max-width:900px;
-        }
+/* HERO */
+.hero {
+    display:flex;
+    padding:50px;
+    align-items:center;
+}
 
-        .content h1 span {
-            color:#22c55e;
-        }
+.hero-left {
+    flex:1;
+}
 
-        .content p {
-            color:#cbd5e1;
-            line-height:1.6;
-        }
+.hero-left h1 span {
+    color:#22c55e;
+}
 
-        /* PURPOSE */
-        .purpose {
-            margin-top:30px;
-        }
+.hero-left p {
+    color:#cbd5e1;
+}
 
-        /* GLOSSY SUMMARY */
-        .summary {
-            margin:40px;
-            padding:25px;
-            border-radius:20px;
-            background: linear-gradient(145deg, #0f172a, #020617);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display:flex;
-            justify-content:space-around;
-            flex-wrap:wrap;
-        }
+/* IMAGE */
+.hero-right img {
+    width:350px;
+}
 
-        .summary-box {
-            text-align:center;
-            width:160px;
-        }
+/* GLOSSY SUMMARY */
+.summary {
+    margin:40px;
+    padding:25px;
+    border-radius:20px;
 
-        .summary-box h3 {
-            margin-top:10px;
-        }
+    background: linear-gradient(145deg, #0f172a, #020617);
 
-        .summary-box p {
-            font-size:13px;
-            color:#94a3b8;
-        }
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.05);
 
-    </style>
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+}
+
+.summary-box {
+    text-align:center;
+    width:160px;
+}
+
+.summary-box h3 {
+    margin-top:10px;
+}
+
+.summary-box p {
+    font-size:13px;
+    color:#94a3b8;
+}
+
+</style>
 </head>
 
 <body>
@@ -132,40 +139,18 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
 
-    <h2 class="logo">📘 FHIR ETL PIPELINE</h2>
-    <p class="subtitle">Bridging Clinical Data Systems</p>
+<h2 class="logo">📘 FHIR ETL PIPELINE</h2>
+<p class="subtitle">Bridging Clinical Data Systems</p>
 
-    <div class="nav-item">🏠 <a href="index.html">HOME</a></div>
+<div class="nav-item">🏠 <a href="index.html">HOME</a></div>
 
-    <div class="nav-item">⚙️ <a href="etl.html">ETL PIPELINE</a>
-        <div class="submenu">
-            <p><a href="etl.html">• Extraction</a></p>
-            <p><a href="etl.html">• Transformation</a></p>
-            <p><a href="etl.html">• Loading</a></p>
-            <p><a href="etl.html">• Five Coding Tasks</a></p>
-        </div>
-    </div>
+<div class="nav-item">⚙️ <a href="etl.html">ETL PIPELINE</a></div>
 
-    <div class="nav-item">📊 <a href="insights.html">INSIGHTS</a>
-        <div class="submenu">
-            <p><a href="insights.html">• Key Insights</a></p>
-            <p><a href="insights.html">• Visualizations</a></p>
-            <p><a href="insights.html">• Challenges</a></p>
-            <p><a href="insights.html">• Lessons Learned</a></p>
-        </div>
-    </div>
+<div class="nav-item">📊 <a href="insights.html">INSIGHTS</a></div>
 
-    <div class="nav-item">👥 <a href="team.html">TEAM</a>
-        <div class="submenu">
-            <p><a href="team.html">• Team Contribution</a></p>
-        </div>
-    </div>
+<div class="nav-item">👥 <a href="team.html">TEAM</a></div>
 
-    <div class="nav-item">📄 <a href="about.html">ABOUT</a>
-        <div class="submenu">
-            <p><a href="about.html">• Presentation Content</a></p>
-        </div>
-    </div>
+<div class="nav-item">📄 <a href="about.html">ABOUT</a></div>
 
 </div>
 
@@ -173,73 +158,68 @@
 <div class="main">
 
 <header>
-    <h2>FHIR ETL Pipeline</h2>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="team.html">Team</a>
-        <a href="etl.html">ETL</a>
-        <a href="insights.html">Insights</a>
-    </nav>
+<h2>FHIR ETL Pipeline</h2>
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="team.html">Team</a>
+<a href="etl.html">ETL</a>
+<a href="insights.html">Insights</a>
+</nav>
 </header>
 
-<!-- CONTENT -->
-<div class="content">
+<!-- HERO -->
+<section class="hero">
+
+<div class="hero-left">
 
 <h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
 
 <p>
-This project implements a clinical data ETL (Extract, Transform, Load) pipeline that connects two
-FHIR-compliant healthcare systems — an OpenEMR source server and a Primary Care EHR target server.
-The pipeline retrieves real patient and condition data, enriches it using the SNOMED CT clinical terminology hierarchy,
-and delivers structured FHIR R4 resources to a destination system. A final interoperability layer converts
-FHIR data into an HL7 v2 ADT message, enabling communication with legacy clinical systems.
+This project builds an ETL pipeline that extracts patient data from OpenEMR,
+transforms it using SNOMED CT, and loads it into a Primary Care EHR,
+with HL7 v2 conversion for interoperability.
 </p>
 
-<div class="purpose">
-<h2>🎯 Purpose of the ETL Pipeline</h2>
-
-<p>
-Healthcare organizations routinely operate multiple electronic health record systems that do not communicate natively.
-This pipeline solves that problem by automating the extraction of patient demographics and clinical conditions,
-applying standardized clinical terminology transformations, and loading the enriched data into a second EHR system —
-all without manual data entry. The result is faster, more accurate patient data migration and a foundation for true clinical interoperability.
-</p>
 </div>
 
+<div class="hero-right">
+<img src="images/etl.png">
 </div>
+
+</section>
 
 <!-- SUMMARY -->
 <div class="summary">
 
-    <div class="summary-box">
-        <h2>📋</h2>
-        <h3>Summary of Deliverables</h3>
-    </div>
+<div class="summary-box">
+<h2>📋</h2>
+<h3>Summary of Deliverables</h3>
+</div>
 
-    <div class="summary-box">
-        <h2>💻</h2>
-        <h3>5 Coding Tasks</h3>
-        <p>Parent, Child, BP, Procedure, HL7</p>
-    </div>
+<div class="summary-box">
+<h2>💻</h2>
+<h3>5 Coding Tasks</h3>
+<p>Parent, Child, BP, Procedure, HL7</p>
+</div>
 
-    <div class="summary-box">
-        <h2>✅</h2>
-        <h3>FHIR Validation</h3>
-        <p>Standard Profiles</p>
-    </div>
+<div class="summary-box">
+<h2>✅</h2>
+<h3>FHIR Validation</h3>
+<p>Standard Profiles</p>
+</div>
 
-    <div class="summary-box">
-        <h2>📄</h2>
-        <h3>HL7 v2 Message</h3>
-        <p>Exported as .txt</p>
-    </div>
+<div class="summary-box">
+<h2>📄</h2>
+<h3>HL7 v2 Message</h3>
+<p>Exported as .txt</p>
+</div>
 
-    <div class="summary-box">
-        <h2>🌐</h2>
-        <h3>Documentation Website</h3>
-        <p>Hosted on GitHub Pages</p>
-    </div>
+<div class="summary-box">
+<h2>🌐</h2>
+<h3>Documentation Website</h3>
+<p>Hosted on GitHub Pages</p>
+</div>
 
 </div>
 
