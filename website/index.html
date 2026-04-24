@@ -10,22 +10,42 @@
 body {
     margin:0;
     font-family:Arial;
-    display:flex;
     background:#020617;
     color:white;
 }
 
-/* SIDEBAR */
-.sidebar {
-    width:260px;
-    background: linear-gradient(180deg, #020617, #052e2b);
-    padding:20px;
-    min-height:100vh;
+/* TOGGLE BUTTON */
+#menuToggle {
+    position:fixed;
+    top:20px;
+    left:20px;
+    font-size:26px;
+    cursor:pointer;
+    z-index:1001;
+    color:#22c55e;
 }
 
-.logo {
+/* SIDEBAR */
+.sidebar {
+    position:fixed;
+    left:-260px;
+    top:0;
+    width:260px;
+    height:100%;
+    background: linear-gradient(180deg, #020617, #052e2b);
+    padding:20px;
+    transition:0.3s;
+    z-index:1000;
+}
+
+/* SIDEBAR ACTIVE */
+.sidebar.active {
+    left:0;
+}
+
+/* SIDEBAR TEXT */
+.sidebar h2 {
     color:#22c55e;
-    margin-bottom:5px;
 }
 
 .subtitle {
@@ -34,7 +54,7 @@ body {
     margin-bottom:20px;
 }
 
-/* SIDEBAR ITEMS */
+/* NAV SECTIONS */
 .nav-section {
     margin-top:15px;
 }
@@ -44,6 +64,7 @@ body {
     margin-bottom:5px;
 }
 
+/* LINKS */
 .nav-link {
     display:block;
     color:white;
@@ -57,16 +78,22 @@ body {
     color:#22c55e;
 }
 
-/* MAIN */
+/* MAIN CONTENT */
 .main {
-    flex:1;
+    transition:0.3s;
+    padding:40px;
+}
+
+/* SHIFT WHEN SIDEBAR OPEN */
+.main.shift {
+    margin-left:260px;
 }
 
 /* HEADER */
 header {
     display:flex;
     justify-content:space-between;
-    padding:20px 40px;
+    margin-bottom:40px;
 }
 
 header h2 {
@@ -86,7 +113,6 @@ nav a:hover {
 /* HERO */
 .hero {
     display:flex;
-    padding:50px;
     align-items:center;
 }
 
@@ -109,7 +135,7 @@ nav a:hover {
 
 /* GLOSSY SUMMARY */
 .summary {
-    margin:40px;
+    margin-top:40px;
     padding:30px;
     border-radius:20px;
 
@@ -144,10 +170,13 @@ nav a:hover {
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+<!-- ☰ BUTTON -->
+<div id="menuToggle" onclick="toggleSidebar()">☰</div>
 
-<h2 class="logo">📘 FHIR ETL PIPELINE</h2>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+
+<h2>📘 FHIR ETL PIPELINE</h2>
 <p class="subtitle">Bridging Clinical Data Systems</p>
 
 <!-- HOME -->
@@ -170,8 +199,6 @@ nav a:hover {
     <div class="nav-section-title">📊 INSIGHTS</div>
     <a href="insights.html" class="nav-link">Key Insights</a>
     <a href="insights.html" class="nav-link">Visualizations</a>
-    <a href="insights.html" class="nav-link">Challenges</a>
-    <a href="insights.html" class="nav-link">Lessons Learned</a>
 </div>
 
 <!-- TEAM -->
@@ -193,6 +220,7 @@ nav a:hover {
 
 <header>
 <h2>FHIR ETL Pipeline</h2>
+
 <nav>
 <a href="index.html">Home</a>
 <a href="about.html">About</a>
@@ -223,7 +251,7 @@ with HL7 v2 conversion for interoperability.
 
 </section>
 
-<!-- GLOSSY SUMMARY -->
+<!-- SUMMARY -->
 <div class="summary">
 
 <div class="summary-box">
@@ -258,6 +286,14 @@ with HL7 v2 conversion for interoperability.
 </div>
 
 </div>
+
+<!-- SCRIPT -->
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.querySelector(".main").classList.toggle("shift");
+}
+</script>
 
 </body>
 </html>
