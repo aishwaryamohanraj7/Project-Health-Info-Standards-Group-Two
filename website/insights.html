@@ -49,13 +49,16 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== DROPDOWN ===== */
+/* ===== DROPDOWN (FIXED FRONT LAYER) ===== */
 .dropdown {
     position: fixed;
     top: 70px;
     left: 20px;
     width: 260px;
+
     background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+
     padding: 15px;
     border-radius: 12px;
 
@@ -63,7 +66,8 @@ nav a:hover {
     transform: translateY(-10px);
     pointer-events: none;
     transition: 0.25s ease;
-    z-index: 999;
+
+    z-index: 9999; /* 🔥 FIXED */
 }
 
 .dropdown.active {
@@ -100,6 +104,9 @@ h1 {
 
 /* ===== GLOSSY CARDS ===== */
 .card {
+    position: relative;
+    z-index: 1;
+
     margin-top: 30px;
     padding: 25px;
     border-radius: 15px;
@@ -128,7 +135,7 @@ ul {
 
 <body>
 
-<!-- HEADER -->
+<!-- ===== HEADER ===== -->
 <header>
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
     <h2 class="logo">FHIR ETL Pipeline</h2>
@@ -142,7 +149,7 @@ ul {
     </nav>
 </header>
 
-<!-- DROPDOWN -->
+<!-- ===== DROPDOWN ===== -->
 <div id="dropdown" class="dropdown">
 
     <h3>🏠 Home</h3>
@@ -167,7 +174,7 @@ ul {
 
 </div>
 
-<!-- CONTENT -->
+<!-- ===== CONTENT ===== -->
 <div class="container">
 
     <h1>FHIR ETL Pipeline Insights</h1>
@@ -200,7 +207,7 @@ ul {
 
 </div>
 
-<!-- SCRIPT -->
+<!-- ===== SCRIPT ===== -->
 <script>
 
 const dropdown = document.getElementById("dropdown");
@@ -209,14 +216,12 @@ function toggleMenu() {
     dropdown.classList.toggle("active");
 }
 
-/* ⭐ FIX: CLOSE FIRST, THEN NAVIGATE */
+/* 🔥 CLOSE FIRST, THEN SCROLL */
 document.querySelectorAll(".dropdown a").forEach(link => {
     link.addEventListener("click", function(e) {
 
-        // close menu immediately
         dropdown.classList.remove("active");
 
-        // smooth scroll for anchor links
         if (this.getAttribute("href").startsWith("#")) {
             e.preventDefault();
 
