@@ -23,7 +23,7 @@ body {
     z-index: 1100;
 }
 
-/* ===== OVERLAY (blur background) ===== */
+/* ===== OVERLAY ===== */
 .overlay {
     position: fixed;
     top: 0;
@@ -31,7 +31,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(6px);
     display: none;
     z-index: 900;
 }
@@ -66,7 +66,7 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -100%;   /* FULLY HIDDEN */
+    left: -100%;
     width: 260px;
     height: 100%;
     background: linear-gradient(180deg, #022c22, #020617);
@@ -80,7 +80,7 @@ body {
     left: 0;
 }
 
-/* ===== SIDEBAR LINKS ===== */
+/* ===== LINKS ===== */
 .sidebar h2 {
     color: #22c55e;
 }
@@ -139,7 +139,7 @@ p {
 <body>
 
 <!-- MENU BUTTON -->
-<div id="menuToggle" onclick="toggleMenu()">☰</div>
+<div id="menuToggle" onclick="openMenu()">☰</div>
 
 <!-- OVERLAY -->
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
@@ -178,27 +178,27 @@ p {
 <div class="main">
 
     <div id="task1" class="task task-box active">
-        <h1>Task 1</h1>
-        <p>Patient retrieved and loaded.</p>
+        <h1>Task 1: Patient Extraction</h1>
+        <p>Patient retrieved and COPD identified.</p>
     </div>
 
     <div id="task2" class="task task-box">
-        <h1>Task 2</h1>
-        <p>Condition transformation.</p>
+        <h1>Task 2: Condition</h1>
+        <p>Child SNOMED concepts added.</p>
     </div>
 
     <div id="task3" class="task task-box">
-        <h1>Task 3</h1>
-        <p>Observation added.</p>
+        <h1>Task 3: Observation</h1>
+        <p>Blood pressure added.</p>
     </div>
 
     <div id="task4" class="task task-box">
-        <h1>Task 4</h1>
-        <p>Procedure added.</p>
+        <h1>Task 4: Procedure</h1>
+        <p>Chest X-ray recorded.</p>
     </div>
 
     <div id="task5" class="task task-box">
-        <h1>Task 5</h1>
+        <h1>Task 5: HL7</h1>
         <p>HL7 message generated.</p>
     </div>
 
@@ -206,16 +206,19 @@ p {
 
 <script>
 
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
-    document.getElementById("overlay").classList.toggle("active");
+/* ===== OPEN MENU (always opens cleanly) ===== */
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
 }
 
+/* ===== CLOSE MENU ===== */
 function closeMenu() {
     document.getElementById("sidebar").classList.remove("active");
     document.getElementById("overlay").classList.remove("active");
 }
 
+/* ===== SWITCH TASK ===== */
 function showTask(event, id) {
 
     document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
@@ -224,7 +227,7 @@ function showTask(event, id) {
     document.querySelectorAll(".sidebar a").forEach(a => a.classList.remove("active"));
     event.target.classList.add("active");
 
-    closeMenu();  // auto close
+    closeMenu();  // always close after click
 }
 
 </script>
