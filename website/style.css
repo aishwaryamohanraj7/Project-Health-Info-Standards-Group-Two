@@ -153,5 +153,33 @@ nav a:hover {
 .card h3 {
     margin-bottom: 10px;
 }
+.team-table {
+    width: 100%;
+    margin-top: 40px;
+    border-collapse: collapse;
+    background: #0f172a;
+    border-radius: 10px;
+    overflow: hidden;
+}
 
+.team-table th {
+    background: #22c55e;
+    color: black;
+    padding: 15px;
+    text-align: left;
+}
 
+.team-table td {
+    padding: 15px;
+    border-bottom: 1px solid #1e293b;
+    vertical-align: top;
+}
+
+.team-table tr:hover {
+    background: #1e293b;
+}
+
+.team-table ul {
+    margin: 0;
+    padding-left: 20px;
+}
