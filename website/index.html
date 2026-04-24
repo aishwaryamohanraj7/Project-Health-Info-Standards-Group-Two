@@ -2,8 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Healthcare ETL Project</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FHIR ETL Pipeline</title>
 
     <style>
         body {
@@ -29,7 +28,7 @@
 
         .subtitle {
             font-size:13px;
-            color:#94a3b8;
+            color:#94a3af;
             margin-bottom:30px;
         }
 
@@ -38,7 +37,6 @@
             padding:10px;
             border-radius:8px;
             cursor:pointer;
-            transition:0.3s;
         }
 
         .nav-item:hover {
@@ -52,13 +50,12 @@
 
         .submenu {
             margin-left:20px;
-            display:none;
             font-size:14px;
-            color:#cbd5e1;
         }
 
-        .submenu p {
-            margin:6px 0;
+        .submenu a {
+            color:white; /* FIXED WHITE TEXT */
+            text-decoration:none;
         }
 
         /* MAIN */
@@ -66,37 +63,81 @@
             flex:1;
         }
 
-        /* ETL BOXES */
-        .etl-section {
-            padding:50px;
+        header {
+            display:flex;
+            justify-content:space-between;
+            padding:20px 40px;
         }
 
-        .etl-title {
-            text-align:center;
-            margin-bottom:30px;
+        header h2 {
+            color:#22c55e;
         }
 
-        .etl-container {
+        nav a {
+            margin-left:20px;
+            color:white;
+            text-decoration:none;
+        }
+
+        /* HERO */
+        .hero {
+            display:flex;
+            padding:60px;
+            align-items:center;
+        }
+
+        .hero-left {
+            flex:1;
+        }
+
+        .hero-left h1 span {
+            color:#22c55e;
+        }
+
+        .buttons a {
+            margin-right:10px;
+            padding:10px 20px;
+            border-radius:20px;
+            text-decoration:none;
+        }
+
+        .primary {
+            background:#22c55e;
+            color:black;
+        }
+
+        .secondary {
+            border:1px solid #22c55e;
+            color:#22c55e;
+        }
+
+        /* SUMMARY SECTION */
+        .summary {
+            margin:40px;
+            padding:20px;
+            border-radius:15px;
+            background:rgba(255,255,255,0.05);
             display:flex;
             justify-content:space-around;
             flex-wrap:wrap;
         }
 
-        .etl-box {
-            background: rgba(255,255,255,0.05);
-            border:1px solid rgba(34,197,94,0.3);
-            border-radius:15px;
-            padding:20px;
-            margin:10px;
-            width:180px;
+        .summary-box {
             text-align:center;
-            transition:0.3s;
+            width:180px;
+            margin:10px;
         }
 
-        .etl-box:hover {
-            background:#22c55e;
-            color:black;
+        .summary-box h3 {
+            font-size:16px;
+            margin-top:10px;
         }
+
+        .summary-box p {
+            font-size:13px;
+            color:#cbd5e1;
+        }
+
     </style>
 </head>
 
@@ -110,120 +151,112 @@
 
     <div class="nav-item">🏠 <a href="index.html">HOME</a></div>
 
-    <div class="nav-item" onclick="toggleMenu('etlMenu')">⚙️ ETL PIPELINE</div>
-    <div id="etlMenu" class="submenu">
-        <p>• Extraction</p>
-        <p>• Transformation</p>
-        <p>• Loading</p>
-        <p>• Five Coding Tasks</p>
+    <div class="nav-item">⚙️ ETL PIPELINE
+        <div class="submenu">
+            <p>• Extraction</p>
+            <p>• Transformation</p>
+            <p>• Loading</p>
+            <p>• Five Coding Tasks</p>
+        </div>
     </div>
 
-    <div class="nav-item" onclick="toggleMenu('insightMenu')">📊 INSIGHTS</div>
-    <div id="insightMenu" class="submenu">
-        <p>• Key Insights</p>
-        <p>• Visualizations</p>
-        <p>• Challenges</p>
-        <p>• Lessons Learned</p>
+    <div class="nav-item">📊 INSIGHTS
+        <div class="submenu">
+            <p>• Key Insights</p>
+            <p>• Visualizations</p>
+            <p>• Challenges</p>
+            <p>• Lessons Learned</p>
+        </div>
     </div>
 
-    <div class="nav-item" onclick="toggleMenu('teamMenu')">👥 TEAM</div>
-    <div id="teamMenu" class="submenu">
-        <p><a href="team.html">• Team Contribution</a></p>
+    <div class="nav-item">👥 TEAM
+        <div class="submenu">
+            <p><a href="team.html">• Team Contribution</a></p>
+        </div>
     </div>
 
-    <div class="nav-item" onclick="toggleMenu('aboutMenu')">📄 ABOUT</div>
-    <div id="aboutMenu" class="submenu">
-        <p><a href="about.html">• Presentation Content</a></p>
+    <div class="nav-item">📄 ABOUT
+        <div class="submenu">
+            <p><a href="about.html">• Presentation Content</a></p>
+        </div>
     </div>
 
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
-    <!-- NAVBAR -->
-    <header>
-        <h2 class="logo">Healthcare ETL Project</h2>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="team.html">Team</a>
-            <a href="etl.html">ETL</a>
-            <a href="insights.html">Insights</a>
-        </nav>
-    </header>
+<header>
+    <h2>FHIR ETL Pipeline</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </nav>
+</header>
 
-    <!-- HERO -->
-    <section class="hero">
+<section class="hero">
 
-        <div class="hero-left">
-            <h1>Welcome to Our <span>Healthcare ETL Project</span></h1>
+    <div class="hero-left">
+        <h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
 
-            <p>
-                A modern data pipeline that extracts healthcare data, transforms it,
-                and delivers powerful insights.
-            </p>
+        <p>
+            A modern data pipeline that extracts healthcare data, transforms it,
+            and delivers powerful insights.
+        </p>
 
-            <div class="buttons">
-                <a href="etl.html" class="btn primary">Explore ETL</a>
-                <a href="about.html" class="btn secondary">Learn More</a>
-                <a href="insights.html" class="btn secondary">Insights</a>
-            </div>
-
-            <h4 class="tagline">Data • Transform • Insights</h4>
+        <div class="buttons">
+            <a href="etl.html" class="primary">Explore ETL</a>
+            <a href="about.html" class="secondary">Learn More</a>
+            <a href="insights.html" class="secondary">Insights</a>
         </div>
 
-        <div class="hero-right">
-            <img src="images/etl.png" class="hero-img">
-        </div>
+        <h4>Data • Transform • Insights</h4>
+    </div>
 
-    </section>
+    <div class="hero-right">
+        <img src="images/etl.png" width="400">
+    </div>
 
-    <!-- ETL DIAGRAM SECTION -->
-    <section class="etl-section">
+</section>
 
-        <h2 class="etl-title">📊 ETL Pipeline Overview</h2>
+<!-- SUMMARY OF DELIVERABLES -->
+<section class="summary">
 
-        <div class="etl-container">
+    <div class="summary-box">
+        <h2>📋</h2>
+        <h3>Summary of Deliverables</h3>
+    </div>
 
-            <div class="etl-box">
-                <h3>🗄️ OpenEMR</h3>
-                <p>FHIR API Source</p>
-            </div>
+    <div class="summary-box">
+        <h2>💻</h2>
+        <h3>5 Coding Tasks</h3>
+        <p>Parent, Child, BP, Procedure, HL7</p>
+    </div>
 
-            <div class="etl-box">
-                <h3>⚙️ Extraction</h3>
-                <p>Retrieve Patients, Conditions, Observations</p>
-            </div>
+    <div class="summary-box">
+        <h2>✅</h2>
+        <h3>FHIR Validation</h3>
+        <p>Standard Profiles</p>
+    </div>
 
-            <div class="etl-box">
-                <h3>🔄 Transformation</h3>
-                <p>SNOMED Mapping & Data Cleaning</p>
-            </div>
+    <div class="summary-box">
+        <h2>📄</h2>
+        <h3>HL7 v2 Message</h3>
+        <p>Exported as .txt</p>
+    </div>
 
-            <div class="etl-box">
-                <h3>🏥 Primary EHR</h3>
-                <p>Load FHIR Resources</p>
-            </div>
+    <div class="summary-box">
+        <h2>🌐</h2>
+        <h3>Documentation Website</h3>
+        <p>Hosted on GitHub Pages</p>
+    </div>
 
-            <div class="etl-box">
-                <h3>📄 HL7</h3>
-                <p>ADT Message Generation</p>
-            </div>
-
-        </div>
-
-    </section>
+</section>
 
 </div>
-
-<!-- SCRIPT -->
-<script>
-function toggleMenu(id) {
-    let menu = document.getElementById(id);
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-</script>
 
 </body>
 </html>
