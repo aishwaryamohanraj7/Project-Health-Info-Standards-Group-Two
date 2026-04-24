@@ -47,24 +47,24 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== TOP DROPDOWN MENU ===== */
+/* ===== GLOSSY MEGA DROPDOWN ===== */
 .dropdown {
     position: fixed;
     top: 70px;
     left: 0;
     width: 100%;
 
-    background: rgba(0,0,0,0.95);
-    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(14px);
 
-    padding: 25px 40px;
+    padding: 30px 50px;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
 
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-25px);
     pointer-events: none;
     transition: 0.3s ease;
 
@@ -77,21 +77,42 @@ nav a:hover {
     pointer-events: auto;
 }
 
-/* SECTION TITLE */
-.dropdown h3 {
+/* ===== GLOSSY BOX ===== */
+.menu-box {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+
+    padding: 18px 20px;
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.15),
+        inset 0 0 10px rgba(255,255,255,0.05);
+
+    transition: 0.25s;
+}
+
+.menu-box:hover {
+    transform: translateY(-5px);
+}
+
+/* TITLES */
+.menu-box h3 {
     color: #00ff88;
     margin-bottom: 10px;
 }
 
 /* LINKS */
-.dropdown a {
+.menu-box a {
     display: block;
     color: white;
     padding: 6px 0;
     text-decoration: none;
 }
 
-.dropdown a:hover {
+.menu-box a:hover {
     color: #00ff88;
 }
 
@@ -105,7 +126,7 @@ h1 {
     color: #00ff88;
 }
 
-/* ===== GLOSSY CARDS ===== */
+/* ===== GLOSSY CONTENT CARDS ===== */
 .card {
     margin-top: 30px;
     padding: 25px;
@@ -135,7 +156,7 @@ ul {
 
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- HEADER -->
 <header>
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
     <h2 class="logo">FHIR ETL Pipeline</h2>
@@ -149,15 +170,15 @@ ul {
     </nav>
 </header>
 
-<!-- ===== TOP DROPDOWN ===== -->
+<!-- ===== GLOSSY MEGA MENU ===== -->
 <div id="dropdown" class="dropdown">
 
-    <div>
+    <div class="menu-box">
         <h3>🏠 Home</h3>
         <a href="index.html">Project Overview</a>
     </div>
 
-    <div>
+    <div class="menu-box">
         <h3>⚙️ ETL Pipeline</h3>
         <a href="etl.html">Extraction</a>
         <a href="etl.html">Transformation</a>
@@ -165,19 +186,19 @@ ul {
         <a href="etl.html">Five Tasks</a>
     </div>
 
-    <div>
+    <div class="menu-box">
         <h3>📊 Insights</h3>
         <a href="#insights">Key Insights</a>
         <a href="#challenges">Challenges</a>
         <a href="#lessons">Lessons Learned</a>
     </div>
 
-    <div>
+    <div class="menu-box">
         <h3>👥 Team</h3>
         <a href="team.html">Team Contribution</a>
     </div>
 
-    <div>
+    <div class="menu-box">
         <h3>📄 About</h3>
         <a href="about.html">Presentation Content</a>
     </div>
@@ -217,7 +238,7 @@ ul {
 
 </div>
 
-<!-- ===== SCRIPT ===== -->
+<!-- SCRIPT -->
 <script>
 
 const dropdown = document.getElementById("dropdown");
@@ -234,7 +255,6 @@ document.querySelectorAll(".dropdown a").forEach(link => {
 
         if (this.getAttribute("href").startsWith("#")) {
             e.preventDefault();
-
             const target = document.querySelector(this.getAttribute("href"));
             if (target) {
                 target.scrollIntoView({ behavior: "smooth" });
@@ -243,7 +263,7 @@ document.querySelectorAll(".dropdown a").forEach(link => {
     });
 });
 
-/* CLOSE ON OUTSIDE CLICK */
+/* CLICK OUTSIDE CLOSE */
 document.addEventListener("click", function(e) {
     const menuBtn = document.querySelector(".menu-btn");
 
