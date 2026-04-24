@@ -12,41 +12,53 @@ body {
     color: white;
 }
 
-/* ===== TOP NAV ===== */
+/* ===== NAVBAR ===== */
 .top-nav {
     position: fixed;
     top: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 18px 40px;
-    background: rgba(2,6,23,0.9);
+    justify-content: space-between;
+    padding: 18px 30px;
+    background: rgba(2,6,23,0.95);
     backdrop-filter: blur(10px);
     z-index: 1000;
+    box-sizing: border-box;
 }
 
+/* LEFT MENU */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #22c55e;
+}
+
+/* CENTER LOGO */
 .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     color: #22c55e;
     font-size: 20px;
     font-weight: bold;
 }
 
-/* RIGHT LINKS */
+/* RIGHT NAV */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+}
+
 .nav-links a {
     color: white;
-    margin-left: 25px;
     text-decoration: none;
+    white-space: nowrap;
+    transition: 0.2s;
 }
 
 .nav-links a:hover {
-    color: #22c55e;
-}
-
-/* ===== MENU BUTTON ===== */
-.menu-btn {
-    font-size: 24px;
-    cursor: pointer;
     color: #22c55e;
 }
 
@@ -78,13 +90,14 @@ body {
 
 .menu-section a {
     display: inline-block;
-    margin-right: 15px;
+    margin-right: 12px;
     margin-bottom: 8px;
     color: white;
     text-decoration: none;
     border: 1px solid #22c55e;
     padding: 6px 12px;
     border-radius: 20px;
+    transition: 0.2s;
 }
 
 .menu-section a:hover {
@@ -111,8 +124,13 @@ h1 {
     margin-bottom: 40px;
 }
 
+h2 {
+    margin-bottom: 15px;
+}
+
 ul {
     color: #d1d5db;
+    line-height: 1.6;
 }
 </style>
 </head>
@@ -121,9 +139,14 @@ ul {
 
 <!-- NAVBAR -->
 <header class="top-nav">
+
+    <!-- LEFT -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+    <!-- CENTER -->
     <div class="logo">FHIR ETL Pipeline</div>
 
+    <!-- RIGHT -->
     <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -131,9 +154,10 @@ ul {
         <a href="etl.html">ETL</a>
         <a href="insights.html">Insights</a>
     </div>
+
 </header>
 
-<!-- DROPDOWN MENU -->
+<!-- DROPDOWN -->
 <div id="dropdown" class="dropdown">
 
     <div class="menu-section">
@@ -151,9 +175,9 @@ ul {
 
     <div class="menu-section">
         <h3>📊 Insights</h3>
-        <a href="insights.html">Key Insights</a>
-        <a href="insights.html">Challenges</a>
-        <a href="insights.html">Lessons Learned</a>
+        <a href="#insights">Key Insights</a>
+        <a href="#challenges">Challenges</a>
+        <a href="#lessons">Lessons Learned</a>
     </div>
 
     <div class="menu-section">
@@ -168,12 +192,13 @@ ul {
 
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div class="main">
 
     <h1>FHIR ETL Pipeline</h1>
 
-    <div class="card">
+    <!-- KEY INSIGHTS -->
+    <div id="insights" class="card">
         <h2>📊 Key Insights</h2>
         <ul>
             <li>FHIR APIs provide structured and standardized healthcare data</li>
@@ -182,7 +207,8 @@ ul {
         </ul>
     </div>
 
-    <div class="card">
+    <!-- CHALLENGES -->
+    <div id="challenges" class="card">
         <h2>⚠️ Challenges Faced</h2>
         <ul>
             <li>Handling API authentication</li>
@@ -191,7 +217,8 @@ ul {
         </ul>
     </div>
 
-    <div class="card">
+    <!-- LESSONS -->
+    <div id="lessons" class="card">
         <h2>💡 Lessons Learned</h2>
         <ul>
             <li>Real-world healthcare data needs validation</li>
