@@ -10,36 +10,44 @@
             margin:0;
             font-family:Arial;
             display:flex;
+            background:#020617;
+            color:white;
         }
 
         /* SIDEBAR */
         .sidebar {
             width:280px;
-            background:#0b2a4a;
-            color:white;
+            background: linear-gradient(180deg, #020617, #052e2b);
             padding:25px;
             min-height:100vh;
         }
 
-        .sidebar h2 {
-            margin-bottom:10px;
+        .logo {
+            color:#22c55e;
+            margin-bottom:5px;
         }
 
-        .sidebar p {
-            font-size:14px;
-            color:#9ca3af;
+        .subtitle {
+            font-size:13px;
+            color:#94a3b8;
+            margin-bottom:30px;
         }
 
         .nav-item {
-            margin-top:20px;
-            cursor:pointer;
+            margin-top:18px;
             padding:10px;
             border-radius:8px;
+            cursor:pointer;
             transition:0.3s;
         }
 
         .nav-item:hover {
-            background:#1e3a5f;
+            background: rgba(34,197,94,0.2);
+        }
+
+        .nav-item a {
+            color:white;
+            text-decoration:none;
         }
 
         .submenu {
@@ -53,9 +61,41 @@
             margin:6px 0;
         }
 
-        /* MAIN CONTENT */
+        /* MAIN */
         .main {
             flex:1;
+        }
+
+        /* ETL BOXES */
+        .etl-section {
+            padding:50px;
+        }
+
+        .etl-title {
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .etl-container {
+            display:flex;
+            justify-content:space-around;
+            flex-wrap:wrap;
+        }
+
+        .etl-box {
+            background: rgba(255,255,255,0.05);
+            border:1px solid rgba(34,197,94,0.3);
+            border-radius:15px;
+            padding:20px;
+            margin:10px;
+            width:180px;
+            text-align:center;
+            transition:0.3s;
+        }
+
+        .etl-box:hover {
+            background:#22c55e;
+            color:black;
         }
     </style>
 </head>
@@ -65,46 +105,35 @@
 <!-- SIDEBAR -->
 <div class="sidebar">
 
-    <h2>📘 FHIR ETL PIPELINE</h2>
-    <p>Bridging Clinical Data Systems</p>
+    <h2 class="logo">📘 FHIR ETL PIPELINE</h2>
+    <p class="subtitle">Bridging Clinical Data Systems</p>
 
-    <!-- HOME -->
-    <div class="nav-item" onclick="toggleMenu('homeMenu')">
-        🏠 <b>HOME</b>
-    </div>
-    <div id="homeMenu" class="submenu">
-        <p>• Project Overview</p>
-    </div>
+    <div class="nav-item">🏠 <a href="index.html">HOME</a></div>
 
-    <!-- ETL -->
-    <div class="nav-item" onclick="toggleMenu('etlMenu')">
-        ⚙️ <b>ETL PIPELINE</b>
-    </div>
+    <div class="nav-item" onclick="toggleMenu('etlMenu')">⚙️ ETL PIPELINE</div>
     <div id="etlMenu" class="submenu">
-        <p><a href="etl.html" style="color:white;">• Extraction</a></p>
-        <p><a href="etl.html" style="color:white;">• Transformation</a></p>
-        <p><a href="etl.html" style="color:white;">• Loading</a></p>
-        <p><a href="etl.html" style="color:white;">• Five Coding Tasks</a></p>
+        <p>• Extraction</p>
+        <p>• Transformation</p>
+        <p>• Loading</p>
+        <p>• Five Coding Tasks</p>
     </div>
 
-    <!-- INSIGHTS -->
-    <div class="nav-item" onclick="toggleMenu('insightMenu')">
-        📊 <b>INSIGHTS</b>
-    </div>
+    <div class="nav-item" onclick="toggleMenu('insightMenu')">📊 INSIGHTS</div>
     <div id="insightMenu" class="submenu">
-        <p><a href="insights.html" style="color:white;">• Key Insights</a></p>
-        <p><a href="insights.html" style="color:white;">• Visualizations</a></p>
-        <p><a href="insights.html" style="color:white;">• Challenges</a></p>
+        <p>• Key Insights</p>
+        <p>• Visualizations</p>
+        <p>• Challenges</p>
+        <p>• Lessons Learned</p>
     </div>
 
-    <!-- TEAM -->
-    <div class="nav-item">
-        👥 <b><a href="team.html" style="color:white;">TEAM</a></b>
+    <div class="nav-item" onclick="toggleMenu('teamMenu')">👥 TEAM</div>
+    <div id="teamMenu" class="submenu">
+        <p><a href="team.html">• Team Contribution</a></p>
     </div>
 
-    <!-- ABOUT -->
-    <div class="nav-item">
-        📄 <b><a href="about.html" style="color:white;">ABOUT</a></b>
+    <div class="nav-item" onclick="toggleMenu('aboutMenu')">📄 ABOUT</div>
+    <div id="aboutMenu" class="submenu">
+        <p><a href="about.html">• Presentation Content</a></p>
     </div>
 
 </div>
@@ -126,6 +155,7 @@
 
     <!-- HERO -->
     <section class="hero">
+
         <div class="hero-left">
             <h1>Welcome to Our <span>Healthcare ETL Project</span></h1>
 
@@ -146,33 +176,43 @@
         <div class="hero-right">
             <img src="images/etl.png" class="hero-img">
         </div>
+
     </section>
 
-    <!-- FEATURES -->
-    <section class="features">
-        <h2>What Our Project Delivers</h2>
+    <!-- ETL DIAGRAM SECTION -->
+    <section class="etl-section">
 
-        <div class="cards">
-            <div class="card">
-                <h3>📊 Data Integration</h3>
-                <p>Extract data from multiple healthcare sources.</p>
+        <h2 class="etl-title">📊 ETL Pipeline Overview</h2>
+
+        <div class="etl-container">
+
+            <div class="etl-box">
+                <h3>🗄️ OpenEMR</h3>
+                <p>FHIR API Source</p>
             </div>
 
-            <div class="card">
-                <h3>⚙️ Transformation</h3>
-                <p>Clean and structure data into usable format.</p>
+            <div class="etl-box">
+                <h3>⚙️ Extraction</h3>
+                <p>Retrieve Patients, Conditions, Observations</p>
             </div>
 
-            <div class="card">
-                <h3>📈 Analytics Ready</h3>
-                <p>Prepare data for dashboards and insights.</p>
+            <div class="etl-box">
+                <h3>🔄 Transformation</h3>
+                <p>SNOMED Mapping & Data Cleaning</p>
             </div>
 
-            <div class="card">
-                <h3>💡 Better Decisions</h3>
-                <p>Enable smarter healthcare decisions.</p>
+            <div class="etl-box">
+                <h3>🏥 Primary EHR</h3>
+                <p>Load FHIR Resources</p>
             </div>
+
+            <div class="etl-box">
+                <h3>📄 HL7</h3>
+                <p>ADT Message Generation</p>
+            </div>
+
         </div>
+
     </section>
 
 </div>
@@ -181,12 +221,7 @@
 <script>
 function toggleMenu(id) {
     let menu = document.getElementById(id);
-
-    if (menu.style.display === "block") {
-        menu.style.display = "none";
-    } else {
-        menu.style.display = "block";
-    }
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 </script>
 
