@@ -12,7 +12,7 @@ body {
     color: white;
 }
 
-/* ===== TOGGLE BUTTON ===== */
+/* ===== MENU BUTTON ===== */
 #menuToggle {
     position: fixed;
     top: 18px;
@@ -39,6 +39,7 @@ body {
     color: white;
     margin-left: 25px;
     text-decoration: none;
+    transition: 0.2s;
 }
 
 .top-nav a:hover {
@@ -49,11 +50,11 @@ body {
 .sidebar {
     position: fixed;
     top: 0;
-    left: -270px;
+    left: -260px;   /* FIXED */
     width: 260px;
     height: 100%;
     background: linear-gradient(180deg, #022c22, #020617);
-    padding: 90px 20px 20px;  /* FIXED spacing */
+    padding: 90px 20px 20px;
     transition: 0.3s;
     z-index: 1000;
     overflow-y: auto;
@@ -89,13 +90,14 @@ body {
     color: black;
 }
 
-/* ===== MAIN ===== */
+/* ===== MAIN CONTENT ===== */
 .main {
     padding: 120px 60px;
+    margin-left: 0;
     transition: margin-left 0.3s;
 }
 
-/* ===== TASK DISPLAY ===== */
+/* ===== TASK CONTENT ===== */
 .task {
     display: none;
 }
@@ -128,7 +130,7 @@ ul {
 
 <body>
 
-<!-- ☰ BUTTON -->
+<!-- MENU BUTTON -->
 <div id="menuToggle" onclick="toggleMenu()">☰</div>
 
 <!-- TOP NAV -->
@@ -224,23 +226,33 @@ ul {
 <script>
 
 function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.querySelector(".main");
+
+    sidebar.classList.toggle("active");
+
+    if (sidebar.classList.contains("active")) {
+        main.style.marginLeft = "260px";
+    } else {
+        main.style.marginLeft = "0";
+    }
 }
 
 function showTask(event, taskId) {
 
-    // hide all tasks
+    // hide all
     document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
 
     // show selected
     document.getElementById(taskId).classList.add("active");
 
-    // highlight sidebar
+    // highlight
     document.querySelectorAll(".sidebar a").forEach(l => l.classList.remove("active"));
     event.target.classList.add("active");
 
-    // ✅ AUTO CLOSE SIDEBAR AFTER CLICK
+    // auto close
     document.getElementById("sidebar").classList.remove("active");
+    document.querySelector(".main").style.marginLeft = "0";
 }
 
 </script>
