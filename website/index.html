@@ -6,6 +6,7 @@
 
 <style>
 
+/* BASE */
 body {
     margin:0;
     font-family:Arial;
@@ -14,9 +15,9 @@ body {
     color:white;
 }
 
-/* SIDEBAR (COMPACT FIXED) */
+/* SIDEBAR */
 .sidebar {
-    width:250px;
+    width:260px;
     background: linear-gradient(180deg, #020617, #052e2b);
     padding:20px;
     min-height:100vh;
@@ -33,20 +34,27 @@ body {
     margin-bottom:20px;
 }
 
-.nav-item {
-    margin-top:10px;
+/* SIDEBAR ITEMS */
+.nav-section {
+    margin-top:15px;
 }
 
-.nav-item a {
+.nav-section-title {
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.nav-link {
+    display:block;
     color:white;
     text-decoration:none;
-    display:block;
-    padding:6px;
-    border-radius:5px;
+    padding:5px;
+    margin-left:10px;
+    font-size:14px;
 }
 
-.nav-item a:hover {
-    background:rgba(34,197,94,0.2);
+.nav-link:hover {
+    color:#22c55e;
 }
 
 /* MAIN */
@@ -54,7 +62,7 @@ body {
     flex:1;
 }
 
-/* TOP NAV */
+/* HEADER */
 header {
     display:flex;
     justify-content:space-between;
@@ -69,7 +77,6 @@ nav a {
     margin-left:20px;
     color:white;
     text-decoration:none;
-    padding:6px;
 }
 
 nav a:hover {
@@ -103,14 +110,15 @@ nav a:hover {
 /* GLOSSY SUMMARY */
 .summary {
     margin:40px;
-    padding:25px;
+    padding:30px;
     border-radius:20px;
 
-    background: linear-gradient(145deg, #0f172a, #020617);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 10px 30px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.08);
 
     display:flex;
     justify-content:space-around;
@@ -142,15 +150,41 @@ nav a:hover {
 <h2 class="logo">📘 FHIR ETL PIPELINE</h2>
 <p class="subtitle">Bridging Clinical Data Systems</p>
 
-<div class="nav-item">🏠 <a href="index.html">HOME</a></div>
+<!-- HOME -->
+<div class="nav-section">
+    <div class="nav-section-title">🏠 HOME</div>
+    <a href="index.html" class="nav-link">Project Overview</a>
+</div>
 
-<div class="nav-item">⚙️ <a href="etl.html">ETL PIPELINE</a></div>
+<!-- ETL -->
+<div class="nav-section">
+    <div class="nav-section-title">⚙️ ETL PIPELINE</div>
+    <a href="etl.html" class="nav-link">Extraction</a>
+    <a href="etl.html" class="nav-link">Transformation</a>
+    <a href="etl.html" class="nav-link">Loading</a>
+    <a href="etl.html" class="nav-link">Five Coding Tasks</a>
+</div>
 
-<div class="nav-item">📊 <a href="insights.html">INSIGHTS</a></div>
+<!-- INSIGHTS -->
+<div class="nav-section">
+    <div class="nav-section-title">📊 INSIGHTS</div>
+    <a href="insights.html" class="nav-link">Key Insights</a>
+    <a href="insights.html" class="nav-link">Visualizations</a>
+    <a href="insights.html" class="nav-link">Challenges</a>
+    <a href="insights.html" class="nav-link">Lessons Learned</a>
+</div>
 
-<div class="nav-item">👥 <a href="team.html">TEAM</a></div>
+<!-- TEAM -->
+<div class="nav-section">
+    <div class="nav-section-title">👥 TEAM</div>
+    <a href="team.html" class="nav-link">Team Contribution</a>
+</div>
 
-<div class="nav-item">📄 <a href="about.html">ABOUT</a></div>
+<!-- ABOUT -->
+<div class="nav-section">
+    <div class="nav-section-title">📄 ABOUT</div>
+    <a href="about.html" class="nav-link">Presentation Content</a>
+</div>
 
 </div>
 
@@ -189,7 +223,7 @@ with HL7 v2 conversion for interoperability.
 
 </section>
 
-<!-- SUMMARY -->
+<!-- GLOSSY SUMMARY -->
 <div class="summary">
 
 <div class="summary-box">
