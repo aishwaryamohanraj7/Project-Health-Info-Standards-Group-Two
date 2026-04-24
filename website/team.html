@@ -47,27 +47,22 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== TOP DROPDOWN ===== */
+/* ===== DROPDOWN ===== */
 .dropdown {
     position: fixed;
     top: 70px;
     left: 0;
     width: 100%;
-
     background: rgba(0,0,0,0.85);
     backdrop-filter: blur(14px);
-
     padding: 30px 50px;
-
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
-
     opacity: 0;
     transform: translateY(-20px);
     pointer-events: none;
     transition: 0.3s ease;
-
     z-index: 9999;
 }
 
@@ -77,24 +72,16 @@ nav a:hover {
     pointer-events: auto;
 }
 
-/* ===== MENU BOX ===== */
+/* MENU BOX */
 .menu-box {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(12px);
     padding: 18px;
     border-radius: 12px;
-
     border: 1px solid rgba(255,255,255,0.1);
-
     box-shadow:
         0 0 20px rgba(0,255,136,0.15),
         inset 0 0 10px rgba(255,255,255,0.05);
-
-    transition: 0.25s;
-}
-
-.menu-box:hover {
-    transform: translateY(-5px);
 }
 
 .menu-box h3 {
@@ -127,29 +114,47 @@ nav a:hover {
     width: 100%;
     border-collapse: collapse;
     margin-top: 30px;
-
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(12px);
     border-radius: 12px;
     overflow: hidden;
-
-    box-shadow:
-        0 0 20px rgba(0,255,136,0.15);
 }
 
-.team-table th, .team-table td {
+/* HEADER */
+.team-table th {
     padding: 15px;
+    background: rgba(0,255,136,0.15);
     text-align: left;
 }
 
-.team-table th {
-    background: rgba(0,255,136,0.15);
+/* ROWS */
+.team-table td {
+    padding: 18px;
 }
 
+/* BASE ROW */
+.team-table tr {
+    background: rgba(255,255,255,0.05);
+    transition: 0.3s ease;
+}
+
+/* ===== HOVER EFFECT ===== */
+.team-table tr:hover {
+    background: rgba(0,255,136,0.12);
+    transform: scale(1.01);
+    box-shadow: 0 0 20px rgba(0,255,136,0.25);
+}
+
+/* ===== SELECTED ROW ===== */
+.team-table tr.selected {
+    background: rgba(0,255,136,0.2);
+    box-shadow: 0 0 25px rgba(0,255,136,0.6);
+}
+
+/* ALT ROW */
 .team-table tr:nth-child(even) {
     background: rgba(255,255,255,0.03);
 }
 
+/* LIST */
 ul {
     margin: 0;
     padding-left: 18px;
@@ -160,7 +165,7 @@ ul {
 
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- HEADER -->
 <header>
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
     <h2 class="logo">FHIR ETL Pipeline</h2>
@@ -174,7 +179,7 @@ ul {
     </nav>
 </header>
 
-<!-- ===== DROPDOWN MENU ===== -->
+<!-- DROPDOWN -->
 <div id="dropdown" class="dropdown">
 
     <div class="menu-box">
@@ -209,12 +214,12 @@ ul {
 
 </div>
 
-<!-- ===== CONTENT ===== -->
+<!-- CONTENT -->
 <section class="features">
 
     <h2>👥 Team Contributions</h2>
 
-    <table class="team-table">
+    <table class="team-table" id="teamTable">
 
         <tr>
             <th>Team Member</th>
@@ -228,12 +233,12 @@ ul {
             <td>Data Extraction Lead</td>
             <td>
                 <ul>
-                    <li>Retrieved patient data from FHIR API</li>
-                    <li>Implemented API requests using Python</li>
+                    <li>Retrieved patient data</li>
+                    <li>API requests using Python</li>
                     <li>Used search parameters</li>
                 </ul>
             </td>
-            <td>Learned API handling and error management.</td>
+            <td>Learned API handling.</td>
         </tr>
 
         <tr>
@@ -241,12 +246,12 @@ ul {
             <td>Data Transformation Lead</td>
             <td>
                 <ul>
-                    <li>Cleaned healthcare data</li>
+                    <li>Cleaned data</li>
                     <li>SNOMED mapping</li>
                     <li>Handled missing data</li>
                 </ul>
             </td>
-            <td>Improved transformation and standardization skills.</td>
+            <td>Improved transformation skills.</td>
         </tr>
 
         <tr>
@@ -254,19 +259,19 @@ ul {
             <td>Visualization & Documentation</td>
             <td>
                 <ul>
-                    <li>Created ETL diagrams</li>
-                    <li>Prepared documentation</li>
-                    <li>Supported presentation</li>
+                    <li>Created diagrams</li>
+                    <li>Documentation</li>
+                    <li>Presentation support</li>
                 </ul>
             </td>
-            <td>Improved technical storytelling skills.</td>
+            <td>Improved storytelling.</td>
         </tr>
 
     </table>
 
 </section>
 
-<!-- ===== SCRIPT ===== -->
+<!-- SCRIPT -->
 <script>
 
 const dropdown = document.getElementById("dropdown");
@@ -277,18 +282,30 @@ function toggleMenu() {
 
 /* AUTO CLOSE */
 document.querySelectorAll(".dropdown a").forEach(link => {
-    link.addEventListener("click", function() {
+    link.addEventListener("click", () => {
         dropdown.classList.remove("active");
     });
 });
 
-/* CLICK OUTSIDE CLOSE */
+/* CLICK OUTSIDE */
 document.addEventListener("click", function(e) {
     const menuBtn = document.querySelector(".menu-btn");
 
     if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
         dropdown.classList.remove("active");
     }
+});
+
+/* ===== ROW SELECTION ===== */
+const rows = document.querySelectorAll("#teamTable tr");
+
+rows.forEach((row, index) => {
+    if (index === 0) return; // skip header
+
+    row.addEventListener("click", () => {
+        rows.forEach(r => r.classList.remove("selected"));
+        row.classList.add("selected");
+    });
 });
 
 </script>
