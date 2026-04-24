@@ -23,7 +23,6 @@
 
         .logo {
             color:#22c55e;
-            margin-bottom:5px;
         }
 
         .subtitle {
@@ -33,28 +32,28 @@
         }
 
         .nav-item {
-            margin-top:18px;
-            padding:10px;
-            border-radius:8px;
-            cursor:pointer;
-        }
-
-        .nav-item:hover {
-            background: rgba(34,197,94,0.2);
+            margin-top:15px;
         }
 
         .nav-item a {
             color:white;
             text-decoration:none;
+            display:block;
+            padding:8px;
+            border-radius:6px;
+        }
+
+        .nav-item a:hover {
+            background:rgba(34,197,94,0.2);
         }
 
         .submenu {
-            margin-left:20px;
+            margin-left:15px;
             font-size:14px;
         }
 
         .submenu a {
-            color:white; /* FIXED WHITE TEXT */
+            color:white;
             text-decoration:none;
         }
 
@@ -79,44 +78,33 @@
             text-decoration:none;
         }
 
-        /* HERO */
-        .hero {
-            display:flex;
-            padding:60px;
-            align-items:center;
+        /* HERO TEXT */
+        .content {
+            padding:40px;
+            max-width:900px;
         }
 
-        .hero-left {
-            flex:1;
-        }
-
-        .hero-left h1 span {
+        .content h1 span {
             color:#22c55e;
         }
 
-        .buttons a {
-            margin-right:10px;
-            padding:10px 20px;
-            border-radius:20px;
-            text-decoration:none;
+        .content p {
+            color:#cbd5e1;
+            line-height:1.6;
         }
 
-        .primary {
-            background:#22c55e;
-            color:black;
+        /* PURPOSE */
+        .purpose {
+            margin-top:30px;
         }
 
-        .secondary {
-            border:1px solid #22c55e;
-            color:#22c55e;
-        }
-
-        /* SUMMARY SECTION */
+        /* GLOSSY SUMMARY */
         .summary {
             margin:40px;
-            padding:20px;
-            border-radius:15px;
-            background:rgba(255,255,255,0.05);
+            padding:25px;
+            border-radius:20px;
+            background: linear-gradient(145deg, #0f172a, #020617);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             display:flex;
             justify-content:space-around;
             flex-wrap:wrap;
@@ -124,18 +112,16 @@
 
         .summary-box {
             text-align:center;
-            width:180px;
-            margin:10px;
+            width:160px;
         }
 
         .summary-box h3 {
-            font-size:16px;
             margin-top:10px;
         }
 
         .summary-box p {
             font-size:13px;
-            color:#cbd5e1;
+            color:#94a3b8;
         }
 
     </style>
@@ -151,31 +137,31 @@
 
     <div class="nav-item">🏠 <a href="index.html">HOME</a></div>
 
-    <div class="nav-item">⚙️ ETL PIPELINE
+    <div class="nav-item">⚙️ <a href="etl.html">ETL PIPELINE</a>
         <div class="submenu">
-            <p>• Extraction</p>
-            <p>• Transformation</p>
-            <p>• Loading</p>
-            <p>• Five Coding Tasks</p>
+            <p><a href="etl.html">• Extraction</a></p>
+            <p><a href="etl.html">• Transformation</a></p>
+            <p><a href="etl.html">• Loading</a></p>
+            <p><a href="etl.html">• Five Coding Tasks</a></p>
         </div>
     </div>
 
-    <div class="nav-item">📊 INSIGHTS
+    <div class="nav-item">📊 <a href="insights.html">INSIGHTS</a>
         <div class="submenu">
-            <p>• Key Insights</p>
-            <p>• Visualizations</p>
-            <p>• Challenges</p>
-            <p>• Lessons Learned</p>
+            <p><a href="insights.html">• Key Insights</a></p>
+            <p><a href="insights.html">• Visualizations</a></p>
+            <p><a href="insights.html">• Challenges</a></p>
+            <p><a href="insights.html">• Lessons Learned</a></p>
         </div>
     </div>
 
-    <div class="nav-item">👥 TEAM
+    <div class="nav-item">👥 <a href="team.html">TEAM</a>
         <div class="submenu">
             <p><a href="team.html">• Team Contribution</a></p>
         </div>
     </div>
 
-    <div class="nav-item">📄 ABOUT
+    <div class="nav-item">📄 <a href="about.html">ABOUT</a>
         <div class="submenu">
             <p><a href="about.html">• Presentation Content</a></p>
         </div>
@@ -197,33 +183,34 @@
     </nav>
 </header>
 
-<section class="hero">
+<!-- CONTENT -->
+<div class="content">
 
-    <div class="hero-left">
-        <h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
+<h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
 
-        <p>
-            A modern data pipeline that extracts healthcare data, transforms it,
-            and delivers powerful insights.
-        </p>
+<p>
+This project implements a clinical data ETL (Extract, Transform, Load) pipeline that connects two
+FHIR-compliant healthcare systems — an OpenEMR source server and a Primary Care EHR target server.
+The pipeline retrieves real patient and condition data, enriches it using the SNOMED CT clinical terminology hierarchy,
+and delivers structured FHIR R4 resources to a destination system. A final interoperability layer converts
+FHIR data into an HL7 v2 ADT message, enabling communication with legacy clinical systems.
+</p>
 
-        <div class="buttons">
-            <a href="etl.html" class="primary">Explore ETL</a>
-            <a href="about.html" class="secondary">Learn More</a>
-            <a href="insights.html" class="secondary">Insights</a>
-        </div>
+<div class="purpose">
+<h2>🎯 Purpose of the ETL Pipeline</h2>
 
-        <h4>Data • Transform • Insights</h4>
-    </div>
+<p>
+Healthcare organizations routinely operate multiple electronic health record systems that do not communicate natively.
+This pipeline solves that problem by automating the extraction of patient demographics and clinical conditions,
+applying standardized clinical terminology transformations, and loading the enriched data into a second EHR system —
+all without manual data entry. The result is faster, more accurate patient data migration and a foundation for true clinical interoperability.
+</p>
+</div>
 
-    <div class="hero-right">
-        <img src="images/etl.png" width="400">
-    </div>
+</div>
 
-</section>
-
-<!-- SUMMARY OF DELIVERABLES -->
-<section class="summary">
+<!-- SUMMARY -->
+<div class="summary">
 
     <div class="summary-box">
         <h2>📋</h2>
@@ -254,7 +241,7 @@
         <p>Hosted on GitHub Pages</p>
     </div>
 
-</section>
+</div>
 
 </div>
 
