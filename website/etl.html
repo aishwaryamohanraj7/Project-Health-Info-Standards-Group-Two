@@ -2,42 +2,75 @@
 <html>
 <head>
     <title>ETL Pipeline Implementation</title>
+
+    <!-- STYLES -->
+    <style>
+        body {
+            margin:0;
+            font-family:Arial;
+            background:#0b1220;
+            color:white;
+        }
+
+        .menu-btn {
+            padding:12px 18px;
+            margin-bottom:12px;
+            border-radius:25px;
+            cursor:pointer;
+            color:#cbd5e1;
+            border:1px solid rgba(34, 197, 94, 0.4);
+            transition: all 0.3s ease;
+            display:block;
+        }
+
+        .menu-btn:hover {
+            background:#22c55e;
+            color:black;
+        }
+
+        .menu-btn.active {
+            background:#22c55e;
+            color:black;
+            font-weight:bold;
+        }
+    </style>
 </head>
 
-<body style="margin:0; font-family:Arial; background:#0b1220; color:white;">
+<body>
 
 <div style="display:flex; height:100vh;">
 
     <!-- SIDEBAR -->
     <div style="
-    width:260px;
-    background: linear-gradient(180deg, #020617, #052e2b);
-    padding:30px 20px;
-">
+        width:260px;
+        background: linear-gradient(180deg, #020617, #052e2b);
+        padding:30px 20px;
+    ">
 
-    <h2 style="color:#22c55e; margin-bottom:25px;">ETL Tasks</h2>
+        <h2 style="color:#22c55e; margin-bottom:25px;">ETL Tasks</h2>
 
-    <div class="menu-btn active" onclick="showTask('task1'); setActive(this)">
-        Task 1: Extraction & Patient
+        <div class="menu-btn active" onclick="showTask('task1'); setActive(this)">
+            Task 1: Extraction & Patient
+        </div>
+
+        <div class="menu-btn" onclick="showTask('task2'); setActive(this)">
+            Task 2: Condition (SNOMED)
+        </div>
+
+        <div class="menu-btn" onclick="showTask('task3'); setActive(this)">
+            Task 3: Observation
+        </div>
+
+        <div class="menu-btn" onclick="showTask('task4'); setActive(this)">
+            Task 4: Procedure
+        </div>
+
+        <div class="menu-btn" onclick="showTask('task5'); setActive(this)">
+            Task 5: HL7 Message
+        </div>
+
     </div>
 
-    <div class="menu-btn" onclick="showTask('task2'); setActive(this)">
-        Task 2: Condition (SNOMED)
-    </div>
-
-    <div class="menu-btn" onclick="showTask('task3'); setActive(this)">
-        Task 3: Observation
-    </div>
-
-    <div class="menu-btn" onclick="showTask('task4'); setActive(this)">
-        Task 4: Procedure
-    </div>
-
-    <div class="menu-btn" onclick="showTask('task5'); setActive(this)">
-        Task 5: HL7 Message
-    </div>
-
-</div>
     <!-- CONTENT -->
     <div style="flex:1; padding:40px; overflow-y:auto;">
 
@@ -60,18 +93,13 @@
                 The SNOMED CT code <b>13645005</b> was used to represent COPD.
             </p>
 
-            <p>
-                Parent concepts for COPD were retrieved from SNOMED CT, such as:
-            </p>
-
             <ul>
                 <li>Tracheobronchial disorder</li>
                 <li>Chronic disease of respiratory system</li>
             </ul>
 
             <p>
-                The patient record was then created in the Primary Care EHR FHIR server, along with the
-                associated parent condition.
+                The patient record was then created in the Primary Care EHR FHIR server.
             </p>
 
             <p>
@@ -81,24 +109,15 @@
 
         <!-- TASK 2 -->
         <div id="task2" class="task" style="display:none;">
-            <h2>Task 2: Condition Transformation (Child Concepts)</h2>
+            <h2>Task 2: Condition Transformation</h2>
 
             <p>
-                In this step, child concepts of COPD were retrieved using SNOMED CT terminology services.
-                These child concepts provide more specific clinical details related to the disease.
+                Child concepts of COPD were retrieved using SNOMED CT terminology.
+                These concepts provide more detailed classification of the condition.
             </p>
 
             <p>
-                The selected child concept codes were added to the patient’s condition resource
-                in the Primary Care EHR system.
-            </p>
-
-            <p>
-                This enhances the accuracy and granularity of clinical data representation.
-            </p>
-
-            <p>
-                This step is part of the <b>Transformation phase</b>, where raw data is enriched and standardized.
+                These codes were added to the patient condition in the target system.
             </p>
         </div>
 
@@ -107,20 +126,11 @@
             <h2>Task 3: Observation (Blood Pressure)</h2>
 
             <p>
-                A new observation resource was created for the patient using blood pressure (BP) data.
+                Blood pressure data was extracted from OpenEMR and added as a FHIR Observation resource.
             </p>
 
             <p>
-                The BP values were extracted from the OpenEMR system for the same patient (David Abshire).
-            </p>
-
-            <p>
-                The observation was structured according to the FHIR <b>Observation</b> resource format
-                and added to the Primary Care EHR server.
-            </p>
-
-            <p>
-                This demonstrates the integration of clinical measurements into the ETL pipeline.
+                This demonstrates integration of clinical measurements into the ETL pipeline.
             </p>
         </div>
 
@@ -129,42 +139,21 @@
             <h2>Task 4: Procedure Creation</h2>
 
             <p>
-                A procedure resource was created for the patient representing a chest X-ray.
-            </p>
-
-            <p>
-                The procedure was coded using SNOMED CT standards and included details such as:
+                A chest X-ray procedure was created and added to the patient record.
             </p>
 
             <ul>
-                <li>Procedure name: Chest X-ray</li>
                 <li>Status: Completed</li>
-                <li>Follow-up information</li>
+                <li>SNOMED coding applied</li>
+                <li>Follow-up included</li>
             </ul>
-
-            <p>
-                This ensures that clinical procedures are recorded in a standardized and interoperable format.
-            </p>
-
-            <p>
-                This step further extends the <b>Loading phase</b> of the ETL pipeline.
-            </p>
         </div>
 
         <!-- TASK 5 -->
         <div id="task5" class="task" style="display:none;">
-            <h2>Task 5: HL7 Message Generation</h2>
+            <h2>Task 5: HL7 Message</h2>
 
-            <p>
-                In this step, an HL7 v2 message was generated using the <b>hl7apy</b> library.
-            </p>
-
-            <p>
-                Patient details such as name, age, and gender were included in the HL7 message.
-                The message represents an ADT (Admit/Discharge/Transfer) event.
-            </p>
-
-            <pre style="background:black; padding:15px; overflow:auto;">
+            <pre style="background:black; padding:15px;">
 MSH|^~\&|OpenEMR|Hospital|PrimaryCare|System|20260423233958||ADT^A01|MSG00001|P|2.5
 PID|1||MRN-ABSHIRE-001||Abshire^David||1996-09-29|M
 PV1|1|O|Clinic
@@ -172,8 +161,7 @@ DG1|1||J44.9^COPD
             </pre>
 
             <p>
-                This demonstrates interoperability between modern FHIR-based systems and
-                legacy HL7 messaging systems.
+                This demonstrates interoperability using HL7 standards.
             </p>
         </div>
 
@@ -181,7 +169,7 @@ DG1|1||J44.9^COPD
 
 </div>
 
-<!-- SCRIPT -->
+<!-- SCRIPTS -->
 <script>
 function showTask(taskId) {
     let tasks = document.getElementsByClassName("task");
@@ -192,25 +180,9 @@ function showTask(taskId) {
 
     document.getElementById(taskId).style.display = "block";
 }
-</script>
 
-</body>
-</html>
-<script>
-function showTask(taskId) {
-    let tasks = document.getElementsByClassName("task");
-
-    for (let i = 0; i < tasks.length; i++) {
-        tasks[i].style.display = "none";
-    }
-
-    document.getElementById(taskId).style.display = "block";
-}
-</script>
-
-<script>
 function setActive(element){
-    let items = document.getElementsByClassName("menu-item");
+    let items = document.getElementsByClassName("menu-btn");
 
     for(let i=0;i<items.length;i++){
         items[i].classList.remove("active");
@@ -219,3 +191,6 @@ function setActive(element){
     element.classList.add("active");
 }
 </script>
+
+</body>
+</html>
