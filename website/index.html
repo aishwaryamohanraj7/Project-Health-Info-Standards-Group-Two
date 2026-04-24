@@ -1,297 +1,262 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>FHIR ETL Pipeline</title>
+    <meta charset="UTF-8">
+    <title>FHIR ETL Pipeline</title>
 
-<style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #020617;
+            color: white;
+        }
 
-/* BASE */
-body {
-    margin:0;
-    font-family:Arial;
-    background:#020617;
-    color:white;
-}
+        /* TOP NAV */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 40px;
+            background: transparent;
+            z-index: 1000;
+        }
 
-/* TOGGLE BUTTON */
-#menuToggle {
-    position:fixed;
-    top:20px;
-    left:20px;
-    font-size:26px;
-    cursor:pointer;
-    z-index:1001;
-    color:#22c55e;
-}
+        header a {
+            color: white;
+            margin-left: 25px;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-/* SIDEBAR */
-.sidebar {
-    position:fixed;
-    left:-260px;
-    top:0;
-    width:260px;
-    height:100%;
-    background: linear-gradient(180deg, #020617, #052e2b);
-    padding:20px;
-    transition:0.3s;
-    z-index:1000;
-}
+        header a:hover {
+            color: #22c55e;
+        }
 
-/* SIDEBAR ACTIVE */
-.sidebar.active {
-    left:0;
-}
+        /* TOGGLE BUTTON */
+        #menuToggle {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            font-size: 26px;
+            cursor: pointer;
+            color: #22c55e;
+            z-index: 1100;
+        }
 
-/* SIDEBAR TEXT */
-.sidebar h2 {
-    color:#22c55e;
-}
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -270px;
+            width: 260px;
+            height: 100%;
+            background: linear-gradient(180deg, #022c22, #020617);
+            padding: 80px 20px 20px 20px; /* ✅ FIXED spacing */
+            transition: 0.3s;
+            z-index: 1000;
+        }
 
-.subtitle {
-    font-size:12px;
-    color:#94a3af;
-    margin-bottom:20px;
-}
+        .sidebar.active {
+            left: 0;
+        }
 
-/* NAV SECTIONS */
-.nav-section {
-    margin-top:15px;
-}
+        .sidebar h2 {
+            color: #22c55e;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
 
-.nav-section-title {
-    font-weight:bold;
-    margin-bottom:5px;
-}
+        .sidebar p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
 
-/* LINKS */
-.nav-link {
-    display:block;
-    color:white;
-    text-decoration:none;
-    padding:5px;
-    margin-left:10px;
-    font-size:14px;
-}
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            color: white;
+            text-decoration: none;
+        }
 
-.nav-link:hover {
-    color:#22c55e;
-}
+        .sidebar a:hover {
+            color: #22c55e;
+        }
 
-/* MAIN CONTENT */
-.main {
-    transition:0.3s;
-    padding:40px;
-}
+        .sidebar ul {
+            padding-left: 15px;
+            margin: 5px 0 15px;
+        }
 
-/* SHIFT WHEN SIDEBAR OPEN */
-.main.shift {
-    margin-left:260px;
-}
+        .sidebar ul li {
+            list-style: none;
+            margin: 5px 0;
+        }
 
-/* HEADER */
-header {
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:40px;
-}
+        /* MAIN CONTENT */
+        .main {
+            padding: 120px 60px;
+        }
 
-header h2 {
-    color:#22c55e;
-}
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-nav a {
-    margin-left:20px;
-    color:white;
-    text-decoration:none;
-}
+        .hero h1 {
+            font-size: 40px;
+        }
 
-nav a:hover {
-    color:#22c55e;
-}
+        .hero span {
+            color: #22c55e;
+        }
 
-/* HERO */
-.hero {
-    display:flex;
-    align-items:center;
-}
+        .hero p {
+            margin-top: 10px;
+            max-width: 500px;
+            color: #d1d5db;
+        }
 
-.hero-left {
-    flex:1;
-}
+        .hero img {
+            width: 320px;
+            border-radius: 15px;
+        }
 
-.hero-left h1 span {
-    color:#22c55e;
-}
+        /* SUMMARY BOX */
+        .summary {
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            background: linear-gradient(145deg, #020617, #0f172a);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.2);
+        }
 
-.hero-left p {
-    color:#cbd5e1;
-}
+        .summary div {
+            text-align: center;
+            flex: 1;
+        }
 
-/* IMAGE */
-.hero-right img {
-    width:350px;
-}
+        .summary h3 {
+            color: white;
+        }
 
-/* GLOSSY SUMMARY */
-.summary {
-    margin-top:40px;
-    padding:30px;
-    border-radius:20px;
+        .summary p {
+            font-size: 14px;
+            color: #9ca3af;
+        }
 
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(12px);
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.7),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-
-    display:flex;
-    justify-content:space-around;
-    flex-wrap:wrap;
-}
-
-.summary-box {
-    text-align:center;
-    width:160px;
-}
-
-.summary-box h3 {
-    margin-top:10px;
-}
-
-.summary-box p {
-    font-size:13px;
-    color:#94a3b8;
-}
-
-</style>
+    </style>
 </head>
 
 <body>
 
-<!-- ☰ BUTTON -->
-<div id="menuToggle" onclick="toggleSidebar()">☰</div>
+<!-- TOGGLE BUTTON -->
+<div id="menuToggle" onclick="toggleMenu()">☰</div>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
-<h2>📘 FHIR ETL PIPELINE</h2>
-<p class="subtitle">Bridging Clinical Data Systems</p>
+    <h2>📘 FHIR ETL PIPELINE</h2>
+    <p>Bridging Clinical Data Systems</p>
 
-<!-- HOME -->
-<div class="nav-section">
-    <div class="nav-section-title">🏠 HOME</div>
-    <a href="index.html" class="nav-link">Project Overview</a>
-</div>
+    <a href="index.html">🏠 HOME</a>
 
-<!-- ETL -->
-<div class="nav-section">
-    <div class="nav-section-title">⚙️ ETL PIPELINE</div>
-    <a href="etl.html" class="nav-link">Extraction</a>
-    <a href="etl.html" class="nav-link">Transformation</a>
-    <a href="etl.html" class="nav-link">Loading</a>
-    <a href="etl.html" class="nav-link">Five Coding Tasks</a>
-</div>
+    <a href="etl.html">⚙️ ETL PIPELINE</a>
+    <ul>
+        <li><a href="etl.html">Extraction</a></li>
+        <li><a href="etl.html">Transformation</a></li>
+        <li><a href="etl.html">Loading</a></li>
+        <li><a href="etl.html">Five Coding Tasks</a></li>
+    </ul>
 
-<!-- INSIGHTS -->
-<div class="nav-section">
-    <div class="nav-section-title">📊 INSIGHTS</div>
-    <a href="insights.html" class="nav-link">Key Insights</a>
-    <a href="insights.html" class="nav-link">Visualizations</a>
-</div>
+    <a href="insights.html">📊 INSIGHTS</a>
+    <ul>
+        <li><a href="insights.html">Key Insights</a></li>
+        <li><a href="insights.html">Visualizations</a></li>
+        <li><a href="insights.html">Challenges</a></li>
+        <li><a href="insights.html">Lessons Learned</a></li>
+    </ul>
 
-<!-- TEAM -->
-<div class="nav-section">
-    <div class="nav-section-title">👥 TEAM</div>
-    <a href="team.html" class="nav-link">Team Contribution</a>
-</div>
+    <a href="team.html">👥 TEAM</a>
+    <ul>
+        <li><a href="team.html">Team Contribution</a></li>
+    </ul>
 
-<!-- ABOUT -->
-<div class="nav-section">
-    <div class="nav-section-title">📄 ABOUT</div>
-    <a href="about.html" class="nav-link">Presentation Content</a>
-</div>
+    <a href="about.html">📄 ABOUT</a>
+    <ul>
+        <li><a href="about.html">Presentation Content</a></li>
+    </ul>
 
 </div>
+
+<!-- TOP NAV -->
+<header>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="team.html">Team</a>
+    <a href="etl.html">ETL</a>
+    <a href="insights.html">Insights</a>
+</header>
 
 <!-- MAIN -->
 <div class="main">
 
-<header>
-<h2>FHIR ETL Pipeline</h2>
+    <div class="hero">
+        <div>
+            <h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="team.html">Team</a>
-<a href="etl.html">ETL</a>
-<a href="insights.html">Insights</a>
-</nav>
-</header>
+            <p>
+                This project builds an ETL pipeline that extracts patient data from OpenEMR,
+                transforms it using SNOMED CT, and loads it into a Primary Care EHR,
+                with HL7 v2 conversion for interoperability.
+            </p>
+        </div>
 
-<!-- HERO -->
-<section class="hero">
+        <img src="images/etl.png">
+    </div>
 
-<div class="hero-left">
+    <!-- SUMMARY -->
+    <div class="summary">
+        <div>
+            <h3>📋 Summary</h3>
+            <p>Project Deliverables</p>
+        </div>
 
-<h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
+        <div>
+            <h3>💻 5 Tasks</h3>
+            <p>Parent, Child, BP, Procedure, HL7</p>
+        </div>
 
-<p>
-This project builds an ETL pipeline that extracts patient data from OpenEMR,
-transforms it using SNOMED CT, and loads it into a Primary Care EHR,
-with HL7 v2 conversion for interoperability.
-</p>
+        <div>
+            <h3>✅ FHIR</h3>
+            <p>Validation</p>
+        </div>
 
-</div>
+        <div>
+            <h3>📄 HL7</h3>
+            <p>Exported</p>
+        </div>
 
-<div class="hero-right">
-<img src="images/etl.png">
-</div>
-
-</section>
-
-<!-- SUMMARY -->
-<div class="summary">
-
-<div class="summary-box">
-<h2>📋</h2>
-<h3>Summary of Deliverables</h3>
-</div>
-
-<div class="summary-box">
-<h2>💻</h2>
-<h3>5 Coding Tasks</h3>
-<p>Parent, Child, BP, Procedure, HL7</p>
-</div>
-
-<div class="summary-box">
-<h2>✅</h2>
-<h3>FHIR Validation</h3>
-<p>Standard Profiles</p>
-</div>
-
-<div class="summary-box">
-<h2>📄</h2>
-<h3>HL7 v2 Message</h3>
-<p>Exported as .txt</p>
-</div>
-
-<div class="summary-box">
-<h2>🌐</h2>
-<h3>Documentation Website</h3>
-<p>Hosted on GitHub Pages</p>
-</div>
-
-</div>
+        <div>
+            <h3>🌐 Website</h3>
+            <p>GitHub Pages</p>
+        </div>
+    </div>
 
 </div>
 
 <!-- SCRIPT -->
 <script>
-function toggleSidebar() {
+function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("active");
-    document.querySelector(".main").classList.toggle("shift");
 }
 </script>
 
