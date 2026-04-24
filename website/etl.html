@@ -25,20 +25,11 @@ body {
 
 .sidebar h2 {
     color:#22c55e;
-    margin-bottom:10px;
+    margin-bottom:15px;
 }
 
-/* ETL PHASES */
-.phase {
-    padding:8px 12px;
-    margin:5px 0;
-    font-size:14px;
-    color:#22c55e;
-    border-left:3px solid #22c55e;
-}
-
-/* TASK BUTTONS */
-.task-btn {
+/* BUTTON STYLE (FOR BOTH PHASES + TASKS) */
+.menu-btn {
     display:block;
     padding:12px;
     margin:10px 0;
@@ -46,9 +37,11 @@ body {
     border:1px solid #22c55e;
     text-decoration:none;
     color:white;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.task-btn:hover {
+.menu-btn:hover {
     background:#22c55e;
     color:black;
 }
@@ -71,26 +64,36 @@ h1 {
 
 p {
     color:#cbd5e1;
+    line-height:1.6;
 }
 
 ul {
     color:#cbd5e1;
 }
 
+hr {
+    border:0.5px solid #1f2937;
+    margin:15px 0;
+}
+
 </style>
 
 <script>
-function showTask(taskId, el) {
+function showSection(id, el) {
 
-    const tasks = document.querySelectorAll(".task-content");
-    tasks.forEach(t => t.style.display = "none");
+    // Hide all sections
+    const sections = document.querySelectorAll(".content-section");
+    sections.forEach(s => s.style.display = "none");
 
-    document.getElementById(taskId).style.display = "block";
+    // Show selected
+    document.getElementById(id).style.display = "block";
 
-    const buttons = document.querySelectorAll(".task-btn");
+    // Remove active from all buttons
+    const buttons = document.querySelectorAll(".menu-btn");
     buttons.forEach(b => b.classList.remove("active"));
 
-    if(el) el.classList.add("active");
+    // Add active to clicked
+    el.classList.add("active");
 }
 </script>
 
@@ -104,27 +107,44 @@ function showTask(taskId, el) {
 <h2>ETL Tasks</h2>
 
 <!-- 🔥 ETL PHASES -->
-<div class="phase">📥 Extract</div>
-<div class="phase">⚙️ Transform</div>
-<div class="phase">📤 Load</div>
+<div class="menu-btn" onclick="showSection('extract', this)">📥 Extract</div>
+<div class="menu-btn" onclick="showSection('transform', this)">⚙️ Transform</div>
+<div class="menu-btn" onclick="showSection('load', this)">📤 Load</div>
 
-<hr style="border:0.5px solid #1f2937; margin:15px 0;">
+<hr>
 
 <!-- TASKS -->
-<a href="#" class="task-btn active" onclick="showTask('task1', this)">Task 1: Extraction & Patient</a>
-<a href="#" class="task-btn" onclick="showTask('task2', this)">Task 2: Condition (SNOMED)</a>
-<a href="#" class="task-btn" onclick="showTask('task3', this)">Task 3: Observation</a>
-<a href="#" class="task-btn" onclick="showTask('task4', this)">Task 4: Procedure</a>
-<a href="#" class="task-btn" onclick="showTask('task5', this)">Task 5: HL7 Message</a>
+<div class="menu-btn active" onclick="showSection('task1', this)">Task 1: Extraction & Patient</div>
+<div class="menu-btn" onclick="showSection('task2', this)">Task 2: Condition (SNOMED)</div>
+<div class="menu-btn" onclick="showSection('task3', this)">Task 3: Observation</div>
+<div class="menu-btn" onclick="showSection('task4', this)">Task 4: Procedure</div>
+<div class="menu-btn" onclick="showSection('task5', this)">Task 5: HL7 Message</div>
 
 </div>
 
 <!-- MAIN CONTENT -->
 <div class="main">
 
-<!-- TASK 1 -->
-<div id="task1" class="task-content">
+<!-- 🔹 EXTRACT -->
+<div id="extract" class="content-section" style="display:none;">
+<h1>Extract Phase</h1>
+<p>Retrieve patient data from OpenEMR FHIR API using REST calls.</p>
+</div>
 
+<!-- 🔹 TRANSFORM -->
+<div id="transform" class="content-section" style="display:none;">
+<h1>Transform Phase</h1>
+<p>Apply SNOMED CT mappings, clean and standardize clinical data.</p>
+</div>
+
+<!-- 🔹 LOAD -->
+<div id="load" class="content-section" style="display:none;">
+<h1>Load Phase</h1>
+<p>Send transformed data to Primary Care EHR and convert to HL7 v2 format.</p>
+</div>
+
+<!-- 🔹 TASK 1 -->
+<div id="task1" class="content-section">
 <h1>Task 1: Patient Extraction and Loading</h1>
 
 <p>
@@ -134,12 +154,11 @@ A specific patient (David Abshire) was retrieved using query parameters such as 
 
 <p>
 Patient attributes including name, gender, date of birth, and address were extracted.
-Additionally, associated clinical conditions were retrieved from the FHIR Condition resource.
+Associated clinical conditions were retrieved from the FHIR Condition resource.
 </p>
 
 <p>
-Chronic Obstructive Pulmonary Disease (COPD) was selected as the primary condition.
-The SNOMED CT code <b>13645005</b> represents COPD.
+COPD (SNOMED CT: <b>13645005</b>) was selected as the primary condition.
 </p>
 
 <ul>
@@ -148,96 +167,33 @@ The SNOMED CT code <b>13645005</b> represents COPD.
 </ul>
 
 <p>
-The patient record was created in the Primary Care EHR FHIR server along with the associated condition.
-</p>
-
-<p>
-This step represents both the <b>Extraction</b> and <b>Loading</b> phases of the ETL pipeline.
+The patient record was created in the Primary Care EHR FHIR server.
 </p>
 
 </div>
 
-<!-- TASK 2 -->
-<div id="task2" class="task-content" style="display:none;">
-
+<!-- 🔹 TASK 2 -->
+<div id="task2" class="content-section" style="display:none;">
 <h1>Task 2: Condition (SNOMED)</h1>
-
-<p>
-Child concepts of COPD were retrieved using SNOMED CT hierarchy.
-These child conditions were added to the patient record.
-</p>
-
-<p>
-This step represents the <b>Transformation</b> phase where clinical terminology is standardized.
-</p>
-
+<p>Child SNOMED concepts for COPD were retrieved and added.</p>
 </div>
 
-<!-- TASK 3 -->
-<div id="task3" class="task-content" style="display:none;">
-
+<!-- 🔹 TASK 3 -->
+<div id="task3" class="content-section" style="display:none;">
 <h1>Task 3: Observation</h1>
-
-<p>
-Blood pressure observations were retrieved from OpenEMR for the same patient.
-</p>
-
-<p>
-The observation data was transformed and added to the target FHIR server.
-</p>
-
-<p>
-This ensures accurate patient monitoring data is transferred across systems.
-</p>
-
+<p>Blood pressure data was retrieved and stored in the target system.</p>
 </div>
 
-<!-- TASK 4 -->
-<div id="task4" class="task-content" style="display:none;">
-
+<!-- 🔹 TASK 4 -->
+<div id="task4" class="content-section" style="display:none;">
 <h1>Task 4: Procedure</h1>
-
-<p>
-A procedure resource was created representing a chest X-ray.
-</p>
-
-<ul>
-<li>Procedure: Chest X-ray</li>
-<li>Status: Completed</li>
-<li>Follow-up information included</li>
-</ul>
-
-<p>
-SNOMED CT coding was used to standardize the procedure.
-</p>
-
-<p>
-This step extends the <b>Loading</b> phase of the ETL pipeline.
-</p>
-
+<p>Chest X-ray procedure created using SNOMED CT.</p>
 </div>
 
-<!-- TASK 5 -->
-<div id="task5" class="task-content" style="display:none;">
-
+<!-- 🔹 TASK 5 -->
+<div id="task5" class="content-section" style="display:none;">
 <h1>Task 5: HL7 Message</h1>
-
-<p>
-Patient data was converted into HL7 v2 format using the hl7apy library.
-</p>
-
-<p>
-The message includes patient name, age, gender, and clinical information.
-</p>
-
-<p>
-The HL7 message was exported as a text file for interoperability with legacy systems.
-</p>
-
-<p>
-This step ensures compatibility between modern FHIR systems and traditional healthcare systems.
-</p>
-
+<p>HL7 v2 message generated using hl7apy and exported.</p>
 </div>
 
 </div>
