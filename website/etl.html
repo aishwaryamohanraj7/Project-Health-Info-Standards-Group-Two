@@ -5,7 +5,6 @@
 <title>FHIR ETL Pipeline - ETL</title>
 
 <style>
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -13,7 +12,7 @@ body {
     color: white;
 }
 
-/* ================= TOP NAV ================= */
+/* ===== TOP NAV ===== */
 .top-nav {
     position: fixed;
     top: 0;
@@ -29,14 +28,13 @@ body {
     color: white;
     margin-left: 25px;
     text-decoration: none;
-    font-weight: 500;
 }
 
 .top-nav a:hover {
     color: #22c55e;
 }
 
-/* ================= SIDEBAR ================= */
+/* ===== SIDEBAR ===== */
 .sidebar {
     position: fixed;
     top: 0;
@@ -49,17 +47,16 @@ body {
 
 .sidebar h2 {
     color: #22c55e;
-    margin-bottom: 20px;
 }
 
 .sidebar a {
     display: block;
-    padding: 12px 15px;
+    padding: 12px;
     margin-bottom: 10px;
     border-radius: 25px;
     border: 1px solid #22c55e;
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
 
 .sidebar a:hover {
@@ -67,40 +64,49 @@ body {
     color: black;
 }
 
-/* ================= MAIN ================= */
+.sidebar a.active {
+    background: #22c55e;
+    color: black;
+}
+
+/* ===== MAIN ===== */
 .main {
     margin-left: 260px;
-    padding: 120px 40px 40px;
+    padding: 120px 40px;
 }
 
-h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
+/* ===== TASK DISPLAY ===== */
+.task {
+    display: none;
 }
 
-p {
-    color: #d1d5db;
-    line-height: 1.6;
+.task.active {
+    display: block;
 }
 
-/* ================= TASK BOX ================= */
 .task-box {
     background: #0f172a;
     padding: 25px;
     border-radius: 12px;
-    margin-bottom: 30px;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+p {
+    color: #d1d5db;
 }
 
 ul {
     margin-left: 20px;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- TOP NAV -->
+<!-- ===== TOP NAV ===== -->
 <header class="top-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -109,113 +115,121 @@ ul {
     <a href="insights.html">Insights</a>
 </header>
 
-<!-- SIDEBAR -->
+<!-- ===== SIDEBAR ===== -->
 <div class="sidebar">
 
     <h2>ETL Tasks</h2>
 
-    <!-- ETL Steps -->
-    <a href="#">📥 Extract</a>
-    <a href="#">⚙️ Transform</a>
-    <a href="#">📤 Load</a>
+    <!-- ETL STEPS -->
+    <a href="#" onclick="showTask(event, 'extract')">📥 Extract</a>
+    <a href="#" onclick="showTask(event, 'transform')">⚙️ Transform</a>
+    <a href="#" onclick="showTask(event, 'load')">📤 Load</a>
 
     <hr style="border:0.5px solid #1f2937; margin:15px 0;">
 
     <!-- TASKS -->
-    <a href="#task1">Task 1: Extraction & Patient</a>
-    <a href="#task2">Task 2: Condition (SNOMED)</a>
-    <a href="#task3">Task 3: Observation</a>
-    <a href="#task4">Task 4: Procedure</a>
-    <a href="#task5">Task 5: HL7 Message</a>
+    <a href="#" onclick="showTask(event, 'task1')" class="active">Task 1: Extraction & Patient</a>
+    <a href="#" onclick="showTask(event, 'task2')">Task 2: Condition</a>
+    <a href="#" onclick="showTask(event, 'task3')">Task 3: Observation</a>
+    <a href="#" onclick="showTask(event, 'task4')">Task 4: Procedure</a>
+    <a href="#" onclick="showTask(event, 'task5')">Task 5: HL7 Message</a>
 
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- ===== MAIN CONTENT ===== -->
 <div class="main">
 
+    <!-- EXTRACT -->
+    <div id="extract" class="task task-box">
+        <h1>Extract Phase</h1>
+        <p>Data is retrieved from OpenEMR FHIR API including patients, conditions, and observations.</p>
+    </div>
+
+    <!-- TRANSFORM -->
+    <div id="transform" class="task task-box">
+        <h1>Transform Phase</h1>
+        <p>Data is standardized using SNOMED CT mappings and cleaned for interoperability.</p>
+    </div>
+
+    <!-- LOAD -->
+    <div id="load" class="task task-box">
+        <h1>Load Phase</h1>
+        <p>Processed data is sent to the Primary Care EHR system and converted into HL7 format.</p>
+    </div>
+
     <!-- TASK 1 -->
-    <div id="task1" class="task-box">
+    <div id="task1" class="task task-box active">
         <h1>Task 1: Patient Extraction and Loading</h1>
 
-        <p>
-            Patient data was extracted from the OpenEMR FHIR server using REST API calls.
-            A specific patient (David Abshire) was retrieved using query parameters.
-        </p>
+        <p>Patient data was extracted from OpenEMR FHIR server using REST APIs.</p>
+        <p>Patient details like name, gender, DOB, and address were retrieved.</p>
 
-        <p>
-            Patient attributes including name, gender, date of birth, and address were extracted.
-            Associated clinical conditions were retrieved from the FHIR Condition resource.
-        </p>
-
-        <p>
-            COPD (SNOMED CT: <b>13645005</b>) was selected as the primary condition.
-        </p>
+        <p>COPD (SNOMED CT: <b>13645005</b>) selected as primary condition.</p>
 
         <ul>
             <li>Tracheobronchial disorder</li>
             <li>Chronic respiratory disease</li>
         </ul>
 
-        <p>
-            The patient record was created in the Primary Care EHR FHIR server.
-        </p>
+        <p>Patient created in Primary Care EHR FHIR server.</p>
     </div>
 
     <!-- TASK 2 -->
-    <div id="task2" class="task-box">
+    <div id="task2" class="task task-box">
         <h1>Task 2: Condition Transformation</h1>
 
-        <p>
-            Child concept codes for COPD were retrieved and mapped using SNOMED CT hierarchy.
-        </p>
-
-        <p>
-            These child conditions were added to the patient record for detailed clinical representation.
-        </p>
+        <p>Child SNOMED CT codes for COPD were retrieved and mapped.</p>
+        <p>These conditions were added to the patient record.</p>
     </div>
 
     <!-- TASK 3 -->
-    <div id="task3" class="task-box">
+    <div id="task3" class="task task-box">
         <h1>Task 3: Observation Creation</h1>
 
-        <p>
-            Blood pressure observations were retrieved from OpenEMR for the same patient.
-        </p>
-
-        <p>
-            A new observation resource was created in the target FHIR server.
-        </p>
+        <p>Blood pressure data retrieved from OpenEMR.</p>
+        <p>Observation resource created in target FHIR server.</p>
     </div>
 
     <!-- TASK 4 -->
-    <div id="task4" class="task-box">
+    <div id="task4" class="task task-box">
         <h1>Task 4: Procedure Creation</h1>
 
-        <p>
-            A procedure resource (Chest X-ray) was created using SNOMED CT coding.
-        </p>
+        <p>Chest X-ray procedure created using SNOMED CT.</p>
 
         <ul>
-            <li>Procedure: Chest X-ray</li>
             <li>Status: Completed</li>
             <li>Follow-up included</li>
         </ul>
     </div>
 
     <!-- TASK 5 -->
-    <div id="task5" class="task-box">
+    <div id="task5" class="task task-box">
         <h1>Task 5: HL7 Message Generation</h1>
 
-        <p>
-            Patient data was converted into HL7 v2 ADT message format using hl7apy.
-        </p>
-
-        <p>
-            The HL7 message was exported as a .txt file for interoperability with legacy systems.
-        </p>
+        <p>HL7 v2 ADT message generated using hl7apy.</p>
+        <p>Exported as .txt file for interoperability.</p>
     </div>
 
 </div>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+function showTask(event, taskId) {
+
+    // hide all
+    let tasks = document.querySelectorAll(".task");
+    tasks.forEach(t => t.classList.remove("active"));
+
+    // show selected
+    document.getElementById(taskId).classList.add("active");
+
+    // active sidebar highlight
+    let links = document.querySelectorAll(".sidebar a");
+    links.forEach(l => l.classList.remove("active"));
+
+    event.target.classList.add("active");
+}
+</script>
 
 </body>
 </html>
