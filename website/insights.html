@@ -1,203 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>FHIR ETL Pipeline - Insights</title>
 
 <style>
+
+/* ===== GLOBAL ===== */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #020617;
+    background: linear-gradient(135deg, #000814, #001d3d);
     color: white;
 }
 
-/* ===== NAVBAR ===== */
-.top-nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
+/* ===== HEADER ===== */
+header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 18px 30px;
-    background: rgba(2,6,23,0.95);
-    backdrop-filter: blur(10px);
+    align-items: center;
+    padding: 15px 40px;
+    background: rgba(0,0,0,0.6);
+    position: sticky;
+    top: 0;
     z-index: 1000;
-    box-sizing: border-box;
 }
 
-/* LEFT MENU */
-.menu-btn {
-    font-size: 24px;
-    cursor: pointer;
-    color: #22c55e;
-}
-
-/* CENTER LOGO */
 .logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #22c55e;
+    color: #00ff88;
     font-size: 20px;
     font-weight: bold;
 }
 
-/* RIGHT NAV */
-.nav-links {
-    display: flex;
-    gap: 20px;
-    margin-left: auto;
-}
-
-.nav-links a {
+/* NAV */
+nav a {
     color: white;
+    margin-left: 20px;
     text-decoration: none;
-    white-space: nowrap;
-    transition: 0.2s;
 }
 
-.nav-links a:hover {
-    color: #22c55e;
+nav a:hover {
+    color: #00ff88;
 }
 
-/* ===== DROPDOWN MENU ===== */
+/* ===== MENU BUTTON ===== */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #00ff88;
+}
+
+/* ===== DROPDOWN ===== */
 .dropdown {
-    position: fixed;
+    position: absolute;
     top: 70px;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(180deg, #022c22, #020617);
-    display: none;
-    padding: 20px 40px;
-    z-index: 999;
+    left: 20px;
+    background: rgba(0,0,0,0.95);
+    padding: 15px;
+    border-radius: 10px;
+    width: 250px;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: 0.3s;
 }
 
 .dropdown.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown h3 {
+    color: #00ff88;
+    margin-top: 10px;
+}
+
+.dropdown a {
     display: block;
-}
-
-/* MENU SECTIONS */
-.menu-section {
-    margin-bottom: 15px;
-}
-
-.menu-section h3 {
-    color: #22c55e;
-    margin-bottom: 8px;
-}
-
-.menu-section a {
-    display: inline-block;
-    margin-right: 12px;
-    margin-bottom: 8px;
+    padding: 8px 0;
     color: white;
     text-decoration: none;
-    border: 1px solid #22c55e;
-    padding: 6px 12px;
-    border-radius: 20px;
-    transition: 0.2s;
 }
 
-.menu-section a:hover {
-    background: #22c55e;
-    color: black;
+.dropdown a:hover {
+    color: #00ff88;
 }
 
-/* ===== MAIN ===== */
-.main {
-    padding: 120px 60px;
-}
-
-/* ===== CARDS ===== */
-.card {
-    background: #0f172a;
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-    box-shadow: 0 0 20px rgba(34,197,94,0.15);
+/* ===== CONTENT ===== */
+.container {
+    padding: 40px;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 40px;
+    color: #00ff88;
 }
 
-h2 {
-    margin-bottom: 15px;
+/* ===== GLOSSY CARDS ===== */
+.card {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.1),
+        inset 0 0 10px rgba(255,255,255,0.05);
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 0 30px rgba(0,255,136,0.2),
+        inset 0 0 15px rgba(255,255,255,0.08);
+}
+
+.card h2 {
+    margin-bottom: 10px;
 }
 
 ul {
-    color: #d1d5db;
-    line-height: 1.6;
+    line-height: 1.8;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<header class="top-nav">
+<!-- ===== HEADER ===== -->
+<header>
 
-    <!-- LEFT -->
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <!-- CENTER -->
-    <div class="logo">FHIR ETL Pipeline</div>
+    <h2 class="logo">FHIR ETL Pipeline</h2>
 
-    <!-- RIGHT -->
-    <div class="nav-links">
+    <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="team.html">Team</a>
         <a href="etl.html">ETL</a>
         <a href="insights.html">Insights</a>
-    </div>
+    </nav>
 
 </header>
 
-<!-- DROPDOWN -->
+<!-- ===== DROPDOWN MENU ===== -->
 <div id="dropdown" class="dropdown">
 
-    <div class="menu-section">
-        <h3>🏠 Home</h3>
-        <a href="index.html">Project Overview</a>
-    </div>
+    <h3>🏠 Home</h3>
+    <a href="index.html">Project Overview</a>
 
-    <div class="menu-section">
-        <h3>⚙️ ETL Pipeline</h3>
-        <a href="etl.html">Extraction</a>
-        <a href="etl.html">Transformation</a>
-        <a href="etl.html">Loading</a>
-        <a href="etl.html">Five Tasks</a>
-    </div>
+    <h3>⚙️ ETL Pipeline</h3>
+    <a href="etl.html">Extraction</a>
+    <a href="etl.html">Transformation</a>
+    <a href="etl.html">Loading</a>
+    <a href="etl.html">Five Tasks</a>
 
-    <div class="menu-section">
-        <h3>📊 Insights</h3>
-        <a href="#insights">Key Insights</a>
-        <a href="#challenges">Challenges</a>
-        <a href="#lessons">Lessons Learned</a>
-    </div>
+    <h3>📊 Insights</h3>
+    <a href="#insights">Key Insights</a>
+    <a href="#challenges">Challenges</a>
+    <a href="#lessons">Lessons Learned</a>
 
-    <div class="menu-section">
-        <h3>👥 Team</h3>
-        <a href="team.html">Team Contribution</a>
-    </div>
+    <h3>👥 Team</h3>
+    <a href="team.html">Team Contribution</a>
 
-    <div class="menu-section">
-        <h3>📄 About</h3>
-        <a href="about.html">Presentation Content</a>
-    </div>
+    <h3>📄 About</h3>
+    <a href="about.html">Presentation Content</a>
 
 </div>
 
-<!-- MAIN -->
-<div class="main">
+<!-- ===== CONTENT ===== -->
+<div class="container">
 
-    <h1>FHIR ETL Pipeline</h1>
+    <h1>FHIR ETL Pipeline Insights</h1>
 
-    <!-- KEY INSIGHTS -->
     <div id="insights" class="card">
         <h2>📊 Key Insights</h2>
         <ul>
@@ -207,7 +191,6 @@ ul {
         </ul>
     </div>
 
-    <!-- CHALLENGES -->
     <div id="challenges" class="card">
         <h2>⚠️ Challenges Faced</h2>
         <ul>
@@ -217,7 +200,6 @@ ul {
         </ul>
     </div>
 
-    <!-- LESSONS -->
     <div id="lessons" class="card">
         <h2>💡 Lessons Learned</h2>
         <ul>
@@ -228,11 +210,31 @@ ul {
 
 </div>
 
-<!-- SCRIPT -->
+<!-- ===== SCRIPT ===== -->
 <script>
+
+const dropdown = document.getElementById("dropdown");
+
 function toggleMenu() {
-    document.getElementById("dropdown").classList.toggle("active");
+    dropdown.classList.toggle("active");
 }
+
+/* CLOSE MENU WHEN CLICKING LINKS */
+document.querySelectorAll(".dropdown a").forEach(link => {
+    link.addEventListener("click", () => {
+        dropdown.classList.remove("active");
+    });
+});
+
+/* CLOSE WHEN CLICKING OUTSIDE */
+document.addEventListener("click", function(event) {
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!dropdown.contains(event.target) && !menuBtn.contains(event.target)) {
+        dropdown.classList.remove("active");
+    }
+});
+
 </script>
 
 </body>
