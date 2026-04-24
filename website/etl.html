@@ -1,88 +1,179 @@
-<nav>
-  <a href="index.html">Home</a> |
-  <a href="about.html">About</a> |
-  <a href="team.html">Team</a> |
-  <a href="etl.html">ETL</a>
-  <a href="insights.html">Insights</a>
-</nav>
-<hr>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ETL Pipeline</title>
+    <title>ETL Pipeline Implementation</title>
 </head>
 
 <body style="margin:0; font-family:Arial; background:#0b1220; color:white;">
 
-<!-- Header -->
-<div style="padding:20px; text-align:center;">
-    <h1>ETL Pipeline Implementation</h1>
-</div>
+<div style="display:flex; height:100vh;">
 
-<!-- Content -->
-<div style="width:85%; margin:auto;">
+    <!-- SIDEBAR -->
+    <div style="width:260px; background:#111827; padding:20px;">
+        <h2>ETL Tasks</h2>
 
-    <!-- Task 1 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>Task 1: Patient Retrieval</h2>
-        <p>
-            A specific patient (David Abshire) was retrieved from the FHIR server using query parameters
-            including name and gender. The system successfully extracted patient details such as ID, gender, and birth date.
-        </p>
-        <p><b>Result:</b> Patient successfully retrieved from OpenEMR FHIR API.</p>
+        <p onclick="showTask('task1')" style="cursor:pointer;">Task 1: Extraction & Patient</p>
+        <p onclick="showTask('task2')" style="cursor:pointer;">Task 2: Condition (SNOMED)</p>
+        <p onclick="showTask('task3')" style="cursor:pointer;">Task 3: Observation</p>
+        <p onclick="showTask('task4')" style="cursor:pointer;">Task 4: Procedure</p>
+        <p onclick="showTask('task5')" style="cursor:pointer;">Task 5: HL7 Message</p>
     </div>
 
-    <!-- Task 2 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>Task 2: Condition Extraction</h2>
-        <p>
-            Patient conditions were retrieved and analyzed. Chronic Obstructive Pulmonary Disease (COPD)
-            was selected as the primary clinical condition using SNOMED CT code <b>13645005</b>.
-        </p>
-    </div>
+    <!-- CONTENT -->
+    <div style="flex:1; padding:40px; overflow-y:auto;">
 
-    <!-- Task 3 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>Task 3: Patient Creation</h2>
-        <p>
-            A new patient record was created in the target FHIR server with demographic details.
-        </p>
-        <p><b>Status:</b> 201 Created</p>
-    </div>
+        <!-- TASK 1 -->
+        <div id="task1" class="task">
+            <h2>Task 1: Patient Extraction and Loading</h2>
 
-    <!-- Task 4 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>Task 4: SNOMED Parent Concepts</h2>
-        <p>
-            Parent concepts for COPD were retrieved, including:
-        </p>
-        <ul>
-            <li>Tracheobronchial disorder</li>
-            <li>Chronic disease of respiratory system</li>
-        </ul>
-    </div>
+            <p>
+                In this step, patient data was extracted from the OpenEMR FHIR server using REST API calls.
+                A specific patient (David Abshire) was retrieved using query parameters such as name and gender.
+            </p>
 
-    <!-- Task 5 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>Task 5: Condition Creation</h2>
-        <p>
-            A condition resource was created and linked to the patient using SNOMED CT coding.
-        </p>
-        <p><b>Status:</b> 201 Created</p>
-    </div>
+            <p>
+                The system extracted key patient attributes including name, gender, date of birth, and address.
+                Additionally, all associated clinical conditions were retrieved from the FHIR <b>Condition</b> resource.
+            </p>
 
-    <!-- HL7 -->
-    <div style="background:#1e293b; padding:20px; margin-bottom:20px; border-radius:10px;">
-        <h2>HL7 Message Generation</h2>
-        <pre style="background:black; padding:15px; overflow:auto;">
+            <p>
+                Chronic Obstructive Pulmonary Disease (COPD) was selected as the primary condition.
+                The SNOMED CT code <b>13645005</b> was used to represent COPD.
+            </p>
+
+            <p>
+                Parent concepts for COPD were retrieved from SNOMED CT, such as:
+            </p>
+
+            <ul>
+                <li>Tracheobronchial disorder</li>
+                <li>Chronic disease of respiratory system</li>
+            </ul>
+
+            <p>
+                The patient record was then created in the Primary Care EHR FHIR server, along with the
+                associated parent condition.
+            </p>
+
+            <p>
+                This step represents both the <b>Extraction</b> and <b>Loading</b> phases of the ETL pipeline.
+            </p>
+        </div>
+
+        <!-- TASK 2 -->
+        <div id="task2" class="task" style="display:none;">
+            <h2>Task 2: Condition Transformation (Child Concepts)</h2>
+
+            <p>
+                In this step, child concepts of COPD were retrieved using SNOMED CT terminology services.
+                These child concepts provide more specific clinical details related to the disease.
+            </p>
+
+            <p>
+                The selected child concept codes were added to the patient’s condition resource
+                in the Primary Care EHR system.
+            </p>
+
+            <p>
+                This enhances the accuracy and granularity of clinical data representation.
+            </p>
+
+            <p>
+                This step is part of the <b>Transformation phase</b>, where raw data is enriched and standardized.
+            </p>
+        </div>
+
+        <!-- TASK 3 -->
+        <div id="task3" class="task" style="display:none;">
+            <h2>Task 3: Observation (Blood Pressure)</h2>
+
+            <p>
+                A new observation resource was created for the patient using blood pressure (BP) data.
+            </p>
+
+            <p>
+                The BP values were extracted from the OpenEMR system for the same patient (David Abshire).
+            </p>
+
+            <p>
+                The observation was structured according to the FHIR <b>Observation</b> resource format
+                and added to the Primary Care EHR server.
+            </p>
+
+            <p>
+                This demonstrates the integration of clinical measurements into the ETL pipeline.
+            </p>
+        </div>
+
+        <!-- TASK 4 -->
+        <div id="task4" class="task" style="display:none;">
+            <h2>Task 4: Procedure Creation</h2>
+
+            <p>
+                A procedure resource was created for the patient representing a chest X-ray.
+            </p>
+
+            <p>
+                The procedure was coded using SNOMED CT standards and included details such as:
+            </p>
+
+            <ul>
+                <li>Procedure name: Chest X-ray</li>
+                <li>Status: Completed</li>
+                <li>Follow-up information</li>
+            </ul>
+
+            <p>
+                This ensures that clinical procedures are recorded in a standardized and interoperable format.
+            </p>
+
+            <p>
+                This step further extends the <b>Loading phase</b> of the ETL pipeline.
+            </p>
+        </div>
+
+        <!-- TASK 5 -->
+        <div id="task5" class="task" style="display:none;">
+            <h2>Task 5: HL7 Message Generation</h2>
+
+            <p>
+                In this step, an HL7 v2 message was generated using the <b>hl7apy</b> library.
+            </p>
+
+            <p>
+                Patient details such as name, age, and gender were included in the HL7 message.
+                The message represents an ADT (Admit/Discharge/Transfer) event.
+            </p>
+
+            <pre style="background:black; padding:15px; overflow:auto;">
 MSH|^~\&|OpenEMR|Hospital|PrimaryCare|System|20260423233958||ADT^A01|MSG00001|P|2.5
-PID|1||9d03b032||Abshire^David||1996-09-29|male
+PID|1||MRN-ABSHIRE-001||Abshire^David||1996-09-29|M
 PV1|1|O|Clinic
 DG1|1||J44.9^COPD
-        </pre>
+            </pre>
+
+            <p>
+                This demonstrates interoperability between modern FHIR-based systems and
+                legacy HL7 messaging systems.
+            </p>
+        </div>
+
     </div>
 
 </div>
+
+<!-- SCRIPT -->
+<script>
+function showTask(taskId) {
+    let tasks = document.getElementsByClassName("task");
+
+    for (let i = 0; i < tasks.length; i++) {
+        tasks[i].style.display = "none";
+    }
+
+    document.getElementById(taskId).style.display = "block";
+}
+</script>
 
 </body>
 </html>
