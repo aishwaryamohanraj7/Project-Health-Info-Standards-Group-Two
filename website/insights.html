@@ -28,10 +28,8 @@ header {
 
 .logo {
     color: #00ff88;
-    font-weight: bold;
 }
 
-/* NAV */
 nav a {
     color: white;
     margin-left: 20px;
@@ -49,25 +47,28 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== DROPDOWN (FIXED FRONT LAYER) ===== */
+/* ===== TOP DROPDOWN MENU ===== */
 .dropdown {
     position: fixed;
     top: 70px;
-    left: 20px;
-    width: 260px;
+    left: 0;
+    width: 100%;
 
     background: rgba(0,0,0,0.95);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
 
-    padding: 15px;
-    border-radius: 12px;
+    padding: 25px 40px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
 
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-20px);
     pointer-events: none;
-    transition: 0.25s ease;
+    transition: 0.3s ease;
 
-    z-index: 9999; /* 🔥 FIXED */
+    z-index: 9999;
 }
 
 .dropdown.active {
@@ -76,15 +77,17 @@ nav a:hover {
     pointer-events: auto;
 }
 
+/* SECTION TITLE */
 .dropdown h3 {
     color: #00ff88;
-    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
+/* LINKS */
 .dropdown a {
     display: block;
-    padding: 8px 0;
     color: white;
+    padding: 6px 0;
     text-decoration: none;
 }
 
@@ -104,26 +107,23 @@ h1 {
 
 /* ===== GLOSSY CARDS ===== */
 .card {
-    position: relative;
-    z-index: 1;
-
     margin-top: 30px;
     padding: 25px;
-    border-radius: 15px;
 
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(15px);
+
+    border-radius: 15px;
+
     border: 1px solid rgba(255,255,255,0.1);
 
     box-shadow:
         0 0 25px rgba(0,255,136,0.12),
         inset 0 0 10px rgba(255,255,255,0.05);
-
-    transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.card h2 {
+    color: #00ff88;
 }
 
 ul {
@@ -149,28 +149,38 @@ ul {
     </nav>
 </header>
 
-<!-- ===== DROPDOWN ===== -->
+<!-- ===== TOP DROPDOWN ===== -->
 <div id="dropdown" class="dropdown">
 
-    <h3>🏠 Home</h3>
-    <a href="index.html">Project Overview</a>
+    <div>
+        <h3>🏠 Home</h3>
+        <a href="index.html">Project Overview</a>
+    </div>
 
-    <h3>⚙️ ETL Pipeline</h3>
-    <a href="etl.html">Extraction</a>
-    <a href="etl.html">Transformation</a>
-    <a href="etl.html">Loading</a>
-    <a href="etl.html">Five Tasks</a>
+    <div>
+        <h3>⚙️ ETL Pipeline</h3>
+        <a href="etl.html">Extraction</a>
+        <a href="etl.html">Transformation</a>
+        <a href="etl.html">Loading</a>
+        <a href="etl.html">Five Tasks</a>
+    </div>
 
-    <h3>📊 Insights</h3>
-    <a href="#insights">Key Insights</a>
-    <a href="#challenges">Challenges</a>
-    <a href="#lessons">Lessons Learned</a>
+    <div>
+        <h3>📊 Insights</h3>
+        <a href="#insights">Key Insights</a>
+        <a href="#challenges">Challenges</a>
+        <a href="#lessons">Lessons Learned</a>
+    </div>
 
-    <h3>👥 Team</h3>
-    <a href="team.html">Team Contribution</a>
+    <div>
+        <h3>👥 Team</h3>
+        <a href="team.html">Team Contribution</a>
+    </div>
 
-    <h3>📄 About</h3>
-    <a href="about.html">Presentation Content</a>
+    <div>
+        <h3>📄 About</h3>
+        <a href="about.html">Presentation Content</a>
+    </div>
 
 </div>
 
@@ -182,8 +192,8 @@ ul {
     <div id="insights" class="card">
         <h2>📊 Key Insights</h2>
         <ul>
-            <li>FHIR APIs provide structured and standardized healthcare data</li>
-            <li>Data transformation ensures consistency and usability</li>
+            <li>FHIR APIs provide structured healthcare data</li>
+            <li>Transformation ensures consistency</li>
             <li>SNOMED improves interoperability</li>
         </ul>
     </div>
@@ -191,17 +201,17 @@ ul {
     <div id="challenges" class="card">
         <h2>⚠️ Challenges Faced</h2>
         <ul>
-            <li>Handling API authentication</li>
-            <li>Managing missing or incomplete data</li>
-            <li>Understanding FHIR structure</li>
+            <li>API authentication</li>
+            <li>Incomplete data</li>
+            <li>FHIR complexity</li>
         </ul>
     </div>
 
     <div id="lessons" class="card">
         <h2>💡 Lessons Learned</h2>
         <ul>
-            <li>Real-world healthcare data needs validation</li>
-            <li>ETL pipelines require structured design</li>
+            <li>Validation is critical</li>
+            <li>Structured pipelines improve quality</li>
         </ul>
     </div>
 
@@ -216,7 +226,7 @@ function toggleMenu() {
     dropdown.classList.toggle("active");
 }
 
-/* 🔥 CLOSE FIRST, THEN SCROLL */
+/* AUTO CLOSE + SCROLL */
 document.querySelectorAll(".dropdown a").forEach(link => {
     link.addEventListener("click", function(e) {
 
@@ -233,7 +243,7 @@ document.querySelectorAll(".dropdown a").forEach(link => {
     });
 });
 
-/* CLOSE WHEN CLICK OUTSIDE */
+/* CLOSE ON OUTSIDE CLICK */
 document.addEventListener("click", function(e) {
     const menuBtn = document.querySelector(".menu-btn");
 
