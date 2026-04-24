@@ -53,9 +53,10 @@ body {
     width: 260px;
     height: 100%;
     background: linear-gradient(180deg, #022c22, #020617);
-    padding: 80px 20px;
+    padding: 90px 20px 20px;  /* FIXED spacing */
     transition: 0.3s;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .sidebar.active {
@@ -64,6 +65,7 @@ body {
 
 .sidebar h2 {
     color: #22c55e;
+    margin-bottom: 20px;
 }
 
 .sidebar a {
@@ -74,6 +76,7 @@ body {
     border: 1px solid #22c55e;
     color: white;
     text-decoration: none;
+    transition: 0.2s;
 }
 
 .sidebar a:hover {
@@ -88,7 +91,8 @@ body {
 
 /* ===== MAIN ===== */
 .main {
-    padding: 120px 40px;
+    padding: 120px 60px;
+    transition: margin-left 0.3s;
 }
 
 /* ===== TASK DISPLAY ===== */
@@ -102,8 +106,9 @@ body {
 
 .task-box {
     background: #0f172a;
-    padding: 25px;
+    padding: 30px;
     border-radius: 12px;
+    box-shadow: 0 0 20px rgba(34,197,94,0.2);
 }
 
 h1 {
@@ -112,6 +117,7 @@ h1 {
 
 p {
     color: #d1d5db;
+    line-height: 1.6;
 }
 
 ul {
@@ -122,10 +128,10 @@ ul {
 
 <body>
 
-<!-- ===== TOGGLE BUTTON ===== -->
+<!-- ☰ BUTTON -->
 <div id="menuToggle" onclick="toggleMenu()">☰</div>
 
-<!-- ===== TOP NAV ===== -->
+<!-- TOP NAV -->
 <header class="top-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -134,92 +140,87 @@ ul {
     <a href="insights.html">Insights</a>
 </header>
 
-<!-- ===== SIDEBAR ===== -->
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
     <h2>ETL Tasks</h2>
 
-    <!-- ETL STEPS -->
-    <a href="#" onclick="showTask(event, 'extract')">📥 Extract</a>
-    <a href="#" onclick="showTask(event, 'transform')">⚙️ Transform</a>
-    <a href="#" onclick="showTask(event, 'load')">📤 Load</a>
+    <!-- ETL PHASES -->
+    <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
+    <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
+    <a href="#" onclick="showTask(event,'load')">📤 Load</a>
 
     <hr style="border:0.5px solid #1f2937; margin:15px 0;">
 
     <!-- TASKS -->
-    <a href="#" onclick="showTask(event, 'task1')" class="active">Task 1</a>
-    <a href="#" onclick="showTask(event, 'task2')">Task 2</a>
-    <a href="#" onclick="showTask(event, 'task3')">Task 3</a>
-    <a href="#" onclick="showTask(event, 'task4')">Task 4</a>
-    <a href="#" onclick="showTask(event, 'task5')">Task 5</a>
+    <a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
+    <a href="#" onclick="showTask(event,'task2')">Task 2</a>
+    <a href="#" onclick="showTask(event,'task3')">Task 3</a>
+    <a href="#" onclick="showTask(event,'task4')">Task 4</a>
+    <a href="#" onclick="showTask(event,'task5')">Task 5</a>
 
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
+<!-- MAIN CONTENT -->
 <div class="main">
 
     <!-- EXTRACT -->
     <div id="extract" class="task task-box">
         <h1>Extract Phase</h1>
-        <p>Retrieve patient, condition, and observation data from OpenEMR FHIR API.</p>
+        <p>Retrieve patient data from OpenEMR FHIR API.</p>
     </div>
 
     <!-- TRANSFORM -->
     <div id="transform" class="task task-box">
         <h1>Transform Phase</h1>
-        <p>Apply SNOMED CT mappings and clean the data.</p>
+        <p>Apply SNOMED CT mappings and clean data.</p>
     </div>
 
     <!-- LOAD -->
     <div id="load" class="task task-box">
         <h1>Load Phase</h1>
-        <p>Load data into Primary Care EHR and convert to HL7 format.</p>
+        <p>Send data to Primary Care EHR and generate HL7.</p>
     </div>
 
     <!-- TASK 1 -->
     <div id="task1" class="task task-box active">
         <h1>Task 1: Patient Extraction and Loading</h1>
-
-        <p>Patient data was retrieved from OpenEMR FHIR server.</p>
-        <p>Details like name, gender, DOB, and address were extracted.</p>
-
-        <p>COPD (SNOMED CT: <b>13645005</b>) selected as primary condition.</p>
-
+        <p>Patient retrieved from OpenEMR FHIR server.</p>
+        <p>COPD (SNOMED CT: <b>13645005</b>) selected.</p>
         <ul>
             <li>Tracheobronchial disorder</li>
             <li>Chronic respiratory disease</li>
         </ul>
-
         <p>Patient created in Primary Care EHR.</p>
     </div>
 
     <!-- TASK 2 -->
     <div id="task2" class="task task-box">
         <h1>Task 2: Condition Transformation</h1>
-        <p>Child SNOMED CT codes were retrieved and added.</p>
+        <p>Child SNOMED codes added.</p>
     </div>
 
     <!-- TASK 3 -->
     <div id="task3" class="task task-box">
-        <h1>Task 3: Observation Creation</h1>
-        <p>Blood pressure observation created from OpenEMR data.</p>
+        <h1>Task 3: Observation</h1>
+        <p>Blood pressure observation created.</p>
     </div>
 
     <!-- TASK 4 -->
     <div id="task4" class="task task-box">
-        <h1>Task 4: Procedure Creation</h1>
-        <p>Chest X-ray procedure added with SNOMED coding.</p>
+        <h1>Task 4: Procedure</h1>
+        <p>Chest X-ray added.</p>
     </div>
 
     <!-- TASK 5 -->
     <div id="task5" class="task task-box">
         <h1>Task 5: HL7 Message</h1>
-        <p>HL7 v2 ADT message generated and exported.</p>
+        <p>HL7 ADT message generated.</p>
     </div>
 
 </div>
 
-<!-- ===== SCRIPT ===== -->
+<!-- SCRIPT -->
 <script>
 
 function toggleMenu() {
@@ -228,18 +229,18 @@ function toggleMenu() {
 
 function showTask(event, taskId) {
 
-    // hide all
-    let tasks = document.querySelectorAll(".task");
-    tasks.forEach(t => t.classList.remove("active"));
+    // hide all tasks
+    document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
 
     // show selected
     document.getElementById(taskId).classList.add("active");
 
     // highlight sidebar
-    let links = document.querySelectorAll(".sidebar a");
-    links.forEach(l => l.classList.remove("active"));
-
+    document.querySelectorAll(".sidebar a").forEach(l => l.classList.remove("active"));
     event.target.classList.add("active");
+
+    // ✅ AUTO CLOSE SIDEBAR AFTER CLICK
+    document.getElementById("sidebar").classList.remove("active");
 }
 
 </script>
