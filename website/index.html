@@ -123,7 +123,6 @@ nav a:hover {
     color:#cbd5e1;
 }
 
-/* IMAGE */
 .hero-right img {
     width:350px;
 }
@@ -182,17 +181,37 @@ nav a:hover {
     background:#1e293b;
 }
 
-/* NEW: SIDE BY SIDE */
+/* FIXED SIDE-BY-SIDE */
 .tools-container {
     display:flex;
-    gap:20px;
+    justify-content:space-between;
     align-items:flex-start;
-    flex-wrap:wrap;
+    gap:30px;
 }
 
+/* FORCE TABLE WIDTH */
+.tools-container table {
+    width:60%;
+}
+
+/* IMAGE FIX */
 .tools-container img {
-    width:350px;
-    border-radius:10px;
+    width:35%;
+    max-width:420px;
+    border-radius:12px;
+    object-fit:contain;
+}
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+    .tools-container {
+        flex-direction:column;
+    }
+
+    .tools-container table,
+    .tools-container img {
+        width:100%;
+    }
 }
 
 </style>
@@ -275,7 +294,6 @@ ensuring seamless data exchange across modern and traditional healthcare platfor
 
 </section>
 
-<!-- PURPOSE -->
 <div class="section">
 <h2>Purpose of the ETL Pipeline</h2>
 <p>
@@ -283,23 +301,17 @@ The purpose of this project is to enable seamless healthcare data interoperabili
 The ETL pipeline extracts patient and clinical data from a source FHIR server (OpenEMR),
 transforms the data using standardized clinical terminology (SNOMED CT),
 and loads it into a target FHIR server (Primary Care EHR).
-
-This ensures consistent, structured, and reusable healthcare data while supporting legacy systems through HL7 v2 messaging.
 </p>
 </div>
 
-<!-- KEY TOOLS -->
+<!-- FIXED SECTION -->
 <div class="section">
 <h2>Key Tools and Technologies</h2>
 
 <div class="tools-container">
 
 <table class="table">
-<tr>
-<th>Tool / Technology</th>
-<th>Role in the Project</th>
-</tr>
-
+<tr><th>Tool / Technology</th><th>Role in the Project</th></tr>
 <tr><td>Python</td><td>Core scripting language for ETL tasks</td></tr>
 <tr><td>Requests Library</td><td>Handles API communication</td></tr>
 <tr><td>OpenEMR FHIR API</td><td>Source system</td></tr>
@@ -310,12 +322,11 @@ This ensures consistent, structured, and reusable healthcare data while supporti
 <tr><td>GitHub Pages</td><td>Website hosting</td></tr>
 </table>
 
-<img src="images/fhir.png">
+<img src="images/fhir.png" alt="FHIR Integration Diagram">
 
 </div>
 </div>
 
-<!-- SUMMARY -->
 <div class="summary">
 
 <div class="summary-box">
