@@ -186,6 +186,7 @@ ul {
         <a href="#key">Key Insights</a>
         <a href="#challenges">Challenges</a>
         <a href="#lessons">Lessons Learned</a>
+        <a href="#future">Future Improvements</a>
     </div>
 
     <div class="menu-box">
@@ -205,29 +206,54 @@ ul {
 
     <h2 class="title">📊 FHIR ETL Pipeline Insights</h2>
 
+    <!-- KEY INSIGHTS -->
     <div id="key" class="card">
         <h3>📊 Key Insights</h3>
         <ul>
-            <li>FHIR APIs provide structured healthcare data</li>
-            <li>Transformation ensures consistency</li>
-            <li>SNOMED improves interoperability</li>
+            <li>FHIR APIs enable structured and standardized healthcare data exchange across systems</li>
+            <li>ETL pipelines help integrate data from multiple healthcare sources into a unified format</li>
+            <li>SNOMED CT mapping improves semantic interoperability and clinical consistency</li>
+            <li>Parent-child relationships in SNOMED help understand disease hierarchies more effectively</li>
+            <li>FHIR resources such as Patient, Condition, Observation, and Procedure allow modular data modeling</li>
+            <li>Using APIs reduces manual data handling and improves scalability of healthcare applications</li>
         </ul>
     </div>
 
+    <!-- CHALLENGES -->
     <div id="challenges" class="card">
         <h3>⚠️ Challenges Faced</h3>
         <ul>
-            <li>API authentication</li>
-            <li>Incomplete data</li>
-            <li>FHIR complexity</li>
+            <li>Handling API authentication and managing access tokens securely</li>
+            <li>Dealing with incomplete or inconsistent FHIR responses</li>
+            <li>Understanding complex FHIR resource structures and relationships</li>
+            <li>Mapping SNOMED concepts and retrieving parent-child relationships correctly</li>
+            <li>Converting FHIR data into HL7 v2 format for legacy system compatibility</li>
+            <li>Debugging API errors and handling HTTP response failures</li>
         </ul>
     </div>
 
+    <!-- LESSONS -->
     <div id="lessons" class="card">
         <h3>💡 Lessons Learned</h3>
         <ul>
-            <li>Validation is critical</li>
-            <li>Structured pipelines improve quality</li>
+            <li>Data validation is essential to ensure accuracy and reliability of healthcare data</li>
+            <li>Standardized terminologies like SNOMED improve data interoperability significantly</li>
+            <li>Structured ETL pipelines enhance data quality and maintain consistency</li>
+            <li>Understanding healthcare standards like FHIR and HL7 is critical for real-world applications</li>
+            <li>Proper error handling and logging are important in API-based systems</li>
+            <li>Breaking the pipeline into modular steps improves maintainability and debugging</li>
+        </ul>
+    </div>
+
+    <!-- FUTURE IMPROVEMENTS -->
+    <div id="future" class="card">
+        <h3>🚀 Future Improvements</h3>
+        <ul>
+            <li>Automate the ETL pipeline for real-time data processing</li>
+            <li>Add advanced data visualizations and dashboards</li>
+            <li>Integrate more FHIR resources such as Medication and Encounter</li>
+            <li>Improve error handling and monitoring mechanisms</li>
+            <li>Enhance scalability using cloud-based deployment</li>
         </ul>
     </div>
 
