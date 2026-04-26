@@ -133,6 +133,15 @@ h1 {
 p {
     color: #d1d5db;
 }
+
+pre {
+    background: #020617;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    color: #22c55e;
+    margin-top: 15px;
+}
 </style>
 </head>
 
@@ -158,14 +167,12 @@ p {
 
     <h2>ETL Tasks</h2>
 
-    <!-- ETL -->
     <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
     <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
     <a href="#" onclick="showTask(event,'load')">📤 Load</a>
 
     <hr style="border:0.5px solid #1f2937; margin:15px 0;">
 
-    <!-- TASKS -->
     <a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
     <a href="#" onclick="showTask(event,'task2')">Task 2</a>
     <a href="#" onclick="showTask(event,'task3')">Task 3</a>
@@ -177,57 +184,168 @@ p {
 <!-- MAIN -->
 <div class="main">
 
+    <!-- EXTRACT -->
+    <div id="extract" class="task task-box">
+        <h1>📥 Extract Phase</h1>
+        <p>
+        Data is extracted from OpenEMR using FHIR APIs. This involves sending authenticated HTTP requests
+        and retrieving structured JSON data.
+        </p>
+
+<pre>
+import requests
+
+url = "https://api.openemr.com/fhir/Patient"
+headers = {"Authorization": "Bearer ACCESS_TOKEN"}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+print(data)
+</pre>
+
+        <p>
+        This step ensures raw patient data is collected for further processing.
+        </p>
+    </div>
+
+    <!-- TRANSFORM -->
+    <div id="transform" class="task task-box">
+        <h1>⚙️ Transform Phase</h1>
+        <p>
+        Raw FHIR data is cleaned and standardized using SNOMED CT terminology.
+        Parent-child relationships are used to structure clinical concepts.
+        </p>
+
+<pre>
+condition = {
+    "code": "COPD",
+    "system": "SNOMED CT",
+    "children": ["chronic bronchitis", "emphysema"]
+}
+
+print(condition)
+</pre>
+
+        <p>
+        Transformation ensures consistency and prepares data for interoperability.
+        </p>
+    </div>
+
+    <!-- LOAD -->
+    <div id="load" class="task task-box">
+        <h1>📤 Load Phase</h1>
+        <p>
+        Transformed data is loaded into a target EHR system using API requests.
+        </p>
+
+<pre>
+post_url = "https://api.targetehr.com/fhir/Condition"
+
+response = requests.post(post_url, json=condition)
+print(response.status_code)
+</pre>
+
+        <p>
+        This step ensures processed data is stored and accessible for clinical use.
+        </p>
+    </div>
+
+    <!-- TASK 1 -->
     <div id="task1" class="task task-box active">
         <h1>Task 1: Patient Extraction</h1>
-        <p>Patient retrieved and COPD identified.</p>
+        <p>
+        Patient data is retrieved from the FHIR API and relevant patient information is extracted.
+        </p>
+
+<pre>
+patient_id = data['entry'][0]['resource']['id']
+print("Patient ID:", patient_id)
+</pre>
     </div>
 
+    <!-- TASK 2 -->
     <div id="task2" class="task task-box">
         <h1>Task 2: Condition</h1>
-        <p>Child SNOMED concepts added.</p>
+        <p>
+        SNOMED CT codes are applied to identify conditions such as COPD and its related child concepts.
+        </p>
+
+<pre>
+parent = "COPD"
+children = ["chronic bronchitis", "emphysema"]
+
+print(parent, "->", children)
+</pre>
     </div>
 
+    <!-- TASK 3 -->
     <div id="task3" class="task task-box">
         <h1>Task 3: Observation</h1>
-        <p>Blood pressure added.</p>
+        <p>
+        Observations such as blood pressure are recorded using FHIR Observation resource.
+        </p>
+
+<pre>
+bp = {
+    "systolic": 120,
+    "diastolic": 80
+}
+print(bp)
+</pre>
     </div>
 
+    <!-- TASK 4 -->
     <div id="task4" class="task task-box">
         <h1>Task 4: Procedure</h1>
-        <p>Chest X-ray recorded.</p>
+        <p>
+        Medical procedures like chest X-ray are recorded using Procedure resource.
+        </p>
+
+<pre>
+procedure = {
+    "name": "Chest X-ray",
+    "status": "completed"
+}
+print(procedure)
+</pre>
     </div>
 
+    <!-- TASK 5 -->
     <div id="task5" class="task task-box">
-        <h1>Task 5: HL7</h1>
-        <p>HL7 message generated.</p>
+        <h1>Task 5: HL7 Message</h1>
+        <p>
+        HL7 v2 message is generated for interoperability with legacy systems.
+        </p>
+
+<pre>
+MSH|^~\&|SendingApp|SendingFac|ReceivingApp|ReceivingFac|20240101||ADT^A01|12345|P|2.3
+PID|||123456||Doe^John
+</pre>
     </div>
 
 </div>
 
 <script>
 
-/* ===== OPEN MENU (always opens cleanly) ===== */
 function openMenu() {
     document.getElementById("sidebar").classList.add("active");
     document.getElementById("overlay").classList.add("active");
 }
 
-/* ===== CLOSE MENU ===== */
 function closeMenu() {
     document.getElementById("sidebar").classList.remove("active");
     document.getElementById("overlay").classList.remove("active");
 }
 
-/* ===== SWITCH TASK ===== */
 function showTask(event, id) {
-
     document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
     document.getElementById(id).classList.add("active");
 
     document.querySelectorAll(".sidebar a").forEach(a => a.classList.remove("active"));
     event.target.classList.add("active");
 
-    closeMenu();  // always close after click
+    closeMenu();
 }
 
 </script>
