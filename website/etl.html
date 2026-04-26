@@ -180,34 +180,60 @@ else:
 
 <p><b>Outcome:</b> Successfully retrieved structured patient data for further processing.</p>
 </div>
- <img src="images/pipeline.png" alt="ETL Pipeline Diagram" style="
-    width:100%;
-    max-width:900px;
-    border-radius:14px;
+ <div id="extract" class="task task-box">
 
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(12px);
-    padding:14px;
+    <h1>Extract Phase</h1>
 
-    box-shadow:
-        0 0 35px rgba(34,197,94,0.35),
-        inset 0 0 15px rgba(255,255,255,0.06);
+    <p>
+        Retrieve patient data from FHIR Patient resource<br>
+        Extract identifiers and demographics<br>
+        Parse JSON structure<br>
+        Identify patient with COPD
+    </p>
 
-    filter: invert(1) hue-rotate(180deg) contrast(1.1);
+    <!-- ✅ IMAGE (ONLY HERE) -->
+    <div style="margin-top:25px; text-align:center;">
 
-    transition: all 0.3s ease;
-"
+        <img src="images/pipeline.png" alt="ETL Pipeline Diagram" style="
+            width:100%;
+            max-width:900px;
+            border-radius:14px;
 
-onmouseover="
-    this.style.transform='scale(1.04)';
-    this.style.boxShadow='0 0 45px rgba(34,197,94,0.5), inset 0 0 20px rgba(255,255,255,0.08)';
-"
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            padding:14px;
 
-onmouseout="
-    this.style.transform='scale(1)';
-    this.style.boxShadow='0 0 35px rgba(34,197,94,0.35), inset 0 0 15px rgba(255,255,255,0.06)';
-"
->
+            box-shadow:
+                0 0 35px rgba(34,197,94,0.35),
+                inset 0 0 15px rgba(255,255,255,0.06);
+
+            filter: invert(1) hue-rotate(180deg) contrast(1.1);
+
+            transition: all 0.3s ease;
+        "
+
+        onmouseover="
+            this.style.transform='scale(1.04)';
+            this.style.boxShadow='0 0 45px rgba(34,197,94,0.5), inset 0 0 20px rgba(255,255,255,0.08)';
+        "
+
+        onmouseout="
+            this.style.transform='scale(1)';
+            this.style.boxShadow='0 0 35px rgba(34,197,94,0.35), inset 0 0 15px rgba(255,255,255,0.06)';
+        "
+        >
+
+        <p style="
+            margin-top:10px;
+            font-size:13px;
+            color:#94a3b8;
+        ">
+            End-to-end ETL pipeline: Extraction → Transformation → Loading with FHIR & HL7 interoperability
+        </p>
+
+    </div>
+
+</div>
 <!-- TRANSFORM -->
 <div id="transform" class="task task-box">
 <h1>⚙️ Transform Phase</h1>
