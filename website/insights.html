@@ -264,6 +264,37 @@ ul {
     </table>
 
 </div>
+    <!-- GRAPH EXPLANATION -->
+<table style="width:100%; margin-top:25px; border-collapse: collapse;">
+    <tr style="background: rgba(255,255,255,0.08);">
+        <th style="padding:15px;">Visualization</th>
+        <th style="padding:15px;">What It Shows</th>
+        <th style="padding:15px;">Insight</th>
+    </tr>
+
+    <tr>
+        <td style="padding:15px;">Bar Chart</td>
+        <td style="padding:15px;">
+            Displays the distribution of FHIR resources used in the ETL pipeline
+            (Patient, Condition, Observation, Procedure).
+        </td>
+        <td style="padding:15px;">
+            Observation data has the highest count, indicating that patient vitals
+            and measurements are the most frequently processed data in the pipeline.
+        </td>
+    </tr>
+
+    <tr>
+        <td style="padding:15px;">Pie Chart</td>
+        <td style="padding:15px;">
+            Shows the proportion of API request success versus failure during data extraction and loading.
+        </td>
+        <td style="padding:15px;">
+            A high success rate (~85%) demonstrates that the ETL pipeline is stable and reliable,
+            with minimal API failures.
+        </td>
+    </tr>
+</table>
 
     <!-- FUTURE IMPROVEMENTS -->
     <div id="future" class="card">
