@@ -12,7 +12,6 @@ body {
     color: white;
 }
 
-/* ===== MENU BUTTON ===== */
 #menuToggle {
     position: fixed;
     top: 18px;
@@ -23,7 +22,6 @@ body {
     z-index: 1100;
 }
 
-/* ===== OVERLAY ===== */
 .overlay {
     position: fixed;
     top: 0;
@@ -36,11 +34,8 @@ body {
     z-index: 900;
 }
 
-.overlay.active {
-    display: block;
-}
+.overlay.active { display: block; }
 
-/* ===== TOP NAV ===== */
 .top-nav {
     position: fixed;
     top: 0;
@@ -58,11 +53,8 @@ body {
     text-decoration: none;
 }
 
-.top-nav a:hover {
-    color: #22c55e;
-}
+.top-nav a:hover { color: #22c55e; }
 
-/* ===== SIDEBAR ===== */
 .sidebar {
     position: fixed;
     top: 0;
@@ -76,14 +68,9 @@ body {
     overflow-y: auto;
 }
 
-.sidebar.active {
-    left: 0;
-}
+.sidebar.active { left: 0; }
 
-/* ===== LINKS ===== */
-.sidebar h2 {
-    color: #22c55e;
-}
+.sidebar h2 { color: #22c55e; }
 
 .sidebar a {
     display: block;
@@ -105,19 +92,10 @@ body {
     color: black;
 }
 
-/* ===== MAIN ===== */
-.main {
-    padding: 120px 60px;
-}
+.main { padding: 120px 60px; }
 
-/* ===== TASK ===== */
-.task {
-    display: none;
-}
-
-.task.active {
-    display: block;
-}
+.task { display: none; }
+.task.active { display: block; }
 
 .task-box {
     background: #0f172a;
@@ -142,27 +120,27 @@ pre {
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
 <header class="top-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="team.html">Team</a>
-    <a href="etl.html">ETL</a>
-    <a href="insights.html">Insights</a>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="team.html">Team</a>
+<a href="etl.html">ETL</a>
+<a href="insights.html">Insights</a>
 </header>
 
 <div class="sidebar" id="sidebar">
-    <h2>ETL Tasks</h2>
+<h2>ETL Tasks</h2>
 
-    <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
-    <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
-    <a href="#" onclick="showTask(event,'load')">📤 Load</a>
+<a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
+<a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
+<a href="#" onclick="showTask(event,'load')">📤 Load</a>
 
-    <hr>
+<hr>
 
-    <a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
-    <a href="#" onclick="showTask(event,'task2')">Task 2</a>
-    <a href="#" onclick="showTask(event,'task3')">Task 3</a>
-    <a href="#" onclick="showTask(event,'task4')">Task 4</a>
-    <a href="#" onclick="showTask(event,'task5')">Task 5</a>
+<a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
+<a href="#" onclick="showTask(event,'task2')">Task 2</a>
+<a href="#" onclick="showTask(event,'task3')">Task 3</a>
+<a href="#" onclick="showTask(event,'task4')">Task 4</a>
+<a href="#" onclick="showTask(event,'task5')">Task 5</a>
 </div>
 
 <div class="main">
@@ -170,140 +148,205 @@ pre {
 <!-- EXTRACT -->
 <div id="extract" class="task task-box">
 <h1>📥 Extract Phase</h1>
+
 <p>
-We extracted patient data from OpenEMR using FHIR APIs. This step involved sending authenticated API requests and retrieving structured JSON data.
+The extraction phase retrieves raw healthcare data from the OpenEMR system using FHIR APIs.
+This step is critical because it ensures that all patient-related information is collected in a structured format.
 </p>
+
+<ul>
+<li>Established connection to OpenEMR FHIR server</li>
+<li>Authenticated API requests using access tokens</li>
+<li>Fetched Patient resources using HTTP GET requests</li>
+<li>Handled JSON response parsing</li>
+<li>Filtered relevant patient data using query parameters</li>
+<li>Validated API response status and structure</li>
+</ul>
 
 <pre>
-response = requests.get(f"{BASE_URL}/Patient", headers=headers)
-data = response.json()
+import requests
 
-print(data['entry'][0]['resource'])
+url = f"{BASE_URL}/Patient"
+headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    data = response.json()
+    print(data['entry'][0]['resource'])
+else:
+    print("Error:", response.status_code)
 </pre>
 
-<p>
-This phase ensures raw healthcare data is collected for processing.
-</p>
+<p><b>Outcome:</b> Successfully retrieved structured patient data for further processing.</p>
 </div>
 
 <!-- TRANSFORM -->
 <div id="transform" class="task task-box">
 <h1>⚙️ Transform Phase</h1>
+
 <p>
-The extracted data was cleaned and standardized using SNOMED CT codes. We mapped conditions and built parent-child relationships.
+In this phase, raw FHIR data is cleaned, standardized, and enriched using SNOMED CT terminology.
+This ensures interoperability and semantic consistency.
 </p>
+
+<ul>
+<li>Removed incomplete or inconsistent data</li>
+<li>Mapped clinical conditions using SNOMED CT codes</li>
+<li>Created parent-child relationships for diseases</li>
+<li>Structured JSON into standardized format</li>
+<li>Prepared data for downstream systems</li>
+</ul>
 
 <pre>
 condition = {
- "code": "COPD",
- "system": "SNOMED CT",
- "children": ["chronic bronchitis", "emphysema"]
+    "code": "COPD",
+    "system": "SNOMED CT",
+    "children": [
+        "chronic bronchitis",
+        "emphysema"
+    ]
 }
 </pre>
 
-<p>
-Transformation ensures consistent and meaningful clinical data.
-</p>
+<p><b>Outcome:</b> Data transformed into clinically meaningful and standardized format.</p>
 </div>
 
 <!-- LOAD -->
 <div id="load" class="task task-box">
 <h1>📤 Load Phase</h1>
+
 <p>
-The transformed data was loaded into a target EHR system using API POST requests.
+The load phase inserts transformed data into the target EHR system, ensuring accessibility and interoperability.
 </p>
+
+<ul>
+<li>Used HTTP POST requests to send data</li>
+<li>Ensured compliance with FHIR resource structure</li>
+<li>Validated response from target system</li>
+<li>Handled success and error cases</li>
+<li>Stored processed data for clinical use</li>
+</ul>
 
 <pre>
-response = requests.post(url, json=condition)
-print(response.status_code)
+response = requests.post(target_url, json=condition)
+
+if response.status_code == 201:
+    print("Data loaded successfully")
+else:
+    print("Error:", response.status_code)
 </pre>
 
-<p>
-This step enables interoperability between systems.
-</p>
+<p><b>Outcome:</b> Data successfully stored in target system.</p>
 </div>
 
 <!-- TASK 1 -->
 <div id="task1" class="task task-box active">
 <h1>Task 1: Patient Extraction</h1>
-<p>
-Retrieved patient data using FHIR Patient resource. Extracted patient ID and demographic information.
-</p>
+
+<ul>
+<li>Retrieved patient data from FHIR Patient resource</li>
+<li>Extracted patient identifiers and demographics</li>
+<li>Validated JSON structure</li>
+<li>Identified patient with COPD</li>
+<li>Stored extracted patient details</li>
+</ul>
 
 <pre>
-patient_id = data['entry'][0]['resource']['id']
-name = data['entry'][0]['resource']['name'][0]['given'][0]
+patient = data['entry'][0]['resource']
+patient_id = patient['id']
+name = patient['name'][0]['given'][0]
+
+print(patient_id, name)
 </pre>
 
-<p>
-Output: Patient successfully identified.
-</p>
+<p><b>Output:</b> Patient successfully identified and extracted.</p>
 </div>
 
 <!-- TASK 2 -->
 <div id="task2" class="task task-box">
 <h1>Task 2: Condition Mapping</h1>
-<p>
-Mapped COPD condition using SNOMED CT and explored its child concepts.
-</p>
+
+<ul>
+<li>Mapped COPD using SNOMED CT</li>
+<li>Identified related child conditions</li>
+<li>Established hierarchical relationships</li>
+<li>Ensured clinical terminology consistency</li>
+</ul>
 
 <pre>
 parent = "COPD"
 children = ["chronic bronchitis", "emphysema"]
+
+print(parent, "->", children)
 </pre>
 
-<p>
-Output: Condition hierarchy established.
-</p>
+<p><b>Output:</b> Condition hierarchy created successfully.</p>
 </div>
 
 <!-- TASK 3 -->
 <div id="task3" class="task task-box">
 <h1>Task 3: Observation</h1>
-<p>
-Recorded blood pressure using FHIR Observation resource.
-</p>
+
+<ul>
+<li>Recorded patient vital signs</li>
+<li>Captured blood pressure values</li>
+<li>Used FHIR Observation resource format</li>
+<li>Validated measurement data</li>
+</ul>
 
 <pre>
-bp = {"systolic":120,"diastolic":80}
+bp = {
+    "systolic": 120,
+    "diastolic": 80
+}
+
+print(bp)
 </pre>
 
-<p>
-Output: Patient vitals successfully added.
-</p>
+<p><b>Output:</b> Observation data successfully recorded.</p>
 </div>
 
 <!-- TASK 4 -->
 <div id="task4" class="task task-box">
 <h1>Task 4: Procedure</h1>
-<p>
-Recorded a chest X-ray procedure using FHIR Procedure resource.
-</p>
+
+<ul>
+<li>Recorded medical procedure (Chest X-ray)</li>
+<li>Used FHIR Procedure resource</li>
+<li>Stored procedure status and details</li>
+<li>Validated procedure data structure</li>
+</ul>
 
 <pre>
-procedure = {"name":"Chest X-ray","status":"completed"}
+procedure = {
+    "name": "Chest X-ray",
+    "status": "completed"
+}
+
+print(procedure)
 </pre>
 
-<p>
-Output: Procedure stored successfully.
-</p>
+<p><b>Output:</b> Procedure successfully recorded.</p>
 </div>
 
 <!-- TASK 5 -->
 <div id="task5" class="task task-box">
 <h1>Task 5: HL7 Message</h1>
-<p>
-Generated HL7 v2 message for interoperability with legacy systems.
-</p>
+
+<ul>
+<li>Converted FHIR data into HL7 v2 format</li>
+<li>Generated MSH and PID segments</li>
+<li>Ensured compatibility with legacy systems</li>
+<li>Exported HL7 message as text file</li>
+</ul>
 
 <pre>
-MSH|^~\&|...
+MSH|^~\&|SendingApp|SendingFac|ReceivingApp|ReceivingFac|20240101||ADT^A01|12345|P|2.3
 PID|||123456||Doe^John
 </pre>
 
-<p>
-Output: HL7 message generated and exported.
-</p>
+<p><b>Output:</b> HL7 message generated and ready for transmission.</p>
 </div>
 
 </div>
