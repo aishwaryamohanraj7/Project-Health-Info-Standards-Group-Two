@@ -153,7 +153,7 @@ nav a:hover {
     color:#94a3b8;
 }
 
-/* NEW SECTION STYLING */
+/* NEW SECTION */
 .section {
     margin-top:50px;
     background:#0f172a;
@@ -245,9 +245,12 @@ nav a:hover {
 <h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
 
 <p>
-This project builds an ETL pipeline that extracts patient data from OpenEMR,
-transforms it using SNOMED CT, and loads it into a Primary Care EHR,
-with HL7 v2 conversion for interoperability.
+This project demonstrates the design and implementation of a healthcare ETL (Extract, Transform, Load) pipeline using FHIR APIs.
+The system extracts patient and clinical data from OpenEMR, transforms it using SNOMED CT terminology for standardization,
+and loads it into a Primary Care EHR system.
+
+The pipeline also supports interoperability with legacy systems by converting FHIR data into HL7 v2 message format,
+ensuring seamless data exchange across modern and traditional healthcare platforms.
 </p>
 
 </div>
@@ -258,7 +261,7 @@ with HL7 v2 conversion for interoperability.
 
 </section>
 
-<!-- ✅ PURPOSE SECTION -->
+<!-- PURPOSE -->
 <div class="section">
 <h2>Purpose of the ETL Pipeline</h2>
 <p>
@@ -267,12 +270,11 @@ The ETL pipeline extracts patient and clinical data from a source FHIR server (O
 transforms the data using standardized clinical terminology (SNOMED CT),
 and loads it into a target FHIR server (Primary Care EHR).
 
-This process ensures consistent, structured, and reusable healthcare data while also supporting
-legacy systems through HL7 v2 message generation.
+This ensures consistent, structured, and reusable healthcare data while supporting legacy systems through HL7 v2 messaging.
 </p>
 </div>
 
-<!-- ✅ TECHNOLOGY TABLE -->
+<!-- TECHNOLOGY TABLE -->
 <div class="section">
 <h2>Key Tools and Technologies</h2>
 
@@ -289,37 +291,37 @@ legacy systems through HL7 v2 message generation.
 
 <tr>
 <td>Requests Library</td>
-<td>Handles API calls to FHIR servers</td>
+<td>Handles API communication</td>
 </tr>
 
 <tr>
 <td>OpenEMR FHIR API</td>
-<td>Source system for patient and condition data</td>
+<td>Source system</td>
 </tr>
 
 <tr>
 <td>Primary Care EHR FHIR API</td>
-<td>Target system where transformed data is loaded</td>
+<td>Target system</td>
 </tr>
 
 <tr>
 <td>SNOMED CT</td>
-<td>Provides standardized clinical terminology</td>
+<td>Clinical terminology mapping</td>
 </tr>
 
 <tr>
-<td>ICD-10 Mapping</td>
-<td>Supports interoperability with legacy systems</td>
+<td>HL7 v2</td>
+<td>Legacy interoperability</td>
 </tr>
 
 <tr>
-<td>HL7 v2 Messaging</td>
-<td>Converts FHIR data into HL7 format</td>
+<td>HL7apy</td>
+<td>HL7 message generation</td>
 </tr>
 
 <tr>
 <td>GitHub Pages</td>
-<td>Hosts the project website</td>
+<td>Website hosting</td>
 </tr>
 
 </table>
