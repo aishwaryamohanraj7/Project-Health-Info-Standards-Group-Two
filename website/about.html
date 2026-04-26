@@ -1,204 +1,194 @@
-<nav>
-  <a href="index.html">Home</a> |
-  <a href="about.html">About</a> |
-  <a href="team.html">Team</a> |
-  <a href="etl.html">ETL</a> |
-  <a href="insights.html">Insights</a> |
-</nav>
-<hr>
-<h1>About Page</h1>
-<p>Details about the project</p>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>About - FHIR ETL Pipeline</title>
+<title>FHIR ETL Pipeline - About</title>
 
 <style>
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #020617;
-    color: white;
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
 }
 
-/* ===== TOP NAV ===== */
-.top-nav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px 40px;
-    z-index: 999;
+/* HEADER */
+header {
+    display:flex;
+    justify-content:space-between;
+    padding:20px 40px;
 }
 
-.top-nav a {
-    color: white;
-    margin-left: 25px;
-    text-decoration: none;
+header h2 {
+    color:#22c55e;
 }
 
-.top-nav a:hover {
-    color: #22c55e;
+nav a {
+    margin-left:20px;
+    color:white;
+    text-decoration:none;
 }
 
-/* ===== SIDEBAR ===== */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px;
-    height: 100%;
-    background: linear-gradient(180deg, #022c22, #020617);
-    padding: 100px 20px;
+nav a:hover {
+    color:#22c55e;
 }
 
-.sidebar h2 {
-    color: #22c55e;
+/* CONTENT */
+.container {
+    padding:40px;
 }
 
-.sidebar a {
-    display: block;
-    padding: 10px 0;
-    color: white;
-    text-decoration: none;
+/* CARDS */
+.card {
+    background:#0f172a;
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 0 25px rgba(34,197,94,0.15);
 }
 
-.sidebar a:hover {
-    color: #22c55e;
-}
-
-/* ===== MAIN ===== */
-.main {
-    margin-left: 260px;
-    padding: 120px 40px;
-}
-
-.section {
-    margin-bottom: 40px;
-}
-
-h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #22c55e;
-    margin-bottom: 10px;
-}
-
-p {
-    color: #d1d5db;
-    line-height: 1.6;
-}
-
-/* ===== BOX STYLE ===== */
-.box {
-    background: #0f172a;
-    padding: 25px;
-    border-radius: 12px;
-    margin-top: 15px;
+.card h2 {
+    color:#22c55e;
+    margin-bottom:10px;
 }
 
 ul {
-    margin-left: 20px;
+    padding-left:20px;
+}
+
+li {
+    margin-bottom:8px;
+    color:#cbd5e1;
+}
+
+/* GRID */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:20px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<!-- ===== TOP NAV ===== -->
-<header class="top-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="team.html">Team</a>
-    <a href="etl.html">ETL</a>
-    <a href="insights.html">Insights</a>
+<header>
+<h2>FHIR ETL Pipeline</h2>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="team.html">Team</a>
+<a href="etl.html">ETL</a>
+<a href="insights.html">Insights</a>
+</nav>
 </header>
 
-<!-- ===== SIDEBAR ===== -->
-<div class="sidebar">
+<div class="container">
 
-    <h2>About</h2>
+<!-- OVERVIEW -->
+<div class="card">
+<h2>📌 Project Overview</h2>
+<p>
+This project demonstrates a healthcare ETL pipeline using FHIR APIs.
+Data is extracted from OpenEMR, transformed using SNOMED CT, and loaded into a Primary Care EHR system.
+The pipeline also supports HL7 v2 conversion for legacy system interoperability.
+</p>
+</div>
 
-    <a href="#overview">📄 Project Overview</a>
-    <a href="#purpose">🎯 Purpose</a>
-    <a href="#tech">⚙️ Technologies</a>
+<!-- OBJECTIVE -->
+<div class="card">
+<h2>🎯 Objective</h2>
+<ul>
+<li>Enable healthcare data interoperability</li>
+<li>Standardize clinical data using SNOMED CT</li>
+<li>Build an end-to-end ETL pipeline</li>
+<li>Support legacy systems using HL7 v2</li>
+</ul>
+</div>
+
+<!-- ETL FLOW -->
+<div class="card">
+<h2>⚙️ ETL Workflow</h2>
+
+<ul>
+<li><b>Extract:</b> Retrieve patient data using FHIR API</li>
+<li><b>Transform:</b> Clean data and map SNOMED codes</li>
+<li><b>Load:</b> Send processed data to target EHR</li>
+</ul>
+
+<!-- OPTIONAL IMAGE -->
+<div style="text-align:center; margin-top:20px;">
+<img src="images/pipeline.png" style="
+    width:100%;
+    max-width:800px;
+    border-radius:12px;
+    box-shadow:0 0 25px rgba(34,197,94,0.25);
+">
+</div>
 
 </div>
 
-<!-- ===== MAIN CONTENT ===== -->
-<div class="main">
+<!-- TASKS -->
+<div class="card">
+<h2>💻 Implementation Tasks</h2>
 
-    <!-- OVERVIEW -->
-    <div id="overview" class="section">
-        <h1>FHIR ETL Pipeline: Bridging Clinical Data Systems</h1>
+<div class="grid">
 
-        <div class="box">
-            <p>
-                This project implements a clinical data ETL (Extract, Transform, Load) pipeline
-                that connects two FHIR-compliant healthcare systems — an OpenEMR source server
-                and a Primary Care EHR target server.
-            </p>
+<div>
+<h3>Task 1</h3>
+<p>Patient extraction</p>
+</div>
 
-            <p>
-                The pipeline retrieves patient and clinical data, enriches it using SNOMED CT
-                terminology, and delivers structured FHIR R4 resources to a destination system.
-            </p>
+<div>
+<h3>Task 2</h3>
+<p>Condition + SNOMED mapping</p>
+</div>
 
-            <p>
-                Additionally, interoperability is achieved by converting FHIR data into HL7 v2
-                ADT messages for integration with legacy healthcare systems.
-            </p>
-        </div>
-    </div>
+<div>
+<h3>Task 3</h3>
+<p>Observation (Blood Pressure)</p>
+</div>
 
-    <!-- PURPOSE -->
-    <div id="purpose" class="section">
-        <h2>🎯 Purpose of the ETL Pipeline</h2>
+<div>
+<h3>Task 4</h3>
+<p>Procedure (Chest X-ray)</p>
+</div>
 
-        <div class="box">
-            <p>
-                Healthcare systems often operate in silos, making data exchange difficult.
-                This ETL pipeline addresses that challenge by automating:
-            </p>
+<div>
+<h3>Task 5</h3>
+<p>HL7 Message Generation</p>
+</div>
 
-            <ul>
-                <li>Extraction of patient data from OpenEMR</li>
-                <li>Transformation using standardized clinical terminology (SNOMED CT)</li>
-                <li>Loading data into a Primary Care EHR system</li>
-                <li>Conversion to HL7 v2 for interoperability</li>
-            </ul>
+</div>
 
-            <p>
-                The result is improved data consistency, reduced manual effort, and enhanced
-                clinical interoperability.
-            </p>
-        </div>
-    </div>
+</div>
 
-    <!-- TECHNOLOGIES -->
-    <div id="tech" class="section">
-        <h2>⚙️ Technologies Used</h2>
+<!-- TECHNOLOGY -->
+<div class="card">
+<h2>🛠️ Technologies Used</h2>
+<ul>
+<li>Python</li>
+<li>FHIR API</li>
+<li>SNOMED CT</li>
+<li>HL7 v2</li>
+<li>HL7apy</li>
+<li>GitHub Pages</li>
+</ul>
+</div>
 
-        <div class="box">
-            <ul>
-                <li><b>Python</b> – ETL pipeline implementation</li>
-                <li><b>FHIR API</b> – Healthcare data exchange</li>
-                <li><b>SNOMED CT</b> – Clinical terminology standardization</li>
-                <li><b>HL7 v2</b> – Legacy system interoperability</li>
-                <li><b>hl7apy</b> – HL7 message generation</li>
-                <li><b>GitHub Pages</b> – Website hosting</li>
-            </ul>
-        </div>
-    </div>
+<!-- OUTCOME -->
+<div class="card">
+<h2>🚀 Outcome</h2>
+<ul>
+<li>Successfully built ETL pipeline</li>
+<li>Achieved data standardization</li>
+<li>Enabled interoperability</li>
+<li>Generated HL7 messages</li>
+</ul>
+</div>
 
 </div>
 
