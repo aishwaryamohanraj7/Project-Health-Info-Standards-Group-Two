@@ -233,12 +233,16 @@ ul {
             <td>Data Extraction Lead</td>
             <td>
                 <ul>
-                    <li>Retrieved patient data</li>
-                    <li>API requests using Python</li>
-                    <li>Used search parameters</li>
+                    <li>Implemented FHIR API calls to retrieve patient data from OpenEMR</li>
+                    <li>Used Python requests library for API communication</li>
+                    <li>Applied search parameters to filter relevant records</li>
+                    <li>Handled authentication using access tokens</li>
+                    <li>Validated API responses and ensured proper data structure</li>
                 </ul>
             </td>
-            <td>Learned API handling.</td>
+            <td>
+                Gained hands-on experience in API integration and learned how to efficiently extract structured healthcare data.
+            </td>
         </tr>
 
         <tr>
@@ -246,12 +250,16 @@ ul {
             <td>Data Transformation Lead</td>
             <td>
                 <ul>
-                    <li>Cleaned data</li>
-                    <li>SNOMED mapping</li>
-                    <li>Handled missing data</li>
+                    <li>Cleaned and structured raw FHIR data</li>
+                    <li>Mapped clinical concepts using SNOMED CT</li>
+                    <li>Implemented parent-child relationships for medical data</li>
+                    <li>Handled missing and inconsistent values</li>
+                    <li>Prepared transformed data for loading stage</li>
                 </ul>
             </td>
-            <td>Improved transformation skills.</td>
+            <td>
+                Developed strong understanding of data transformation and healthcare standardization techniques.
+            </td>
         </tr>
 
         <tr>
@@ -259,12 +267,16 @@ ul {
             <td>Visualization & Documentation</td>
             <td>
                 <ul>
-                    <li>Created diagrams</li>
-                    <li>Documentation</li>
-                    <li>Presentation support</li>
+                    <li>Designed data visualizations including bar and pie charts</li>
+                    <li>Developed project documentation website</li>
+                    <li>Created diagrams explaining ETL workflow</li>
+                    <li>Structured insights, challenges, and lessons learned sections</li>
+                    <li>Supported presentation and improved content clarity</li>
                 </ul>
             </td>
-            <td>Improved storytelling.</td>
+            <td>
+                Improved skills in visualization, documentation, and presenting technical concepts effectively.
+            </td>
         </tr>
 
     </table>
@@ -300,7 +312,7 @@ document.addEventListener("click", function(e) {
 const rows = document.querySelectorAll("#teamTable tr");
 
 rows.forEach((row, index) => {
-    if (index === 0) return; // skip header
+    if (index === 0) return;
 
     row.addEventListener("click", () => {
         rows.forEach(r => r.classList.remove("selected"));
