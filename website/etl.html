@@ -126,34 +126,21 @@ body {
     box-shadow: 0 0 20px rgba(34,197,94,0.2);
 }
 
-h1 {
-    margin-bottom: 15px;
-}
-
-p {
-    color: #d1d5db;
-}
-
 pre {
     background: #020617;
     padding: 15px;
     border-radius: 8px;
-    overflow-x: auto;
     color: #22c55e;
-    margin-top: 15px;
+    overflow-x: auto;
 }
 </style>
 </head>
 
 <body>
 
-<!-- MENU BUTTON -->
 <div id="menuToggle" onclick="openMenu()">☰</div>
-
-<!-- OVERLAY -->
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
-<!-- TOP NAV -->
 <header class="top-nav">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -162,192 +149,181 @@ pre {
     <a href="insights.html">Insights</a>
 </header>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-
     <h2>ETL Tasks</h2>
 
     <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
     <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
     <a href="#" onclick="showTask(event,'load')">📤 Load</a>
 
-    <hr style="border:0.5px solid #1f2937; margin:15px 0;">
+    <hr>
 
     <a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
     <a href="#" onclick="showTask(event,'task2')">Task 2</a>
     <a href="#" onclick="showTask(event,'task3')">Task 3</a>
     <a href="#" onclick="showTask(event,'task4')">Task 4</a>
     <a href="#" onclick="showTask(event,'task5')">Task 5</a>
-
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-    <!-- EXTRACT -->
-    <div id="extract" class="task task-box">
-        <h1>📥 Extract Phase</h1>
-        <p>
-        Data is extracted from OpenEMR using FHIR APIs. This involves sending authenticated HTTP requests
-        and retrieving structured JSON data.
-        </p>
+<!-- EXTRACT -->
+<div id="extract" class="task task-box">
+<h1>📥 Extract Phase</h1>
+<p>
+We extracted patient data from OpenEMR using FHIR APIs. This step involved sending authenticated API requests and retrieving structured JSON data.
+</p>
 
 <pre>
-import requests
-
-url = "https://api.openemr.com/fhir/Patient"
-headers = {"Authorization": "Bearer ACCESS_TOKEN"}
-
-response = requests.get(url, headers=headers)
+response = requests.get(f"{BASE_URL}/Patient", headers=headers)
 data = response.json()
 
-print(data)
+print(data['entry'][0]['resource'])
 </pre>
 
-        <p>
-        This step ensures raw patient data is collected for further processing.
-        </p>
-    </div>
+<p>
+This phase ensures raw healthcare data is collected for processing.
+</p>
+</div>
 
-    <!-- TRANSFORM -->
-    <div id="transform" class="task task-box">
-        <h1>⚙️ Transform Phase</h1>
-        <p>
-        Raw FHIR data is cleaned and standardized using SNOMED CT terminology.
-        Parent-child relationships are used to structure clinical concepts.
-        </p>
+<!-- TRANSFORM -->
+<div id="transform" class="task task-box">
+<h1>⚙️ Transform Phase</h1>
+<p>
+The extracted data was cleaned and standardized using SNOMED CT codes. We mapped conditions and built parent-child relationships.
+</p>
 
 <pre>
 condition = {
-    "code": "COPD",
-    "system": "SNOMED CT",
-    "children": ["chronic bronchitis", "emphysema"]
+ "code": "COPD",
+ "system": "SNOMED CT",
+ "children": ["chronic bronchitis", "emphysema"]
 }
-
-print(condition)
 </pre>
 
-        <p>
-        Transformation ensures consistency and prepares data for interoperability.
-        </p>
-    </div>
+<p>
+Transformation ensures consistent and meaningful clinical data.
+</p>
+</div>
 
-    <!-- LOAD -->
-    <div id="load" class="task task-box">
-        <h1>📤 Load Phase</h1>
-        <p>
-        Transformed data is loaded into a target EHR system using API requests.
-        </p>
+<!-- LOAD -->
+<div id="load" class="task task-box">
+<h1>📤 Load Phase</h1>
+<p>
+The transformed data was loaded into a target EHR system using API POST requests.
+</p>
 
 <pre>
-post_url = "https://api.targetehr.com/fhir/Condition"
-
-response = requests.post(post_url, json=condition)
+response = requests.post(url, json=condition)
 print(response.status_code)
 </pre>
 
-        <p>
-        This step ensures processed data is stored and accessible for clinical use.
-        </p>
-    </div>
+<p>
+This step enables interoperability between systems.
+</p>
+</div>
 
-    <!-- TASK 1 -->
-    <div id="task1" class="task task-box active">
-        <h1>Task 1: Patient Extraction</h1>
-        <p>
-        Patient data is retrieved from the FHIR API and relevant patient information is extracted.
-        </p>
+<!-- TASK 1 -->
+<div id="task1" class="task task-box active">
+<h1>Task 1: Patient Extraction</h1>
+<p>
+Retrieved patient data using FHIR Patient resource. Extracted patient ID and demographic information.
+</p>
 
 <pre>
 patient_id = data['entry'][0]['resource']['id']
-print("Patient ID:", patient_id)
+name = data['entry'][0]['resource']['name'][0]['given'][0]
 </pre>
-    </div>
 
-    <!-- TASK 2 -->
-    <div id="task2" class="task task-box">
-        <h1>Task 2: Condition</h1>
-        <p>
-        SNOMED CT codes are applied to identify conditions such as COPD and its related child concepts.
-        </p>
+<p>
+Output: Patient successfully identified.
+</p>
+</div>
+
+<!-- TASK 2 -->
+<div id="task2" class="task task-box">
+<h1>Task 2: Condition Mapping</h1>
+<p>
+Mapped COPD condition using SNOMED CT and explored its child concepts.
+</p>
 
 <pre>
 parent = "COPD"
 children = ["chronic bronchitis", "emphysema"]
-
-print(parent, "->", children)
 </pre>
-    </div>
 
-    <!-- TASK 3 -->
-    <div id="task3" class="task task-box">
-        <h1>Task 3: Observation</h1>
-        <p>
-        Observations such as blood pressure are recorded using FHIR Observation resource.
-        </p>
+<p>
+Output: Condition hierarchy established.
+</p>
+</div>
+
+<!-- TASK 3 -->
+<div id="task3" class="task task-box">
+<h1>Task 3: Observation</h1>
+<p>
+Recorded blood pressure using FHIR Observation resource.
+</p>
 
 <pre>
-bp = {
-    "systolic": 120,
-    "diastolic": 80
-}
-print(bp)
+bp = {"systolic":120,"diastolic":80}
 </pre>
-    </div>
 
-    <!-- TASK 4 -->
-    <div id="task4" class="task task-box">
-        <h1>Task 4: Procedure</h1>
-        <p>
-        Medical procedures like chest X-ray are recorded using Procedure resource.
-        </p>
+<p>
+Output: Patient vitals successfully added.
+</p>
+</div>
+
+<!-- TASK 4 -->
+<div id="task4" class="task task-box">
+<h1>Task 4: Procedure</h1>
+<p>
+Recorded a chest X-ray procedure using FHIR Procedure resource.
+</p>
 
 <pre>
-procedure = {
-    "name": "Chest X-ray",
-    "status": "completed"
-}
-print(procedure)
+procedure = {"name":"Chest X-ray","status":"completed"}
 </pre>
-    </div>
 
-    <!-- TASK 5 -->
-    <div id="task5" class="task task-box">
-        <h1>Task 5: HL7 Message</h1>
-        <p>
-        HL7 v2 message is generated for interoperability with legacy systems.
-        </p>
+<p>
+Output: Procedure stored successfully.
+</p>
+</div>
+
+<!-- TASK 5 -->
+<div id="task5" class="task task-box">
+<h1>Task 5: HL7 Message</h1>
+<p>
+Generated HL7 v2 message for interoperability with legacy systems.
+</p>
 
 <pre>
-MSH|^~\&|SendingApp|SendingFac|ReceivingApp|ReceivingFac|20240101||ADT^A01|12345|P|2.3
+MSH|^~\&|...
 PID|||123456||Doe^John
 </pre>
-    </div>
+
+<p>
+Output: HL7 message generated and exported.
+</p>
+</div>
 
 </div>
 
 <script>
-
-function openMenu() {
-    document.getElementById("sidebar").classList.add("active");
-    document.getElementById("overlay").classList.add("active");
+function openMenu(){
+document.getElementById("sidebar").classList.add("active");
+document.getElementById("overlay").classList.add("active");
 }
-
-function closeMenu() {
-    document.getElementById("sidebar").classList.remove("active");
-    document.getElementById("overlay").classList.remove("active");
+function closeMenu(){
+document.getElementById("sidebar").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
 }
-
-function showTask(event, id) {
-    document.querySelectorAll(".task").forEach(t => t.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-
-    document.querySelectorAll(".sidebar a").forEach(a => a.classList.remove("active"));
-    event.target.classList.add("active");
-
-    closeMenu();
+function showTask(e,id){
+document.querySelectorAll(".task").forEach(t=>t.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));
+e.target.classList.add("active");
+closeMenu();
 }
-
 </script>
 
 </body>
