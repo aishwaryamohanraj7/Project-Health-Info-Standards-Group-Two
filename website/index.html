@@ -38,12 +38,10 @@ body {
     z-index:1000;
 }
 
-/* SIDEBAR ACTIVE */
 .sidebar.active {
     left:0;
 }
 
-/* SIDEBAR TEXT */
 .sidebar h2 {
     color:#22c55e;
 }
@@ -54,7 +52,6 @@ body {
     margin-bottom:20px;
 }
 
-/* NAV SECTIONS */
 .nav-section {
     margin-top:15px;
 }
@@ -64,7 +61,6 @@ body {
     margin-bottom:5px;
 }
 
-/* LINKS */
 .nav-link {
     display:block;
     color:white;
@@ -78,13 +74,12 @@ body {
     color:#22c55e;
 }
 
-/* MAIN CONTENT */
+/* MAIN */
 .main {
     transition:0.3s;
     padding:40px;
 }
 
-/* SHIFT WHEN SIDEBAR OPEN */
 .main.shift {
     margin-left:260px;
 }
@@ -133,19 +128,16 @@ nav a:hover {
     width:350px;
 }
 
-/* GLOSSY SUMMARY */
+/* SUMMARY */
 .summary {
     margin-top:40px;
     padding:30px;
     border-radius:20px;
-
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(12px);
-
     box-shadow:
         0 10px 30px rgba(0,0,0,0.7),
         inset 0 1px 0 rgba(255,255,255,0.08);
-
     display:flex;
     justify-content:space-around;
     flex-wrap:wrap;
@@ -156,13 +148,37 @@ nav a:hover {
     width:160px;
 }
 
-.summary-box h3 {
-    margin-top:10px;
-}
-
 .summary-box p {
     font-size:13px;
     color:#94a3b8;
+}
+
+/* NEW SECTION STYLING */
+.section {
+    margin-top:50px;
+    background:#0f172a;
+    padding:25px;
+    border-radius:15px;
+}
+
+.section h2 {
+    color:#22c55e;
+    margin-bottom:15px;
+}
+
+.table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table th, .table td {
+    border:1px solid #334155;
+    padding:10px;
+    text-align:left;
+}
+
+.table th {
+    background:#1e293b;
 }
 
 </style>
@@ -170,22 +186,18 @@ nav a:hover {
 
 <body>
 
-<!-- ☰ BUTTON -->
 <div id="menuToggle" onclick="toggleSidebar()">☰</div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
-<h2> FHIR ETL PIPELINE</h2>
+<h2>FHIR ETL PIPELINE</h2>
 <p class="subtitle">Bridging Clinical Data Systems</p>
 
-<!-- HOME -->
 <div class="nav-section">
     <div class="nav-section-title">🏠 HOME</div>
     <a href="index.html" class="nav-link">Project Overview</a>
 </div>
 
-<!-- ETL -->
 <div class="nav-section">
     <div class="nav-section-title">⚙️ ETL PIPELINE</div>
     <a href="etl.html" class="nav-link">Extraction</a>
@@ -194,20 +206,17 @@ nav a:hover {
     <a href="etl.html" class="nav-link">Five Coding Tasks</a>
 </div>
 
-<!-- INSIGHTS -->
 <div class="nav-section">
     <div class="nav-section-title">📊 INSIGHTS</div>
     <a href="insights.html" class="nav-link">Key Insights</a>
     <a href="insights.html" class="nav-link">Visualizations</a>
 </div>
 
-<!-- TEAM -->
 <div class="nav-section">
     <div class="nav-section-title">👥 TEAM</div>
     <a href="team.html" class="nav-link">Team Contribution</a>
 </div>
 
-<!-- ABOUT -->
 <div class="nav-section">
     <div class="nav-section-title">📄 ABOUT</div>
     <a href="about.html" class="nav-link">Presentation Content</a>
@@ -215,7 +224,6 @@ nav a:hover {
 
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
 <header>
@@ -230,7 +238,6 @@ nav a:hover {
 </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
 
 <div class="hero-left">
@@ -250,6 +257,73 @@ with HL7 v2 conversion for interoperability.
 </div>
 
 </section>
+
+<!-- ✅ PURPOSE SECTION -->
+<div class="section">
+<h2>Purpose of the ETL Pipeline</h2>
+<p>
+The purpose of this project is to enable seamless healthcare data interoperability between systems.
+The ETL pipeline extracts patient and clinical data from a source FHIR server (OpenEMR),
+transforms the data using standardized clinical terminology (SNOMED CT),
+and loads it into a target FHIR server (Primary Care EHR).
+
+This process ensures consistent, structured, and reusable healthcare data while also supporting
+legacy systems through HL7 v2 message generation.
+</p>
+</div>
+
+<!-- ✅ TECHNOLOGY TABLE -->
+<div class="section">
+<h2>Key Tools and Technologies</h2>
+
+<table class="table">
+<tr>
+<th>Tool / Technology</th>
+<th>Role in the Project</th>
+</tr>
+
+<tr>
+<td>Python</td>
+<td>Core scripting language for ETL tasks</td>
+</tr>
+
+<tr>
+<td>Requests Library</td>
+<td>Handles API calls to FHIR servers</td>
+</tr>
+
+<tr>
+<td>OpenEMR FHIR API</td>
+<td>Source system for patient and condition data</td>
+</tr>
+
+<tr>
+<td>Primary Care EHR FHIR API</td>
+<td>Target system where transformed data is loaded</td>
+</tr>
+
+<tr>
+<td>SNOMED CT</td>
+<td>Provides standardized clinical terminology</td>
+</tr>
+
+<tr>
+<td>ICD-10 Mapping</td>
+<td>Supports interoperability with legacy systems</td>
+</tr>
+
+<tr>
+<td>HL7 v2 Messaging</td>
+<td>Converts FHIR data into HL7 format</td>
+</tr>
+
+<tr>
+<td>GitHub Pages</td>
+<td>Hosts the project website</td>
+</tr>
+
+</table>
+</div>
 
 <!-- SUMMARY -->
 <div class="summary">
@@ -287,7 +361,6 @@ with HL7 v2 conversion for interoperability.
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("active");
