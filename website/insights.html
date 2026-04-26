@@ -14,86 +14,136 @@ body {
     color: white;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 15px 40px;
     background: rgba(0,0,0,0.6);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo { color:#00ff88; }
+.logo {
+    color: #00ff88;
+}
 
 nav a {
-    color:white;
-    margin-left:20px;
-    text-decoration:none;
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
 }
 
-nav a:hover { color:#00ff88; }
+nav a:hover {
+    color: #00ff88;
+}
 
-/* CONTENT */
+/* ===== MENU BUTTON ===== */
+.menu-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #00ff88;
+}
+
+/* ===== DROPDOWN ===== */
+.dropdown {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(16px);
+    padding: 30px 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.dropdown.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* MENU BOX */
+.menu-box {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    padding: 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.15),
+        inset 0 0 10px rgba(255,255,255,0.05);
+}
+
+.menu-box h3 {
+    color: #00ff88;
+}
+
+.menu-box a {
+    display: block;
+    color: white;
+    padding: 6px 0;
+    text-decoration: none;
+}
+
+.menu-box a:hover {
+    color: #00ff88;
+}
+
+/* ===== CONTENT ===== */
 .container {
     padding: 50px;
 }
 
 .title {
-    text-align:center;
-    color:#00ff88;
-    margin-bottom:40px;
+    text-align: center;
+    color: #00ff88;
+    margin-bottom: 40px;
 }
 
-/* CARDS */
+/* ===== GLOSSY CARDS ===== */
 .card {
-    margin-bottom:30px;
-    padding:25px;
-    border-radius:15px;
-    background: rgba(255,255,255,0.05);
+    margin-bottom: 30px;
+    padding: 25px;
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.06);
     backdrop-filter: blur(14px);
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 0 25px rgba(0,255,136,0.12);
+    border: 1px solid rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 25px rgba(0,255,136,0.12),
+        inset 0 0 10px rgba(255,255,255,0.05);
+
+    transition: 0.3s ease;
 }
 
-.card h3 { color:#00ff88; }
-
-ul { padding-left:20px; }
-
-/* CHARTS */
-.chart-container {
-    display:flex;
-    justify-content:center;
-    gap:40px;
-    flex-wrap:wrap;
-    margin-top:20px;
+/* HOVER GLOW */
+.card:hover {
+    transform: scale(1.01);
+    box-shadow:
+        0 0 35px rgba(0,255,136,0.35),
+        inset 0 0 15px rgba(255,255,255,0.08);
 }
 
-.chart-container img {
-    width:350px;
-    border-radius:12px;
-    box-shadow:0 0 20px rgba(0,255,136,0.2);
+/* HEADINGS */
+.card h3 {
+    color: #00ff88;
 }
 
-/* TABLE */
-.table {
-    width:100%;
-    border-collapse:collapse;
-    margin-top:20px;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.table th {
-    background:#1e293b;
-    padding:12px;
-}
-
-.table td {
-    padding:12px;
-    border-top:1px solid #334155;
-}
-
-.table tr:hover {
-    background:rgba(0,255,136,0.05);
+/* LIST */
+ul {
+    margin-top: 10px;
+    padding-left: 20px;
 }
 
 </style>
@@ -101,100 +151,114 @@ ul { padding-left:20px; }
 
 <body>
 
+<!-- HEADER -->
 <header>
-<h2 class="logo">FHIR ETL Pipeline</h2>
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="team.html">Team</a>
-<a href="etl.html">ETL</a>
-<a href="insights.html">Insights</a>
-</nav>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <h2 class="logo">FHIR ETL Pipeline</h2>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </nav>
 </header>
 
+<!-- DROPDOWN -->
+<div id="dropdown" class="dropdown">
+
+    <div class="menu-box">
+        <h3>🏠 Home</h3>
+        <a href="index.html">Project Overview</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>⚙️ ETL Pipeline</h3>
+        <a href="etl.html">Extraction</a>
+        <a href="etl.html">Transformation</a>
+        <a href="etl.html">Loading</a>
+        <a href="etl.html">Five Tasks</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>📊 Insights</h3>
+        <a href="#key">Key Insights</a>
+        <a href="#challenges">Challenges</a>
+        <a href="#lessons">Lessons Learned</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>👥 Team</h3>
+        <a href="team.html">Team Contribution</a>
+    </div>
+
+    <div class="menu-box">
+        <h3>📄 About</h3>
+        <a href="about.html">Presentation Content</a>
+    </div>
+
+</div>
+
+<!-- CONTENT -->
 <div class="container">
 
-<h2 class="title">📊 FHIR ETL Pipeline Insights</h2>
+    <h2 class="title">📊 FHIR ETL Pipeline Insights</h2>
 
-<!-- KEY INSIGHTS -->
-<div class="card">
-<h3>📊 Key Insights</h3>
-<ul>
-<li>FHIR APIs enable structured healthcare data exchange</li>
-<li>ETL pipelines integrate data from multiple systems</li>
-<li>SNOMED CT improves semantic interoperability</li>
-<li>Parent-child relationships help analyze clinical hierarchies</li>
-<li>Modular FHIR resources improve scalability</li>
-</ul>
-</div>
+    <div id="key" class="card">
+        <h3>📊 Key Insights</h3>
+        <ul>
+            <li>FHIR APIs provide structured healthcare data</li>
+            <li>Transformation ensures consistency</li>
+            <li>SNOMED improves interoperability</li>
+        </ul>
+    </div>
 
-<!-- CHALLENGES -->
-<div class="card">
-<h3>⚠️ Challenges Faced</h3>
-<ul>
-<li>API authentication handling</li>
-<li>Incomplete FHIR responses</li>
-<li>Complex FHIR resource structures</li>
-<li>SNOMED mapping complexity</li>
-<li>HL7 conversion challenges</li>
-</ul>
-</div>
+    <div id="challenges" class="card">
+        <h3>⚠️ Challenges Faced</h3>
+        <ul>
+            <li>API authentication</li>
+            <li>Incomplete data</li>
+            <li>FHIR complexity</li>
+        </ul>
+    </div>
 
-<!-- LESSONS -->
-<div class="card">
-<h3>💡 Lessons Learned</h3>
-<ul>
-<li>Validation is critical</li>
-<li>Standardization improves interoperability</li>
-<li>Structured pipelines improve quality</li>
-<li>Error handling is essential</li>
-</ul>
-</div>
-
-<!-- VISUALIZATION -->
-<div class="card">
-<h3>📈 Data Visualization</h3>
-
-<div class="chart-container">
-    <img src="images/etl_chart.png">
-    <img src="images/success_pie.png">
-</div>
-
-<table class="table">
-<tr>
-<th>Visualization</th>
-<th>What It Shows</th>
-<th>Insight</th>
-</tr>
-
-<tr>
-<td>Bar Chart</td>
-<td>Distribution of FHIR resources (Patient, Condition, Observation, Procedure)</td>
-<td>Observation data is most frequent, indicating higher clinical data capture in vitals and measurements</td>
-</tr>
-
-<tr>
-<td>Pie Chart</td>
-<td>API request success vs failure</td>
-<td>Majority of API calls were successful, showing stable ETL performance with minor data issues</td>
-</tr>
-
-</table>
+    <div id="lessons" class="card">
+        <h3>💡 Lessons Learned</h3>
+        <ul>
+            <li>Validation is critical</li>
+            <li>Structured pipelines improve quality</li>
+        </ul>
+    </div>
 
 </div>
 
-<!-- FUTURE -->
-<div class="card">
-<h3>🚀 Future Improvements</h3>
-<ul>
-<li>Automate ETL pipeline</li>
-<li>Add dashboards</li>
-<li>Integrate more FHIR resources</li>
-<li>Improve scalability</li>
-</ul>
-</div>
+<!-- SCRIPT -->
+<script>
 
-</div>
+const dropdown = document.getElementById("dropdown");
+
+function toggleMenu() {
+    dropdown.classList.toggle("active");
+}
+
+/* AUTO CLOSE ON CLICK */
+document.querySelectorAll(".dropdown a").forEach(link => {
+    link.addEventListener("click", () => {
+        dropdown.classList.remove("active");
+    });
+});
+
+/* CLICK OUTSIDE CLOSE */
+document.addEventListener("click", function(e) {
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+        dropdown.classList.remove("active");
+    }
+});
+
+</script>
 
 </body>
 </html>
