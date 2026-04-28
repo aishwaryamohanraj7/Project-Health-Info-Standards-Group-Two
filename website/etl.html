@@ -402,7 +402,8 @@ This ensures interoperability and semantic consistency.
 <li>Prepared data for downstream systems</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 condition = {
     "code": "COPD",
     "system": "SNOMED CT",
@@ -411,9 +412,11 @@ condition = {
         "emphysema"
     ]
 }
-</pre>
-
+</code></pre>
+</div>
+<div class="output-box">
 <p><b>Outcome:</b> Data transformed into clinically meaningful and standardized format.</p>
+    <div class="code-box">
 </div>
 
 <!-- LOAD -->
@@ -432,14 +435,17 @@ The load phase inserts transformed data into the target EHR system, ensuring acc
 <li>Stored processed data for clinical use</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 response = requests.post(target_url, json=condition)
 
 if response.status_code == 201:
     print("Data loaded successfully")
 else:
     print("Error:", response.status_code)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Outcome:</b> Data successfully stored in target system.</p>
 </div>
@@ -468,6 +474,7 @@ print(patient_id, name)
     <img src="images/T%201%20pt%20details.png">
     <img src="images/t%201%20parent.png">
 </div>
+    </div>
 
 <!-- TASK 2 -->
 <div id="task2" class="task task-box">
