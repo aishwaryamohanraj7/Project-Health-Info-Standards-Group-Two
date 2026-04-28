@@ -437,16 +437,20 @@ The load phase inserts transformed data into the target EHR system, ensuring acc
 <li>Stored processed data for clinical use</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 response = requests.post(target_url, json=condition)
 
 if response.status_code == 201:
     print("Data loaded successfully")
 else:
     print("Error:", response.status_code)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Outcome:</b> Data successfully stored in target system.</p>
+    </div>
 </div>
 
 <!-- TASK 1 -->
@@ -461,17 +465,21 @@ else:
 <li>Stored extracted patient details</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 patient = data['entry'][0]['resource']
 patient_id = patient['id']
 name = patient['name'][0]['given'][0]
 
 print(patient_id, name)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Output:</b> Patient successfully identified and extracted.</p>
     <img src="images/T%201%20pt%20details.png">
     <img src="images/t%201%20parent.png">
+    </div>
 </div>
 
 <!-- TASK 2 -->
@@ -485,15 +493,19 @@ print(patient_id, name)
 <li>Ensured clinical terminology consistency</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 parent = "COPD"
 children = ["chronic bronchitis", "emphysema"]
 
 print(parent, "->", children)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Output:</b> Condition hierarchy created successfully.</p>
     <img src="images/t%202%20child.png">
+    </div>
 </div>
 
 <!-- TASK 3 -->
@@ -507,17 +519,21 @@ print(parent, "->", children)
 <li>Validated measurement data</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 bp = {
     "systolic": 120,
     "diastolic": 80
 }
 
 print(bp)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Output:</b> Observation data successfully recorded.</p>
     <img src="images/T%203%20obbp.png">
+    </div>
 </div>
 
 <!-- TASK 4 -->
@@ -531,18 +547,22 @@ print(bp)
 <li>Validated procedure data structure</li>
 </ul>
 
-<pre>
+<div class="code-box">
+<pre><code>
 procedure = {
     "name": "Chest X-ray",
     "status": "completed"
 }
 
 print(procedure)
-</pre>
+</code></pre>
+</div>
+<div class="output-box">
 
 <p><b>Output:</b> Procedure successfully recorded.</p>
     <img src="images/task%204%20procedure.png">
     <img src="images/radiology%20workflow.png">
+    </div>
 </div>
 
 <!-- TASK 5 -->
