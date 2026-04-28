@@ -22,6 +22,7 @@ body {
     justify-content: flex-end;
     padding: 20px 40px;
     z-index: 999;
+    background: rgba(2,6,23,0.9);
 }
 
 .top-nav a {
@@ -30,17 +31,16 @@ body {
     text-decoration: none;
 }
 
-.top-nav a:hover { color: #22c55e; }
+.top-nav a:hover {
+    color: #22c55e;
+}
 
-/* ===== ETL TOP BAR (FORMER SIDEBAR) ===== */
+/* ===== ETL TOP BAR (FIXED ISSUE HERE) ===== */
 .sidebar {
-    position: fixed;
-    top: 70px;
-    left: 0;
+    position: relative;   /* ✅ FIXED (was fixed before) */
     width: 100%;
     background: linear-gradient(90deg, #022c22, #020617);
     padding: 15px 20px;
-    z-index: 1000;
 
     display: flex;
     align-items: center;
@@ -52,13 +52,12 @@ body {
 }
 
 .sidebar h2 {
-    margin-right: 20px;
-    white-space: nowrap;
     color: #22c55e;
+    margin-right: 20px;
 }
 
+/* ===== BUTTON STYLE ===== */
 .sidebar a {
-    display: inline-block;
     padding: 10px 18px;
     border-radius: 25px;
     border: 1px solid #22c55e;
@@ -79,56 +78,65 @@ body {
 
 /* ===== MAIN ===== */
 .main {
-    padding: 160px 60px 60px;
+    padding: 100px 60px 60px;  /* adjusted spacing */
 }
 
 /* ===== TASK ===== */
-.task { display: none; }
-.task.active { display: block; }
+.task {
+    display: none;
+}
+
+.task.active {
+    display: block;
+}
 
 .task-box {
     background: #0f172a;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(34,197,94,0.2);
+    margin-bottom: 40px;
 }
 
-pre {
-    background: #020617;
-    padding: 15px;
-    border-radius: 8px;
-    color: #22c55e;
-    overflow-x: auto;
+h1 {
+    margin-bottom: 15px;
+}
+
+p, li {
+    color: #d1d5db;
 }
 </style>
 </head>
 
 <body>
 
+<!-- TOP NAV -->
 <header class="top-nav">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="team.html">Team</a>
-<a href="etl.html">ETL</a>
-<a href="insights.html">Insights</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="team.html">Team</a>
+    <a href="etl.html">ETL</a>
+    <a href="insights.html">Insights</a>
 </header>
 
-<!-- TOP ETL BAR -->
+<!-- ETL TOP BAR -->
 <div class="sidebar">
-<h2>ETL Tasks</h2>
+    <h2>ETL Tasks</h2>
 
-<a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
-<a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
-<a href="#" onclick="showTask(event,'load')">📤 Load</a>
+    <a href="#" onclick="showTask(event,'extract')">📥 Extract</a>
+    <a href="#" onclick="showTask(event,'transform')">⚙️ Transform</a>
+    <a href="#" onclick="showTask(event,'load')">📤 Load</a>
 
-<a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
-<a href="#" onclick="showTask(event,'task2')">Task 2</a>
-<a href="#" onclick="showTask(event,'task3')">Task 3</a>
-<a href="#" onclick="showTask(event,'task4')">Task 4</a>
-<a href="#" onclick="showTask(event,'task5')">Task 5</a>
+    <a href="#" onclick="showTask(event,'task1')" class="active">Task 1</a>
+    <a href="#" onclick="showTask(event,'task2')">Task 2</a>
+    <a href="#" onclick="showTask(event,'task3')">Task 3</a>
+    <a href="#" onclick="showTask(event,'task4')">Task 4</a>
+    <a href="#" onclick="showTask(event,'task5')">Task 5</a>
 </div>
 
+<!-- MAIN -->
 <div class="main">
+
 
 <!-- EXTRACT -->
 <div id="extract" class="task task-box">
