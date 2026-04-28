@@ -435,17 +435,14 @@ The load phase inserts transformed data into the target EHR system, ensuring acc
 <li>Stored processed data for clinical use</li>
 </ul>
 
-<div class="code-box">
-<pre><code>
+
 response = requests.post(target_url, json=condition)
 
 if response.status_code == 201:
     print("Data loaded successfully")
 else:
     print("Error:", response.status_code)
-</code></pre>
-</div>
-<div class="output-box">
+
 
 <p><b>Outcome:</b> Data successfully stored in target system.</p>
 </div>
