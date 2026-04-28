@@ -416,9 +416,8 @@ condition = {
 </div>
 <div class="output-box">
 <p><b>Outcome:</b> Data transformed into clinically meaningful and standardized format.</p>
-    </div>
 
-
+</div>
 
 <!-- LOAD -->
 <div id="load" class="task task-box">
@@ -436,14 +435,14 @@ The load phase inserts transformed data into the target EHR system, ensuring acc
 <li>Stored processed data for clinical use</li>
 </ul>
 
-
+<pre>
 response = requests.post(target_url, json=condition)
 
 if response.status_code == 201:
     print("Data loaded successfully")
 else:
     print("Error:", response.status_code)
-
+</pre>
 
 <p><b>Outcome:</b> Data successfully stored in target system.</p>
 </div>
