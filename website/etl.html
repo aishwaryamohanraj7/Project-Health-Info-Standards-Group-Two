@@ -318,7 +318,10 @@ This step is critical because it ensures that all patient-related information is
 <li>Validated API response status and structure</li>
 </ul>
 
-<pre>
+<h3 class="code-title">Code</h3>
+
+<div class="code-box">
+<pre><code
 import requests
 
 url = f"{BASE_URL}/Patient"
@@ -331,10 +334,14 @@ if response.status_code == 200:
     print(data['entry'][0]['resource'])
 else:
     print("Error:", response.status_code)
-</pre>
+</code></pre>
+</div>
+
+<div class="output-box">
 
 <p><b>Outcome:</b> Successfully retrieved structured patient data for further processing.</p>
-    <!-- PLACE THIS BELOW YOUR EXTRACT CONTENT -->
+    </div>
+
 <div style="margin-top:25px; text-align:center;">
 
     <img src="images/pipeline.png" alt="ETL Pipeline Diagram" style="
