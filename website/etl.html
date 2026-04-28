@@ -499,13 +499,47 @@ print(procedure)
 <li>Exported HL7 message as text file</li>
 </ul>
 
-<pre>
+<div class="code-container">
+<pre><code>
 MSH|^~\&|OpenEMR|LudyHospital|PrimaryCare|System|20260428002841||ADT^A01|MSG20260428002841|P|2.5
 PID|1||9d03b032-3e4f-4ddb-b385-55a3f8a6d4f2^^^OpenEMR^MR||Abshire^David^^^||19960929|M|||393 Cole Knoll Unit 63^^Malden^Massachusetts^02155^USA
-PV1|1|O|Clinic^Room1^Bed1|||12345^Abshire^David^^^Dr|12345^Abshire^David^^^Dr||||||||||V20260428002841
-OBX|1|NM|55284-4^Blood Pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||20260428002841
+PV1|1|O|Clinic^Room1^Bed1|||12345^Abshire^David^^^Dr||||||||||V20260428002841
+OBX|1|NM|55284-4^Blood pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||20260428002841
 DG1|1||J44.9^Chronic obstructive pulmonary disease^I10|Chronic obstructive pulmonary disease|20260428002841|A
-</pre>
+</code></pre>
+</div>
+    .code-container {
+    margin-top: 25px;
+    border-radius: 14px;
+    padding: 18px;
+    overflow-x: auto;
+
+    /* DARK BASE */
+    background: linear-gradient(145deg, #020617, #020617);
+
+    /* GLOSS / GLASS EFFECT */
+    backdrop-filter: blur(10px);
+
+    /* NEON GLOW */
+    box-shadow:
+        0 0 25px rgba(34,197,94,0.25),
+        inset 0 0 10px rgba(34,197,94,0.15);
+
+    border: 1px solid rgba(34,197,94,0.4);
+}
+
+.code-container pre {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #22c55e;   /* neon green */
+    font-family: "Courier New", monospace;
+}
+
+/* Optional: subtle syntax feel */
+.code-container code {
+    white-space: pre;
+}
 
 <p><b>Output:</b> HL7 message generated and ready for transmission.</p>
     <img src="images/t%205%20hl7.png">
