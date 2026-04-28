@@ -308,6 +308,11 @@ The purpose of this project is to enable seamless healthcare data interoperabili
 The ETL pipeline extracts patient and clinical data from a source FHIR server (OpenEMR),
 transforms the data using standardized clinical terminology (SNOMED CT),
 and loads it into a target FHIR server (Primary Care EHR).
+Healthcare organizations routinely operate multiple electronic health record systems that do not communicate natively.
+    This pipeline solves that problem by automating the extraction of patient demographics and clinical conditions
+    from one FHIR server, applying standardized clinical terminology transformations, and loading the enriched
+    data into a second EHR system - all without manual data entry.
+    The result is faster, more accurate patient data migration and a foundation for true clinical interoperability.
 </p>
 </div>
 
