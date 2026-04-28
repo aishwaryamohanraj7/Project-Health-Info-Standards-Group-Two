@@ -335,16 +335,24 @@ This step is critical because it ensures that all patient-related information is
 <pre><code>
 import requests
 
-url = f"{BASE_URL}/Patient"
-headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+def get_access_token():
+    """Extracts the authorization token from the local JSON file."""
+    with open(data_dir / "access_token.json", "r") as f:
+        return json.load(f).get("access_token")
 
-response = requests.get(url, headers=headers)
 
-if response.status_code == 200:
-    data = response.json()
-    print(data['entry'][0]['resource'])
-else:
-    print("Error:", response.status_code)
+def get_openemr_headers():
+    return {
+        "Authorization": f"Bearer {get_access_token()}",
+        "Accept": "application/json"
+    }
+
+
+def get_primary_care_headers():
+    return {
+        "Content-Type": "application/fhir+json",
+        "Accept": "application/fhir+json"
+    }
 </code></pre>
 </div>
 
@@ -415,14 +423,33 @@ This ensures interoperability and semantic consistency.
 
 <div class="code-box">
 <pre><code>
-condition = {
-    "code": "COPD",
-    "system": "SNOMED CT",
-    "children": [
-        "chronic bronchitis",
-        "emphysema"
-    ]
-}
+def search_snomed_by_text(search_term):
+    """
+    Resolve a free-text clinical string to a SNOMED CT concept via Hermes.
+    Constraint '<404684003' limits results to Clinical Findings.
+    Returns: (conceptId, preferredTerm)
+    """
+    print(f"\n  [Hermes] Text search: '{search_term}'")
+    response = requests.get(
+        f"{HERMES_BASE}/search",
+        params={"s": search_term, "constraint": "<404684003", "maxHits": 1}
+    )
+    data  = response.json()
+    items = data if isinstance(data, list) else data.get("items", [])
+
+    if not items:
+        print("  [Hermes] No match found.")
+        return None, None
+
+    concept_id     = items[0].get("conceptId") or items[0].get("id")
+    preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
+
+    print(f"  [Hermes] Matched concept : {concept_id} | {preferred_term}")
+    print("\n  [=== Raw Hermes JSON Payload ===]")
+    print(json.dumps(data, indent=4))
+    print("  [=]\n")
+
+    return concept_id, preferred_term
 </code></pre>
 </div>
 <div class="output-box">
@@ -450,12 +477,23 @@ The load phase inserts transformed data into the target EHR system, ensuring acc
 
 <div class="code-box">
 <pre><code>
-response = requests.post(target_url, json=condition)
+response = requests.post(
+        url=f"{PRIMARY_CARE_BASE}/Patient",
+        headers=get_primary_care_headers(),
+        json=patient_payload
+    )
+    created = response.json()
+    patient_id = created.get("id")
+    print(f"Transfer successful. New Local ID assigned: {patient_id}")
 
-if response.status_code == 201:
-    print("Data loaded successfully")
-else:
-    print("Error:", response.status_code)
+    with open(data_dir / "patient.json", "w") as f:
+        json.dump(patient_payload, f, indent=4)
+    print(f"Resource cached locally at: data/patient.json")
+
+    with open(data_dir / "task1_patient_id.json", "w") as f:
+        json.dump({"patient_id": patient_id}, f, indent=4)
+
+    return patient_id, patient_payload
 </code></pre>
 </div>
 <div class="output-box">
@@ -479,11 +517,39 @@ else:
 
 <div class="code-box">
 <pre><code>
-patient = data['entry'][0]['resource']
-patient_id = patient['id']
-name = patient['name'][0]['given'][0]
+def search_patient():
+    """
+    Queries OpenEMR to locate a specific individual based on predefined demographics.
+    Returns: A list of matching Patient resources from the FHIR Bundle.
+    """
+    url = f"{OPENEMR_BASE}/Patient"
+    params = {
+        "given": SEARCH_GIVEN,
+        "family": SEARCH_FAMILY,
+        "gender": SEARCH_GENDER
+    }
 
-print(patient_id, name)
+    print(f"\n[Phase 1] Executing Patient Discovery")
+    print(f"Request URI: GET /Patient?given={SEARCH_GIVEN}&family={SEARCH_FAMILY}&gender={SEARCH_GENDER}")
+    print(f"Awaiting: FHIR Bundle containing candidate profiles.")
+
+    response = requests.get(url=url, headers=get_openemr_headers(), params=params)
+    data = response.json()
+    entries = data.get("entry", [])
+    print(f"Total individuals identified: {len(entries)}. Displaying top 10.")
+
+    for i, entry in enumerate(entries[:10]):
+        resource = entry["resource"]
+        patient_id = resource.get("id")
+        name = resource.get("name", [{}])[0]
+        given = name.get("given", [""])[0]
+        family = name.get("family", "")
+        gender_val = resource.get("gender", "unknown")
+        dob = resource.get("birthDate", "unknown")
+        deceased = resource.get("deceasedBoolean") or resource.get("deceasedDateTime")
+        print(f"  [{i}] Record ID: {patient_id} | Individual: {given} {family} | Sex: {gender_val} | Born: {dob} | Deceased Status: {deceased}")
+
+    return entries
 </code></pre>
 </div>
 <div class="output-box">
@@ -509,8 +575,33 @@ print(patient_id, name)
 
 <div class="code-box">
 <pre><code>
-parent = "COPD"
-children = ["chronic bronchitis", "emphysema"]
+def search_snomed_by_text(search_term):
+    """
+    Resolve a free-text clinical string to a SNOMED CT concept via Hermes.
+    Constraint '<404684003' limits results to Clinical Findings.
+    Returns: (conceptId, preferredTerm)
+    """
+    print(f"\n  [Hermes] Text search: '{search_term}'")
+    response = requests.get(
+        f"{HERMES_BASE}/search",
+        params={"s": search_term, "constraint": "<404684003", "maxHits": 1}
+    )
+    data  = response.json()
+    items = data if isinstance(data, list) else data.get("items", [])
+
+    if not items:
+        print("  [Hermes] No match found.")
+        return None, None
+
+    concept_id     = items[0].get("conceptId") or items[0].get("id")
+    preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
+
+    print(f"  [Hermes] Matched concept : {concept_id} | {preferred_term}")
+    print("\n  [=== Raw Hermes JSON Payload ===]")
+    print(json.dumps(data, indent=4))
+    print("  [==]\n")
+
+    return concept_id, preferred_term
 
 print(parent, "->", children)
 </code></pre>
@@ -535,12 +626,19 @@ print(parent, "->", children)
 
 <div class="code-box">
 <pre><code>
-bp = {
-    "systolic": 127,
-    "diastolic": 86
-}
+BP_PANEL_CODE     = "55284-4"
+BP_SYSTOLIC_CODE  = "8480-6"
+BP_DIASTOLIC_CODE = "8462-4"
+LOINC_SYSTEM      = "http://loinc.org"
+UCUM_SYSTEM       = "http://unitsofmeasure.org"
 
-print(bp)
+# SNOMED body site — Left arm  368209003
+SNOMED_SYSTEM     = "http://snomed.info/sct"
+BODY_SITE_CODE    = "368208006"
+BODY_SITE_DISPLAY = "Left arm"
+
+# Interpretation code system
+INTERP_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"
 </code></pre>
 </div>
 <div class="output-box">
