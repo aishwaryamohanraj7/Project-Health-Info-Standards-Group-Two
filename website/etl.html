@@ -466,14 +466,15 @@ else:
 
 <!-- TASK 1 -->
 <div id="task1" class="task task-box active">
-<h1>Task 1: Patient Extraction</h1>
+<h1>Task 1: Patient Extraction and Parent SNOMED</h1>
 
 <ul>
-<li>Retrieved patient data from FHIR Patient resource</li>
-<li>Extracted patient identifiers and demographics</li>
+<li>Retrieved patient data from OpenEMR</li>
+<li>Extracted patient identifiers,conditions and demographics</li>
 <li>Validated JSON structure</li>
 <li>Identified patient with COPD</li>
-<li>Stored extracted patient details</li>
+<li>Retrived the parent SNOMED concept via Hermes</li>
+<li>Created the patient with Parent concept details on the primary care EHR FHIR server</li>
 </ul>
 
 <div class="code-box">
@@ -487,7 +488,7 @@ print(patient_id, name)
 </div>
 <div class="output-box">
 
-<p><b>Output:</b> Patient successfully identified and extracted.</p>
+<p><b>Output:</b> Patient successfully identified, extracted and updaed. </p>
     <img src="images/T%201%20pt%20details.png">
     <img src="images/t%201%20parent.png">
     </div>
@@ -495,13 +496,15 @@ print(patient_id, name)
 
 <!-- TASK 2 -->
 <div id="task2" class="task task-box">
-<h1>Task 2: Condition Mapping</h1>
+<h1>Task 2: Child Condition Mapping</h1>
 
 <ul>
-<li>Mapped COPD using SNOMED CT</li>
+<li>Using the same patient and retrived the patient from OpenEMR</li>
+<li>Retrived the child condition for COPD using SNOMED CT via Hermes</li>
 <li>Identified related child conditions</li>
 <li>Established hierarchical relationships</li>
 <li>Ensured clinical terminology consistency</li>
+<li>Created the patient with child concept details on the primary care EHR FHIR server</li>
 </ul>
 
 <div class="code-box">
@@ -521,11 +524,11 @@ print(parent, "->", children)
 
 <!-- TASK 3 -->
 <div id="task3" class="task task-box">
-<h1>Task 3: Observation</h1>
+<h1>Task 3: BP Observation</h1>
 
 <ul>
-<li>Recorded patient vital signs</li>
-<li>Captured blood pressure values</li>
+<li>Created a Blood pressure FHIR observation for the existing patient on the Primary Care EHR</li>
+<li>Added blood pressure values</li>
 <li>Used FHIR Observation resource format</li>
 <li>Validated measurement data</li>
 </ul>
@@ -533,8 +536,8 @@ print(parent, "->", children)
 <div class="code-box">
 <pre><code>
 bp = {
-    "systolic": 120,
-    "diastolic": 80
+    "systolic": 127,
+    "diastolic": 86
 }
 
 print(bp)
@@ -549,10 +552,10 @@ print(bp)
 
 <!-- TASK 4 -->
 <div id="task4" class="task task-box">
-<h1>Task 4: Procedure</h1>
+<h1>Task 4:Chest x-ray Procedure</h1>
 
 <ul>
-<li>Recorded medical procedure (Chest X-ray)</li>
+<li>Created a medical procedure (Chest X-ray) for the same patient and post it to the primary care EHR</li>
 <li>Used FHIR Procedure resource</li>
 <li>Stored procedure status and details</li>
 <li>Validated procedure data structure</li>
@@ -581,10 +584,13 @@ print(procedure)
 <h1>Task 5: HL7 Message</h1>
 
 <ul>
+<li>Retrived the patient and condition from the Open EMR</li>
+<li>Mapped the SNOMED code to ICD-10</li>
 <li>Converted FHIR data into HL7 v2 format</li>
 <li>Generated MSH and PID segments</li>
 <li>Ensured compatibility with legacy systems</li>
 <li>Exported HL7 message as text file</li>
+<li>Generated an HL7 ADT_A01 message using hl7apy for interoperability</li>
 </ul>
 
 <div class="code-box">
