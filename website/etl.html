@@ -196,6 +196,38 @@ body {
     border-radius: 12px;
     margin-top: 20px;
 }
+    .code-container {
+    margin-top: 25px;
+    border-radius: 14px;
+    padding: 18px;
+    overflow-x: auto;
+
+    /* DARK BASE */
+    background: linear-gradient(145deg, #020617, #020617);
+
+    /* GLOSS / GLASS EFFECT */
+    backdrop-filter: blur(10px);
+
+    /* NEON GLOW */
+    box-shadow:
+        0 0 25px rgba(34,197,94,0.25),
+        inset 0 0 10px rgba(34,197,94,0.15);
+
+    border: 1px solid rgba(34,197,94,0.4);
+}
+
+.code-container pre {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #22c55e;   /* neon green */
+    font-family: "Courier New", monospace;
+}
+
+/* Optional: subtle syntax feel */
+.code-container code {
+    white-space: pre;
+}
 </style>
 </head>
 
@@ -508,38 +540,7 @@ OBX|1|NM|55284-4^Blood pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||2026042800
 DG1|1||J44.9^Chronic obstructive pulmonary disease^I10|Chronic obstructive pulmonary disease|20260428002841|A
 </code></pre>
 </div>
-    .code-container {
-    margin-top: 25px;
-    border-radius: 14px;
-    padding: 18px;
-    overflow-x: auto;
 
-    /* DARK BASE */
-    background: linear-gradient(145deg, #020617, #020617);
-
-    /* GLOSS / GLASS EFFECT */
-    backdrop-filter: blur(10px);
-
-    /* NEON GLOW */
-    box-shadow:
-        0 0 25px rgba(34,197,94,0.25),
-        inset 0 0 10px rgba(34,197,94,0.15);
-
-    border: 1px solid rgba(34,197,94,0.4);
-}
-
-.code-container pre {
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #22c55e;   /* neon green */
-    font-family: "Courier New", monospace;
-}
-
-/* Optional: subtle syntax feel */
-.code-container code {
-    white-space: pre;
-}
 
 <p><b>Output:</b> HL7 message generated and ready for transmission.</p>
     <img src="images/t%205%20hl7.png">
