@@ -241,6 +241,17 @@ body {
     color: #22c55e;
     font-weight: bold;
 }
+    <script>
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+</script>
 </style>
 </head>
 
@@ -272,11 +283,11 @@ body {
 
     <h2>FHIR ETL PIPELINE</h2>
 
-    <a href="index.html"> Home</a>
-    <a href="etl.html"> ETL</a>
-    <a href="insights.html"> Insights</a>
-    <a href="team.html"> Team</a>
-    <a href="about.html"> About</a>
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="etl.html" onclick="closeMenu()"> ETL</a>
+    <a href="insights.html" onclick="closeMenu()"> Insights</a>
+    <a href="team.html" onclick="closeMenu()"> Team</a>
+    <a href="about.html" onclick="closeMenu()"> About</a>
 
 </div>
 
