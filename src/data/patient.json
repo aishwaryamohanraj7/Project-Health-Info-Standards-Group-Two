@@ -1,0 +1,54 @@
+{
+    "resourceType": "Patient",
+    "meta": {
+        "profile": [
+            "http://example.org/StructureDefinition/my-patient-profile"
+        ]
+    },
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Individual: David Abshire, Sex: male, Born: 1996-09-29</div>"
+    },
+    "identifier": [
+        {
+            "use": "usual",
+            "type": {
+                "coding": [
+                    {
+                        "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                        "code": "MR"
+                    }
+                ]
+            },
+            "system": "urn:oid:1.2.36.146.595.217.0.1",
+            "value": "9d03b032-3e4f-4ddb-b385-55a3f8a6d4f2"
+        }
+    ],
+    "active": true,
+    "name": [
+        {
+            "use": "official",
+            "family": "Abshire",
+            "given": [
+                "David"
+            ]
+        }
+    ],
+    "gender": "male",
+    "birthDate": "1996-09-29",
+    "deceasedBoolean": false,
+    "address": [
+        {
+            "use": "home",
+            "type": "both",
+            "line": [
+                "393 Cole Knoll Unit 63"
+            ],
+            "city": "Malden",
+            "district": "Unknown",
+            "state": "Massachusetts",
+            "postalCode": "02155",
+            "text": "393 Cole Knoll Unit 63, Malden, Unknown, Massachusetts 02155"
+        }
+    ]
+}

@@ -1,4 +1,0 @@
-MSH|^~\&|OpenEMR|Hospital|PrimaryCare|System|20260421130304||ADT^A01|MSG00001|P|2.5
-PID|1||9d03b032-3e4f-4ddb-b385-55a3f8a6d4f2||Abshire^David||1996-09-29|male
-PV1|1|O
-DG1|1||J44.9^Chronic obstructive pulmonary disease

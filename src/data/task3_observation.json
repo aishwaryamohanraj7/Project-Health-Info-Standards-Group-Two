@@ -1,0 +1,129 @@
+{
+    "resourceType": "Observation",
+    "identifier": [
+        {
+            "system": "urn:ietf:rfc:3986",
+            "value": "urn:uuid:13c0aec0-8456-4fb4-97e8-0d80a516a8fd"
+        }
+    ],
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Blood Pressure: 127/86 mmHg \u2014 2026-04-29T03:31:16+00:00</div>"
+    },
+    "status": "final",
+    "category": [
+        {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "Vital Signs"
+                }
+            ],
+            "text": "Vital Signs"
+        }
+    ],
+    "code": {
+        "coding": [
+            {
+                "system": "http://loinc.org",
+                "code": "55284-4",
+                "display": "Blood pressure systolic and diastolic"
+            }
+        ],
+        "text": "Blood pressure systolic and diastolic"
+    },
+    "subject": {
+        "reference": "Patient/248"
+    },
+    "effectiveDateTime": "2026-04-29T03:31:16+00:00",
+    "performer": [
+        {
+            "reference": "Practitioner/8"
+        }
+    ],
+    "interpretation": [
+        {
+            "coding": [
+                {
+                    "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                    "code": "H",
+                    "display": "High"
+                }
+            ],
+            "text": "High"
+        }
+    ],
+    "bodySite": {
+        "coding": [
+            {
+                "system": "http://snomed.info/sct",
+                "code": "368208006",
+                "display": "Left arm"
+            }
+        ],
+        "text": "Left arm"
+    },
+    "component": [
+        {
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://loinc.org",
+                        "code": "8480-6",
+                        "display": "Systolic blood pressure"
+                    }
+                ],
+                "text": "Systolic blood pressure"
+            },
+            "valueQuantity": {
+                "value": 127,
+                "unit": "mmHg",
+                "system": "http://unitsofmeasure.org",
+                "code": "mm[Hg]"
+            },
+            "interpretation": [
+                {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                            "code": "H",
+                            "display": "High"
+                        }
+                    ],
+                    "text": "High"
+                }
+            ]
+        },
+        {
+            "code": {
+                "coding": [
+                    {
+                        "system": "http://loinc.org",
+                        "code": "8462-4",
+                        "display": "Diastolic blood pressure"
+                    }
+                ],
+                "text": "Diastolic blood pressure"
+            },
+            "valueQuantity": {
+                "value": 86,
+                "unit": "mmHg",
+                "system": "http://unitsofmeasure.org",
+                "code": "mm[Hg]"
+            },
+            "interpretation": [
+                {
+                    "coding": [
+                        {
+                            "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                            "code": "H",
+                            "display": "High"
+                        }
+                    ],
+                    "text": "High"
+                }
+            ]
+        }
+    ]
+}

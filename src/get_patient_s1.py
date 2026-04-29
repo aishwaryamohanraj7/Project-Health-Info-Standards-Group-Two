@@ -8,14 +8,21 @@ BASE_URL = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 
 # -------- AUTH --------
 def get_access_token():
-    file_path = Path(data_dir / "access_token.json")
-    with open(file_path, 'r') as f:
-        return json.load(f).get("access_token")
+    try:
+        file_path = Path(data_dir / "access_token.json")
+        with open(file_path, 'r') as f:
+            return json.load(f).get("access_token")
+    except Exception as e:
+        print("❌ Error reading access token:", e)
+        return None
 
 
 def get_headers():
+    token = get_access_token()
+    if not token:
+        raise Exception("❌ No access token found. Check your access_token.json file.")
     return {
-        "Authorization": f"Bearer {get_access_token()}"
+        "Authorization": f"Bearer {token}"
     }
 
 
@@ -25,22 +32,33 @@ def search_specific_patient():
     response = requests.get(url, headers=get_headers())
 
     print("\n--- Specific Patient Query ---")
-    print(response.url)
+    print("URL:", response.url)
+    print("Status Code:", response.status_code)
+
+    if response.status_code != 200:
+        print("❌ Request failed")
+        print(response.text)
+        return
 
     data = response.json()
+
+    if "entry" not in data:
+        print("⚠️ No patients found.")
+        print(data)
+        return
 
     print("\n--- Patient Found ---")
 
     for entry in data.get("entry", []):
         patient = entry["resource"]
 
-        pid = patient["id"]
-        given = patient["name"][0]["given"][0]
-        family = patient["name"][0]["family"]
-        gender = patient.get("gender")
-        birthdate = patient.get("birthDate")
+        pid = patient.get("id", "N/A")
+        given = patient.get("name", [{}])[0].get("given", ["N/A"])[0]
+        family = patient.get("name", [{}])[0].get("family", "N/A")
+        gender = patient.get("gender", "N/A")
+        birthdate = patient.get("birthDate", "N/A")
 
-        print(f"ID: {pid}")
+        print(f"\nID: {pid}")
         print(f"Name: {given} {family}")
         print(f"Gender: {gender}")
         print(f"Birth Date: {birthdate}")
@@ -52,14 +70,26 @@ def filtered_search():
     response = requests.get(url, headers=get_headers())
 
     print("\n--- Filtered Search Query ---")
-    print(response.url)
+    print("URL:", response.url)
+    print("Status Code:", response.status_code)
+
+    if response.status_code != 200:
+        print("❌ Request failed")
+        print(response.text)
+        return
 
     data = response.json()
+
+    if "entry" not in data:
+        print("⚠️ No matching patients found.")
+        print(data)
+        return
 
     print(f"\nNumber of matching patients: {len(data.get('entry', []))}")
 
 
 # -------- MAIN --------
 if __name__ == "__main__":
+    print("🚀 Running Patient Search Script...\n")
     search_specific_patient()
     filtered_search()

@@ -1,0 +1,68 @@
+{
+    "resourceType": "Procedure",
+    "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Procedure: Spirometry \u2014 Status: finished \u2014 Performed: 2026-04-29T03:31:20+00:00</div>"
+    },
+    "status": "finished",
+    "category": {
+        "coding": [
+            {
+                "system": "http://snomed.info/sct",
+                "code": "103693007",
+                "display": "Diagnostic procedure"
+            }
+        ],
+        "text": "Diagnostic procedure"
+    },
+    "code": {
+        "coding": [
+            {
+                "system": "http://snomed.info/sct",
+                "code": "127783003",
+                "display": "Spirometry"
+            }
+        ],
+        "text": "Spirometry"
+    },
+    "subject": {
+        "reference": "Patient/12"
+    },
+    "performedDateTime": "2026-04-29T03:31:20+00:00",
+    "performer": [
+        {
+            "actor": {
+                "reference": "Practitioner/8"
+            }
+        }
+    ],
+    "bodySite": [
+        {
+            "coding": [
+                {
+                    "system": "http://snomed.info/sct",
+                    "code": "39607008",
+                    "display": "Lung structure"
+                }
+            ],
+            "text": "Lung structure"
+        }
+    ],
+    "reasonCode": [
+        {
+            "coding": [
+                {
+                    "system": "http://snomed.info/sct",
+                    "code": "13645005",
+                    "display": "Chronic obstructive lung disease"
+                }
+            ],
+            "text": "Chronic obstructive lung disease"
+        }
+    ],
+    "note": [
+        {
+            "text": "Spirometry performed to assess pulmonary function. Results forwarded to Primary Care EHR."
+        }
+    ]
+}
