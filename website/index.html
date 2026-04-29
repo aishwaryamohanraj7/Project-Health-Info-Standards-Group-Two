@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FHIR ETL Pipeline</title>
+
+<style>
+
+/* BASE */
+body {
+    margin:0;
+    font-family:Arial;
+    background:#020617;
+    color:white;
+}
+
+/* TOGGLE BUTTON */
+#menuToggle {
+    position:fixed;
+    top:20px;
+    left:20px;
+    font-size:26px;
+    cursor:pointer;
+    z-index:1001;
+    color:#22c55e;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position:fixed;
+    left:-260px;
+    top:0;
+    width:260px;
+    height:100%;
+    background: linear-gradient(180deg, #020617, #052e2b);
+    padding:20px;
+    transition:0.3s;
+    z-index:1000;
+}
+
+.sidebar.active {
+    left:0;
+}
+
+.sidebar h2 {
+    color:#22c55e;
+}
+
+.subtitle {
+    font-size:12px;
+    color:#94a3af;
+    margin-bottom:20px;
+}
+
+.nav-section {
+    margin-top:15px;
+}
+
+.nav-section-title {
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.nav-link {
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:5px;
+    margin-left:10px;
+    font-size:14px;
+}
+
+.nav-link:hover {
+    color:#22c55e;
+}
+
+/* MAIN */
+.main {
+    transition:0.3s;
+    padding:40px;
+}
+
+.main.shift {
+    margin-left:260px;
+}
+
+/* HEADER */
+header {
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:40px;
+}
+
+header h2 {
+    color:#22c55e;
+}
+
+nav a {
+    margin-left:20px;
+    color:white;
+    text-decoration:none;
+}
+
+nav a:hover {
+    color:#22c55e;
+}
+
+/* HERO */
+.hero {
+    display:flex;
+    align-items:center;
+}
+
+.hero-left {
+    flex:1;
+}
+
+.hero-left h1 span {
+    color:#22c55e;
+}
+
+.hero-left p {
+    color:#cbd5e1;
+}
+
+.hero-right img {
+    width:350px;
+}
+
+/* SUMMARY */
+.summary {
+    margin-top:40px;
+    padding:30px;
+    border-radius:20px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.7),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+}
+
+.summary-box {
+    text-align:center;
+    width:160px;
+}
+
+.summary-box p {
+    font-size:13px;
+    color:#94a3b8;
+}
+
+/* SECTION */
+.section {
+    margin-top:50px;
+    background:#0f172a;
+    padding:25px;
+    border-radius:15px;
+}
+
+.section h2 {
+    color:#22c55e;
+    margin-bottom:15px;
+}
+
+/* TABLE */
+.table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table th, .table td {
+    border:1px solid #334155;
+    padding:10px;
+    text-align:left;
+}
+
+.table th {
+    background:#1e293b;
+}
+
+/* FIXED SIDE-BY-SIDE */
+.tools-container {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:30px;
+}
+
+/* FORCE TABLE WIDTH */
+.tools-container table {
+    width:60%;
+}
+
+/* IMAGE FIX */
+.tools-container img {
+    width:35%;
+    max-width:420px;
+    border-radius:12px;
+    object-fit:contain;
+}
+
+/* RESPONSIVE */
+@media (max-width:900px) {
+    .tools-container {
+        flex-direction:column;
+    }
+
+    .tools-container table,
+    .tools-container img {
+        width:100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="menuToggle" onclick="toggleSidebar()">☰</div>
+
+<div class="sidebar" id="sidebar">
+
+<h2>FHIR ETL PIPELINE</h2>
+<p class="subtitle">Bridging Clinical Data Systems</p>
+
+<div class="nav-section">
+    <div class="nav-section-title"> HOME</div>
+    <a href="index.html" class="nav-link">Project Overview</a>
+</div>
+
+<div class="nav-section">
+    <div class="nav-section-title"> ETL PIPELINE</div>
+    <a href="etl.html" class="nav-link">Extraction</a>
+    <a href="etl.html" class="nav-link">Transformation</a>
+    <a href="etl.html" class="nav-link">Loading</a>
+    <a href="etl.html" class="nav-link">Task 1</a>
+    <a href="etl.html" class="nav-link">Task 2</a>
+    <a href="etl.html" class="nav-link">Task 3</a>
+    <a href="etl.html" class="nav-link">Task 4</a>
+    <a href="etl.html" class="nav-link">Task 5</a>
+</div>
+
+<div class="nav-section">
+    <div class="nav-section-title"> INSIGHTS</div>
+    <a href="insights.html" class="nav-link">Key Insights</a>
+    <a href="insights.html" class="nav-link">Challanges</a>
+    <a href="insights.html" class="nav-link">Lessons Learned</a>
+    <a href="insights.html" class="nav-link">Data Visualizations</a>
+    <a href="insights.html" class="nav-link">Future Improvements</a>
+</div>
+
+<div class="nav-section">
+    <div class="nav-section-title"> TEAM</div>
+    <a href="team.html" class="nav-link">Team Contribution</a>
+</div>
+
+<div class="nav-section">
+    <div class="nav-section-title"> ABOUT</div>
+    <a href="about.html" class="nav-link">Presentation Content</a>
+</div>
+
+</div>
+
+<div class="main">
+
+<header>
+<h2>FHIR ETL Pipeline</h2>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="team.html">Team</a>
+<a href="etl.html">ETL</a>
+<a href="insights.html">Insights</a>
+</nav>
+</header>
+
+<section class="hero">
+
+<div class="hero-left">
+
+<h1>FHIR ETL Pipeline: <span>Bridging Clinical Data Systems</span></h1>
+
+<p>
+This project demonstrates the design and implementation of a healthcare ETL (Extract, Transform, Load) pipeline using FHIR APIs.
+The system extracts patient and clinical data from OpenEMR, transforms it using SNOMED CT terminology for standardization,
+and loads it into a Primary Care EHR system.
+
+The pipeline also supports interoperability with legacy systems by converting FHIR data into HL7 v2 message format,
+ensuring seamless data exchange across modern and traditional healthcare platforms.
+</p>
+
+</div>
+
+<div class="hero-right">
+<img src="images/etl.png">
+</div>
+
+</section>
+
+<div class="section">
+<h2>Purpose of the ETL Pipeline</h2>
+<p>
+The purpose of this project is to enable seamless healthcare data interoperability between systems.
+The ETL pipeline extracts patient and clinical data from a source FHIR server (OpenEMR),
+transforms the data using standardized clinical terminology (SNOMED CT),
+and loads it into a target FHIR server (Primary Care EHR).
+Healthcare organizations routinely operate multiple electronic health record systems that do not communicate natively.
+    This pipeline solves that problem by automating the extraction of patient demographics and clinical conditions
+    from one FHIR server, applying standardized clinical terminology transformations, and loading the enriched
+    data into a second EHR system - all without manual data entry.
+    The result is faster, more accurate patient data migration and a foundation for true clinical interoperability.
+
+</p>
+</div>
+
+<!--SECTION -->
+<div class="section">
+<h2>Key Tools and Technologies</h2>
+
+<div class="tools-container">
+
+<table class="table">
+<tr><th>Tool / Technology</th><th>Role in the Project</th></tr>
+<tr><td>Python</td><td>Core scripting language for ETL tasks</td></tr>
+<tr><td>Requests Library</td><td>Handles API communication</td></tr>
+<tr><td>OpenEMR FHIR API</td><td>Source system</td></tr>
+<tr><td>Primary Care EHR FHIR API</td><td>Target system</td></tr>
+<tr><td>SNOMED CT</td><td>Clinical terminology mapping</td></tr>
+<tr><td>HL7 v2</td><td>Legacy interoperability</td></tr>
+<tr><td>HL7apy</td><td>HL7 message generation</td></tr>
+<tr><td>GitHub Pages</td><td>Website hosting</td></tr>
+</table>
+
+<img src="images/fhir_fixed.png" alt="FHIR Integration Diagram">
+
+</div>
+</div>
+
+<div class="summary">
+
+<div class="summary-box">
+<h2>📋</h2>
+<h3>Summary of Deliverables</h3>
+</div>
+
+<div class="summary-box">
+<h2>💻</h2>
+<h3>5 Coding Tasks</h3>
+<p>Parent, Child, BP, Procedure, HL7</p>
+</div>
+
+<div class="summary-box">
+<h2>✅</h2>
+<h3>FHIR Validation</h3>
+<p>Standard Profiles</p>
+</div>
+
+<div class="summary-box">
+<h2>📄</h2>
+<h3>HL7 v2 Message</h3>
+<p>Exported as .txt</p>
+</div>
+
+<div class="summary-box">
+<h2>🌐</h2>
+<h3>Documentation Website</h3>
+<p>Hosted on GitHub Pages</p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.querySelector(".main").classList.toggle("shift");
+}
+</script>
+
+</body>
+</html>
