@@ -72,9 +72,9 @@ This project demonstrates how healthcare data can be extracted, transformed, and
 
 ---
 
-##Project Structure
+## Project Structure
 
-
+```
 Project-Health-Info-Standards-Group-Two/
 │
 ├── src/
@@ -97,6 +97,7 @@ Project-Health-Info-Standards-Group-Two/
 │
 ├── README.md
 ├── .gitignore
+```
 
 ## How to Run the Project
 
