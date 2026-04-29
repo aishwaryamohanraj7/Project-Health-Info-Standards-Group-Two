@@ -72,6 +72,32 @@ This project demonstrates how healthcare data can be extracted, transformed, and
 
 ---
 
+##Project Structure
+
+
+Project-Health-Info-Standards-Group-Two/
+│
+├── src/
+│   ├── data/
+│   ├── task_1.py
+│   ├── task_2.py
+│   ├── task_3.py
+│   ├── task_4.py
+│   ├── task_5.py
+│   ├── main.py
+│
+├── website/
+│   ├── index.html
+│   ├── etl.html
+│   ├── insights.html
+│   ├── about.html
+│   ├── team.html
+│   ├── style.css
+│   ├── images/
+│
+├── README.md
+├── .gitignore
+
 ## How to Run the Project
 
 ### 1. Clone the Repository
