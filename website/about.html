@@ -10,9 +10,10 @@ body {
     font-family: Arial, sans-serif;
     background: #020617;
     color: white;
+    overflow-x: hidden;
 }
 
-/* ===== MENU BUTTON ===== */
+/* MENU BUTTON */
 #menuToggle {
     position: fixed;
     top: 18px;
@@ -23,8 +24,8 @@ body {
     z-index: 1100;
 }
 
-/* ===== HEADER ===== */
-..header {
+/* HEADER (✅ FIXED) */
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -35,7 +36,7 @@ body {
     justify-content: space-between;
 
     padding: 12px 20px;
-    padding-left: 65px; /* space for ☰ */
+    padding-left: 65px;
 
     background: rgba(2,6,23,0.75);
     backdrop-filter: blur(12px);
@@ -49,32 +50,24 @@ body {
     color: #22c55e;
     font-size: 20px;
     font-weight: bold;
-    white-space: nowrap;
 }
 
-/* RIGHT NAV */
+/* NAV LINKS */
 .nav-links {
     display: flex;
-    align-items: center;
-    gap: 15px;
-
-    overflow: visible;   /* ✅ prevents hiding */
+    gap: 18px;
 }
 
-/* LINKS */
 .nav-links a {
     color: white;
     text-decoration: none;
-    font-size: 14px;
-    padding: 5px 8px;
-    transition: 0.2s;
 }
 
 .nav-links a:hover {
     color: #22c55e;
 }
 
-/* ===== SIDEBAR ===== */
+/* SIDEBAR */
 .sidebar {
     position: fixed;
     top: 0;
@@ -91,10 +84,6 @@ body {
     left: 0;
 }
 
-.sidebar h2 {
-    color: #22c55e;
-}
-
 .sidebar a {
     display: block;
     padding: 12px;
@@ -105,12 +94,7 @@ body {
     text-decoration: none;
 }
 
-.sidebar a:hover {
-    background: #22c55e;
-    color: black;
-}
-
-/* ===== OVERLAY ===== */
+/* OVERLAY */
 .overlay {
     position: fixed;
     width: 100%;
@@ -124,12 +108,12 @@ body {
     display: block;
 }
 
-/* ===== MAIN ===== */
+/* MAIN */
 .main {
     padding: 120px 60px;
 }
 
-/* ===== CARDS ===== */
+/* CARDS */
 .card {
     background: #0f172a;
     padding: 25px;
@@ -145,18 +129,17 @@ h2 {
 
 <body>
 
-<!-- MENU BUTTON -->
+<!-- MENU -->
 <div id="menuToggle" onclick="openMenu()">☰</div>
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <h2>FHIR ETL PIPELINE</h2>
-
-    <a href="index.html" onclick="closeMenu()">Home</a>
-    <a href="etl.html" onclick="closeMenu()">ETL</a>
-    <a href="insights.html" onclick="closeMenu()">Insights</a>
-    <a href="team.html" onclick="closeMenu()">Team</a>
-    <a href="about.html" onclick="closeMenu()">About</a>
+    <a href="index.html">Home</a>
+    <a href="etl.html">ETL</a>
+    <a href="insights.html">Insights</a>
+    <a href="team.html">Team</a>
+    <a href="about.html">About</a>
 </div>
 
 <!-- OVERLAY -->
@@ -165,7 +148,6 @@ h2 {
 <!-- HEADER -->
 <div class="header">
     <div class="logo">FHIR ETL Pipeline</div>
-
     <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -176,9 +158,8 @@ h2 {
 </div>
 
 
+</div>
 
-
-<!-- SCRIPT -->
 <script>
 function openMenu() {
     document.getElementById("sidebar").classList.add("active");
@@ -190,21 +171,11 @@ function closeMenu() {
     document.getElementById("overlay").classList.remove("active");
 }
 
-/* ✅ AUTO CLOSE ON SCROLL */
-window.addEventListener("scroll", function () {
-    closeMenu();
-});
+window.addEventListener("scroll", closeMenu);
 </script>
 
 </body>
 </html>
-<body>
-
-<header>
-<h2>FHIR ETL Pipeline</h2>
-
-<nav>
-
 <!-- OVERVIEW -->
 <div class="card">
 <h2> Project Overview</h2>
