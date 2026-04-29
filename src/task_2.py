@@ -302,8 +302,8 @@ def create_condition_on_primary_care(primary_care_patient_id, child_concept_id, 
                 "coding": [
                     {
                         "system":  "http://snomed.info/sct",
-                        "code":    "38266002",
-                        "display": "Entire body as a whole"
+                        "code":    "55214000",
+                        "display": "Bronchiole structure (body structure)"
                     }
                 ]
             }
