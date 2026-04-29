@@ -155,7 +155,7 @@ sickit-learn
 json
 datetime
 uuid
-All dependencies are listed in requirements.txt
+All dependencies are listed in requiredpackages.txt
 ```
 
 ---
