@@ -7,21 +7,18 @@ OPENEMR_BASE = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhi
 HERMES_BASE = "http://159.203.121.13:8080/v1/snomed"
 PRIMARY_CARE_BASE = "http://159.203.105.138:8080/fhir"
 
-# Target FHIR Profiles
+#FHIR Profiles
 PATIENT_PROFILE = "http://example.org/StructureDefinition/my-patient-profile"
 CONDITION_PROFILE = "http://example.org/StructureDefinition/my-condition-profile"
 
-# Target Patient Criteria (David Abshire)
+#Patient Criteria
 SEARCH_GENDER = "male"
 SEARCH_GIVEN = "David"
 SEARCH_FAMILY = "Abshire"
 
-# Local Storage Setup
 data_dir = Path(__file__).parent / "data"
 data_dir.mkdir(exist_ok=True)
 
-
-# --- Security & Authentication ---
 def get_access_token():
     """Extracts the authorization token from the local JSON file."""
     with open(data_dir / "access_token.json", "r") as f:
@@ -41,13 +38,7 @@ def get_primary_care_headers():
         "Accept": "application/fhir+json"
     }
 
-
-# --- Phase 1: Patient Discovery ---
 def search_patient():
-    """
-    Queries OpenEMR to locate a specific individual based on predefined demographics.
-    Returns: A list of matching Patient resources from the FHIR Bundle.
-    """
     url = f"{OPENEMR_BASE}/Patient"
     params = {
         "given": SEARCH_GIVEN,
@@ -55,7 +46,7 @@ def search_patient():
         "gender": SEARCH_GENDER
     }
 
-    print(f"\n[Phase 1] Executing Patient Discovery")
+    print(f"\nExecuting Patient Discovery")
     print(f"Request URI: GET /Patient?given={SEARCH_GIVEN}&family={SEARCH_FAMILY}&gender={SEARCH_GENDER}")
     print(f"Awaiting: FHIR Bundle containing candidate profiles.")
 
@@ -73,21 +64,15 @@ def search_patient():
         gender_val = resource.get("gender", "unknown")
         dob = resource.get("birthDate", "unknown")
         deceased = resource.get("deceasedBoolean") or resource.get("deceasedDateTime")
-        print(f"  [{i}] Record ID: {patient_id} | Individual: {given} {family} | Sex: {gender_val} | Born: {dob} | Deceased Status: {deceased}")
+        print(f"[{i}] Record ID: {patient_id} | Individual: {given} {family} | Sex: {gender_val} | Born: {dob} | Deceased Status: {deceased}")
 
     return entries
 
-
-# --- Phase 2: Clinical Problem Extraction ---
 def get_patient_conditions(patient_id):
-    """
-    Retrieves the complete problem list (Condition resources) for a specific individual.
-    Returns: A comprehensive list of condition entries.
-    """
     url = f"{OPENEMR_BASE}/Condition"
     params = {"patient": patient_id}
 
-    print(f"\n[Phase 2] Fetching Clinical Records for ID: {patient_id}")
+    print(f"\nFetching Clinical Records for ID: {patient_id}")
 
     response = requests.get(url=url, headers=get_openemr_headers(), params=params)
     data = response.json()
@@ -109,18 +94,12 @@ def get_patient_conditions(patient_id):
         else:
             display = code_field.get("text", "unknown")
             system = "text-only"
-        print(f"  [{i}] Terminology: {display} | Code System: {system}")
+        print(f"[{i}] Terminology: {display} | Code System: {system}")
 
     return entries
 
-
-# --- Terminology Transformation ---
 def search_snomed_by_text(search_term):
-    """
-    Pings the Hermes API to resolve a raw text string into an official SNOMED CT concept.
-    Returns: Tuple containing the Concept ID and the Preferred Term.
-    """
-    print(f"  -> Querying Hermes API for string: '{search_term}'")
+    print(f"Querying Hermes API for string: '{search_term}'")
     response = requests.get(
         f"{HERMES_BASE}/search",
         params={"s": search_term, "constraint": "<404684003", "maxHits": 1}
@@ -133,22 +112,15 @@ def search_snomed_by_text(search_term):
 
     concept_id = items[0].get("conceptId") or items[0].get("id")
     preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
-    print(f"  -> Match Acquired: {concept_id} | {preferred_term}")
+    print(f"Match Acquired: {concept_id} | {preferred_term}")
 
-    print("\n  [=== Raw Hermes JSON Payload ===]")
+    print("\nRaw Hermes JSON Payload")
     print(json.dumps(data, indent=4))
-    print("  [===============================]\n")
 
     return concept_id, preferred_term
 
-
-# --- Phase 3: Parent Hierarchy Resolution ---
 def get_parent_concept(snomed_code):
-    """
-    Investigates the SNOMED hierarchy via Hermes to identify the direct broader category (IS-A relationship).
-    Returns: Tuple of Parent Concept ID and Parent Term.
-    """
-    print(f"\n[Phase 3] Ascending SNOMED Hierarchy for Concept: {snomed_code}")
+    print(f"\nAscending SNOMED Hierarchy for Concept: {snomed_code}")
 
     response = requests.get(f"{HERMES_BASE}/concepts/{snomed_code}/extended")
     data = response.json()
@@ -168,30 +140,20 @@ def get_parent_concept(snomed_code):
 
     return parent_id, preferred_term
 
-
-# --- Phase 4: Constructing Destination Patient ---
 def create_patient_on_primary_care(openemr_patient_resource):
-    """
-    Compiles and POSTs a new Patient resource to the Primary Care EHR server.
-    All demographic and address fields are fetched directly from the OpenEMR source resource.
-    """
     name = openemr_patient_resource.get("name", [{}])[0]
     given = name.get("given", ["Unknown"])
     family = name.get("family", "Unknown")
     gender = openemr_patient_resource.get("gender", "unknown")
     birth_date = openemr_patient_resource.get("birthDate", "1900-01-01")
     identifier_value = openemr_patient_resource.get("id", "unknown")
-
-    # Fetch address fields from OpenEMR source
     address = openemr_patient_resource.get("address", [{}])[0]
     address_line = address.get("line", ["Unknown"])
     city = address.get("city", "Unknown")
     district = address.get("district", "Unknown")
     state = address.get("state", "Unknown")
     postal_code = address.get("postalCode", "Unknown")
-
     address_text = f"{', '.join(address_line)}, {city}, {district}, {state} {postal_code}"
-
     patient_payload = {
         "resourceType": "Patient",
         "meta": {"profile": [PATIENT_PROFILE]},
@@ -232,11 +194,9 @@ def create_patient_on_primary_care(openemr_patient_resource):
             }
         ]
     }
-
-    print(f"\n[Phase 4] Initiating Patient Transfer to Target EHR")
+    print(f"\nInitiating Patient Transfer to Target EHR")
     print(f"Target: {given[0]} {family} | Active Status: True | Gender: {gender} | DOB: {birth_date}")
     print(f"Address: {address_text}")
-
     response = requests.post(
         url=f"{PRIMARY_CARE_BASE}/Patient",
         headers=get_primary_care_headers(),
@@ -255,13 +215,7 @@ def create_patient_on_primary_care(openemr_patient_resource):
 
     return patient_id, patient_payload
 
-
-# --- Phase 5: Constructing Destination Condition ---
 def create_condition_on_primary_care(primary_care_patient_id, parent_concept_id, parent_term):
-    """
-    Issues a POST request to create a new Condition resource on the Primary Care EHR.
-    Injects the generalized parent SNOMED concept mapped from Hermes.
-    """
     condition_payload = {
         "resourceType": "Condition",
         "meta": {"profile": [CONDITION_PROFILE]},
@@ -314,7 +268,7 @@ def create_condition_on_primary_care(primary_care_patient_id, parent_concept_id,
         "onsetDateTime": "2024-01-01T00:00:00+00:00"
     }
 
-    print(f"\n[Phase 5] Pushing New Condition to Target EHR")
+    print(f"\nPushing New Condition to Target EHR")
     print(f"Injecting Parent Terminology: {parent_concept_id} | {parent_term}")
     print(f"Subject Reference ID: {primary_care_patient_id}")
 
@@ -333,15 +287,9 @@ def create_condition_on_primary_care(primary_care_patient_id, parent_concept_id,
 
     return condition_id, condition_payload
 
-
-# --- Phase 6: Post-Process Validation ---
 def validate_resource(resource_type, resource_payload):
-    """
-    Submits the generated JSON payload to the FHIR server's $validate endpoint
-    to ensure compliance with the specified meta.profile structure.
-    """
     url = f"{PRIMARY_CARE_BASE}/{resource_type}/$validate"
-    print(f"\n[Phase 6] Executing Profile Validation for: {resource_type}")
+    print(f"\nExecuting Profile Validation for: {resource_type}")
     print(f"Target URI: POST {url}")
     print(f"Applied Standard: {resource_payload.get('meta', {}).get('profile', ['Unknown Standard'])[0]}")
 
@@ -357,17 +305,11 @@ def validate_resource(resource_type, resource_payload):
 
     return response.status_code, data
 
-
-# ==========================================
-# MAIN PIPELINE EXECUTION
-# ==========================================
 if __name__ == "__main__":
-    print("=== WORKFLOW PIPELINE INITIATED ===")
+    print(" WORKFLOW PIPELINE INITIATED ")
     print("Data Flow: Source (OpenEMR) -> Terminology (Hermes) -> Destination (Primary Care EHR)")
 
-    # Phase 1: Look up David Abshire
     patients = search_patient()
-
     selected_patient = None
     patient_id = None
     snomed_code = None
@@ -424,10 +366,7 @@ if __name__ == "__main__":
         print("Troubleshooting: Authorization may have expired. Try refreshing token.")
         exit(1)
 
-    # TRANSFORMATION
     parent_id, parent_term = get_parent_concept(snomed_code)
-
-    # LOADING — always create new Patient and Condition resources
     primary_care_patient_id, patient_payload = create_patient_on_primary_care(selected_patient)
 
     if parent_id and parent_term:
@@ -437,19 +376,13 @@ if __name__ == "__main__":
     else:
         print("\n[FATAL] Hierarchy mapping failed. Halting process before Load/Validate.")
         exit(1)
-
-    # VALIDATION
     patient_status_code, patient_data = validate_resource("Patient", patient_payload)
     patient_errors = len([i for i in patient_data.get("issue", []) if i.get("severity") == "error"])
 
     condition_status_code, condition_data = validate_resource("Condition", condition_payload)
     condition_errors = len([i for i in condition_data.get("issue", []) if i.get("severity") == "error"])
 
-    # FINAL REPORT
-    print("\n===============================")
-    print("      EXECUTION SUMMARY")
-    print("===============================")
-
+    print("\n>> EXECUTION SUMMARY")
     patient_name = selected_patient.get("name", [{}])[0]
     print(f"\n>> SOURCE DATA EXTRACTION:")
     print(f"   API Params: GET /Patient?given={SEARCH_GIVEN}&family={SEARCH_FAMILY}&gender={SEARCH_GENDER}")

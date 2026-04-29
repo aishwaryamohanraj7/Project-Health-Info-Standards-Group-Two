@@ -4,8 +4,6 @@ from pathlib import Path
 from datetime import datetime
 from hl7apy.core import Message
 
-# ENDPOINT CONFIGURATIONS
-
 OPENEMR_BASE  = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 HERMES_BASE   = "http://159.203.121.13:8080/v1/snomed"
 
