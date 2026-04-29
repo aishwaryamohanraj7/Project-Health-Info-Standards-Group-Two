@@ -312,7 +312,7 @@ def create_condition_on_primary_care(primary_care_patient_id, child_concept_id, 
         "onsetDateTime": "2024-01-01T00:00:00+00:00"
     }
 
-    print("Condition Creation → Primary Care EHR (Child Concept)")
+    print("Condition Creation - Primary Care EHR (Child Concept)")
     print(f"  Child Concept : {child_concept_id} | {child_term}")
     print(f"  Subject Ref   : Patient/{primary_care_patient_id}")
     print(f"  Display used  : Preferred Term (PT) - FSN intentionally omitted")
@@ -433,7 +433,7 @@ if __name__ == "__main__":
 
     with open(data_dir / "task1_patient_id.json", "r") as f:
         primary_care_patient_id = json.load(f).get("patient_id")
-    print(f"\n[Phase 4] Reusing existing Primary Care Patient ID: {primary_care_patient_id} (from Task 1)")
+    print(f"\nReusing existing Primary Care Patient ID: {primary_care_patient_id} (from Task 1)")
 
     primary_care_condition_id, condition_payload = create_condition_on_primary_care(
         primary_care_patient_id, child_id, child_term

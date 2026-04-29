@@ -118,7 +118,7 @@ def get_bp_values_from_openemr(openemr_patient_id):
         print(f"    Diastolic : {diastolic} mmHg  (LOINC {BP_DIASTOLIC_CODE})")
     else:
         print("\n  WARNING: No BP values found in OpenEMR for this patient.")
-        print("  No Observation resource exists — proceeding without source values.")
+        print("  No Observation resource exists - proceeding without source values.")
 
     return systolic, diastolic
 

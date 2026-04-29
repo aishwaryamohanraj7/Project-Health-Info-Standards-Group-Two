@@ -96,7 +96,7 @@ def search_snomed_by_text(search_term):
 
 def snomed_to_icd(snomed_code):
 
-    print(f" SNOMED → ICD-10 Mapping")
+    print(f" SNOMED - ICD-10 Mapping")
     print(f"  Endpoint : GET /v1/snomed/concepts/{snomed_code}/map/447562003")
 
     response = requests.get(

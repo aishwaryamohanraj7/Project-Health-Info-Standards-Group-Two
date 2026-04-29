@@ -1,5 +1,5 @@
-MSH|^~\&|OpenEMR|LudyHospital|PrimaryCare|System|20260429122302||ADT^A01|MSG20260429122302|P|2.5
+MSH|^~\&|OpenEMR|LudyHospital|PrimaryCare|System|20260429154437||ADT^A01|MSG20260429154437|P|2.5
 PID|1||9d03b032-3e4f-4ddb-b385-55a3f8a6d4f2^^^OpenEMR^MR||Abshire^David^^^||19960929|M|||393 Cole Knoll Unit 63^^Malden^Massachusetts^02155^USA
-PV1|1|O|Clinic^Room1^Bed1|||12345^Abshire^David^^^Dr|12345^Abshire^David^^^Dr||||||||||V20260429122302
-OBX|1|NM|55284-4^Blood Pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||20260429122302
-DG1|1||J44.9^Chronic obstructive pulmonary disease^I10|Chronic obstructive pulmonary disease|20260429122302|A
+PV1|1|O|Clinic^Room1^Bed1|||12345^Abshire^David^^^Dr|12345^Abshire^David^^^Dr||||||||||V20260429154437
+OBX|1|NM|55284-4^Blood Pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||20260429154437
+DG1|1||J44.9^Chronic obstructive pulmonary disease^I10|Chronic obstructive pulmonary disease|20260429154437|A

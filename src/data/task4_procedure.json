@@ -26,7 +26,7 @@
         "text": "Plain X-ray of chest (procedure)"
     },
     "subject": {
-        "reference": "Patient/311"
+        "reference": "Patient/342"
     },
     "performedDateTime": "2024-02-12T03:44:24+00:00",
     "performer": [
