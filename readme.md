@@ -2,7 +2,7 @@
 
 ## Project Purpose
 
-The purpose of this project is to demonstrate how healthcare data can be extracted, transformed, and integrated using FHIR standards while ensuring interoperability with legacy systems through HL7 message generation.
+This project demonstrates how healthcare data can be extracted, transformed, and integrated using FHIR standards, while ensuring interoperability with legacy systems through HL7 message generation.
 
 ---
 
@@ -42,45 +42,79 @@ The purpose of this project is to demonstrate how healthcare data can be extract
 ### Task 1: Patient Extraction
 - Retrieved patient details from FHIR Patient resource  
 - Extracted patient ID and demographic information  
-- Identified relevant patient data for further processing  
 
 ### Task 2: Condition Mapping
 - Mapped COPD using SNOMED CT  
-- Identified related child conditions (e.g., bronchitis, emphysema)  
-- Established hierarchical relationships  
+- Identified child conditions such as bronchitis and emphysema  
 
 ### Task 3: Observation
-- Recorded patient observations (e.g., blood pressure)  
-- Structured data using FHIR Observation format  
-- Validated measurement values  
+- Recorded observations such as blood pressure  
+- Structured data using FHIR Observation  
 
 ### Task 4: Procedure
-- Captured procedure details (e.g., Chest X-ray)  
-- Used FHIR Procedure resource structure  
+- Captured procedure details such as Chest X-ray  
 - Stored and validated procedure data  
 
 ### Task 5: HL7 Message Generation
 - Converted FHIR data into HL7 v2 format  
-- Generated key segments (MSH, PID, PV1, DG1)  
-- Ensured compatibility with legacy systems  
+- Generated MSH, PID, PV1, and DG1 segments  
 
 ---
 
 ## Key Technologies
 
 - Python  
-- FHIR (Fast Healthcare Interoperability Resources)  
-- OpenEMR FHIR API  
-- SNOMED CT (clinical terminology)  
-- HL7 v2 (message standard)  
-- HTML, CSS, JavaScript (web interface)  
-- GitHub Pages (deployment)  
+- FHIR  
+- OpenEMR API  
+- SNOMED CT  
+- HL7 v2  
+- HTML, CSS, JavaScript  
 
 ---
 
-## Project Summary
+## How to Run the Project
 
-This project demonstrates how healthcare data can be integrated across systems using modern interoperability standards. By combining FHIR for data exchange and HL7 for legacy compatibility, the ETL pipeline provides a structured approach to managing clinical information. The web interface further enhances understanding by presenting each stage of the pipeline along with code outputs and visualizations.
+### 1. Clone the Repository
+
+```bash
+git clone https://github.iu.edu/Aismohan/Project-Health-Info-Standards-Group-Two.git
+cd Project-Health-Info-Standards-Group-Two
+```
+
+### 2. Create Virtual Environment
+
+```bash
+python3 -m venv venv
+```
+
+Activate:
+
+Mac/Linux:
+```bash
+source venv/bin/activate
+```
+
+Windows:
+```bash
+venv\Scripts\activate
+```
+
+---
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4. Run the Project
+
+```bash
+cd src
+python main.py
+```
 
 ---
 
@@ -88,5 +122,20 @@ This project demonstrates how healthcare data can be integrated across systems u
 
 https://pages.github.iu.edu/Aismohan/Project-Health-Info-Standards-Group-Two/website/index.html
 
+---
+
+## Team Members
+
+| Name | Role |
+|------|------|
+| Aishwarya Mohanraj | Data Extraction Lead & Web Developer |
+| Partha Pratim Seal | Data Engineer & Analyst |
+| Sathvika Neeruddula | Team Leader & Transformation Lead |
+
+---
+
+## Summary
+
+This project shows how healthcare data can be processed using FHIR and converted into HL7 for compatibility with legacy systems. It demonstrates a complete ETL workflow along with a web interface for visualization.
 
 ---
