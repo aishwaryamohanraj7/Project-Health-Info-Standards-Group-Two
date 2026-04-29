@@ -39,14 +39,17 @@ This project demonstrates how healthcare data can be extracted, transformed, and
 
 ## Tasks Performed
 
-### Task 1: Patient Extraction
+### Task 1: Patient Extraction and Parent Condition
 - Retrieved patient details from FHIR Patient resource  
 - Extracted patient ID and demographic information  
-
-### Task 2: Condition Mapping
+- Mapped COPD using SNOMED CT
+- Identified parent condition such as
+- Created a Patient resource on Primary care EHR
+- Created a Condition (using parent condition) resource on Primary care EHR for the same patient.
+### Task 2: Child Condition 
 - Mapped COPD using SNOMED CT  
 - Identified child conditions such as bronchitis and emphysema  
-
+- Created a Condition (using child condition) resource on Primary care EHR for the same patient.
 ### Task 3: Observation
 - Recorded observations such as blood pressure  
 - Structured data using FHIR Observation  
