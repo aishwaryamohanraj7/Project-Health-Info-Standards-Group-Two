@@ -2,75 +2,124 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> FHIR ETL Pipeline - About</title>
+<title>About - FHIR ETL Pipeline</title>
 
 <style>
-
 body {
-    margin:0;
-    font-family:Arial;
-    background:#020617;
-    color:white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
 }
 
-/* HEADER */
-header {
-    display:flex;
-    justify-content:space-between;
-    padding:20px 40px;
+/* ===== MENU BUTTON ===== */
+#menuToggle {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
 }
 
-header h2 {
-    color:#22c55e;
+/* ===== OVERLAY ===== */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    display: none;
+    z-index: 900;
+}
+.overlay.active {
+    display: block;
 }
 
-nav a {
-    margin-left:20px;
-    color:white;
-    text-decoration:none;
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(180deg, #022c22, #020617);
+    padding: 90px 20px;
+    transition: 0.3s;
+    z-index: 1000;
 }
 
-nav a:hover {
-    color:#22c55e;
+.sidebar.active {
+    left: 0;
 }
 
-/* CONTENT */
-.container {
-    padding:40px;
+.sidebar h2 {
+    color: #22c55e;
 }
 
-/* CARDS */
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #22c55e;
+    color: black;
+}
+
+/* ===== TOP NAV ===== */
+.top-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 40px;
+    z-index: 999;
+
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
+}
+
+.top-nav a {
+    color: white;
+    margin-left: 25px;
+    text-decoration: none;
+}
+
+.top-nav a:hover {
+    color: #22c55e;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main {
+    padding: 120px 60px;
+}
+
+/* ===== CARD STYLE ===== */
 .card {
-    background:#0f172a;
-    padding:25px;
-    margin-bottom:25px;
-    border-radius:15px;
-    box-shadow:0 0 25px rgba(34,197,94,0.15);
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
 }
 
-.card h2 {
-    color:#22c55e;
-    margin-bottom:10px;
+h2 {
+    color: #22c55e;
 }
-
-ul {
-    padding-left:20px;
-}
-
-li {
-    margin-bottom:8px;
-    color:#cbd5e1;
-}
-
-/* GRID */
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-    gap:20px;
-}
-
 </style>
 </head>
+
+<body>
+
 
 <body>
 
