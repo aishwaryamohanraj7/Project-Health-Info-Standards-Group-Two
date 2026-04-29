@@ -12,31 +12,47 @@ body {
     color: white;
 }
 
+/* ===== HEADER ===== */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 999;
+
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
+}
+
+.logo {
+    color: #22c55e;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ===== NAV RIGHT ===== */
+.nav-links a {
+    color: white;
+    margin-left: 25px;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #22c55e;
+}
+
 /* ===== MENU BUTTON ===== */
 #menuToggle {
     position: fixed;
     top: 18px;
-    left: 18px;
+    left: 20px;
     font-size: 26px;
     cursor: pointer;
     color: #22c55e;
     z-index: 1100;
-}
-
-/* ===== OVERLAY ===== */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(6px);
-    display: none;
-    z-index: 900;
-}
-.overlay.active {
-    display: block;
 }
 
 /* ===== SIDEBAR ===== */
@@ -75,36 +91,26 @@ body {
     color: black;
 }
 
-/* ===== TOP NAV ===== */
-.top-nav {
+/* ===== OVERLAY ===== */
+.overlay {
     position: fixed;
-    top: 0;
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px 40px;
-    z-index: 999;
-
-    background: rgba(2,6,23,0.6);
-    backdrop-filter: blur(12px);
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 900;
 }
 
-.top-nav a {
-    color: white;
-    margin-left: 25px;
-    text-decoration: none;
+.overlay.active {
+    display: block;
 }
 
-.top-nav a:hover {
-    color: #22c55e;
-}
-
-/* ===== MAIN CONTENT ===== */
+/* ===== MAIN ===== */
 .main {
     padding: 120px 60px;
 }
 
-/* ===== CARD STYLE ===== */
+/* ===== CARD ===== */
 .card {
     background: #0f172a;
     padding: 25px;
@@ -119,6 +125,36 @@ h2 {
 </head>
 
 <body>
+
+<!-- MENU BUTTON -->
+<div id="menuToggle" onclick="openMenu()">☰</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>FHIR ETL PIPELINE</h2>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="etl.html" onclick="closeMenu()">ETL</a>
+    <a href="insights.html" onclick="closeMenu()">Insights</a>
+    <a href="team.html" onclick="closeMenu()">Team</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">FHIR ETL Pipeline</div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </div>
+</div>
 
 
 <body>
