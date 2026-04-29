@@ -6,7 +6,7 @@
 
 <style>
 
-/* ===== GLOBAL ===== */
+/* GLOBAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -14,7 +14,7 @@ body {
     color: white;
 }
 
-/* ===== HEADER ===== */
+/* HEADER  */
 header {
     display: flex;
     justify-content: space-between;
@@ -47,7 +47,7 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== DROPDOWN ===== */
+/* DROPDOWN */
 .dropdown {
     position: fixed;
     top: 70px;
@@ -99,7 +99,7 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== CONTENT ===== */
+/*CONTENT*/
 .features {
     padding: 40px;
 }
@@ -109,7 +109,7 @@ nav a:hover {
     color: #00ff88;
 }
 
-/* ===== TABLE ===== */
+/* TABLE  */
 .team-table {
     width: 100%;
     border-collapse: collapse;
@@ -136,14 +136,14 @@ nav a:hover {
     transition: 0.3s ease;
 }
 
-/* ===== HOVER EFFECT ===== */
+/* HOVER EFFECT*/
 .team-table tr:hover {
     background: rgba(0,255,136,0.12);
     transform: scale(1.01);
     box-shadow: 0 0 20px rgba(0,255,136,0.25);
 }
 
-/* ===== SELECTED ROW ===== */
+/* SELECTED ROW */
 .team-table tr.selected {
     background: rgba(0,255,136,0.2);
     box-shadow: 0 0 25px rgba(0,255,136,0.6);
@@ -315,7 +315,7 @@ document.addEventListener("click", function(e) {
     }
 });
 
-/* ===== ROW SELECTION ===== */
+/* ROW SELECTION  */
 const rows = document.querySelectorAll("#teamTable tr");
 
 rows.forEach((row, index) => {

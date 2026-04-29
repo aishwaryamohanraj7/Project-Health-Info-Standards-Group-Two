@@ -1,3 +1,4 @@
+#patients-bar graph
 import matplotlib.pyplot as plt
 
 resources = ['Patient', 'Condition', 'Observation', 'Procedure']
@@ -15,6 +16,7 @@ plt.tight_layout()
 plt.savefig("etl_chart.png")
 plt.show()
 
+#procedures-line graph
 import matplotlib.pyplot as plt
 from collections import Counter
 
