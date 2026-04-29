@@ -86,7 +86,7 @@ This project demonstrates how healthcare data can be integrated across systems u
 
 ## Project Website
 
-https://pages.github.iu.edu/Aismohan/groupProjecthistwo/website/index.html
+https://pages.github.iu.edu/Aismohan/Project-Health-Info-Standards-Group-Two/website/index.html
 
 
 ---

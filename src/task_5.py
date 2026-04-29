@@ -7,21 +7,13 @@ from hl7apy.core import Message
 OPENEMR_BASE  = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 HERMES_BASE   = "http://159.203.121.13:8080/v1/snomed"
 
-# TARGET PATIENT CRITERIA (same as Task 1 — David Abshire)
 SEARCH_GENDER = "male"
 SEARCH_GIVEN  = "David"
 SEARCH_FAMILY = "Abshire"
 
-# ============================================================
-# LOCAL STORAGE
-# ============================================================
 data_dir = Path(__file__).parent / "data"
 data_dir.mkdir(exist_ok=True)
 
-
-# ────────────────────────────────────────────────────────────
-# SECURITY & AUTHENTICATION
-# ────────────────────────────────────────────────────────────
 def get_access_token():
     with open(data_dir / "access_token.json", "r") as f:
         return json.load(f).get("access_token")
@@ -32,10 +24,6 @@ def get_openemr_headers():
         "Accept": "application/json"
     }
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 1 — PATIENT DISCOVERY (same logic as Task 1)
-# ────────────────────────────────────────────────────────────
 def search_patient():
     url    = f"{OPENEMR_BASE}/Patient"
     params = {
@@ -61,10 +49,6 @@ def search_patient():
               f"Deceased: {r.get('deceasedBoolean') or r.get('deceasedDateTime')}")
     return entries
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 2 — CONDITION EXTRACTION (same logic as Task 1)
-# ────────────────────────────────────────────────────────────
 def get_patient_conditions(patient_id):
     url    = f"{OPENEMR_BASE}/Condition"
     params = {"patient": patient_id}
@@ -95,10 +79,6 @@ def get_patient_conditions(patient_id):
 
     return entries
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 3 — SNOMED TEXT SEARCH (same logic as Task 1)
-# ────────────────────────────────────────────────────────────
 def search_snomed_by_text(search_term):
     print(f"\n  [Hermes] Text search: '{search_term}'")
     response = requests.get(
@@ -118,19 +98,9 @@ def search_snomed_by_text(search_term):
 
     return concept_id, preferred_term
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 4 — SNOMED → ICD-10 MAPPING VIA HERMES
-# ────────────────────────────────────────────────────────────
 def snomed_to_icd(snomed_code):
-    """
-    Map a SNOMED CT concept to ICD-10 using Hermes cross-map endpoint.
-    Reference set 447562003 = ICD-10 complex map reference set.
-    Returns: ICD-10 code string or 'UNKNOWN'
-    """
-    print(f"\n{'='*60}")
+
     print(f"[Phase 4] SNOMED → ICD-10 Mapping")
-    print(f"{'='*60}")
     print(f"  Endpoint : GET /v1/snomed/concepts/{snomed_code}/map/447562003")
 
     response = requests.get(
@@ -151,22 +121,8 @@ def snomed_to_icd(snomed_code):
 
     return "UNKNOWN"
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 5 — BUILD HL7 ADT^A01 MESSAGE
-# ────────────────────────────────────────────────────────────
 def build_hl7_message(patient, snomed_code, snomed_display, icd_code):
-    """
-    Construct a simplified HL7 v2.5 ADT^A01 message using data
-    extracted dynamically from OpenEMR and Hermes.
 
-    Segments included:
-      MSH — Message header
-      PID — Patient identification (ID, name, DOB, gender, address)
-      PV1 — Patient visit information
-      DG1 — Diagnosis (ICD-10 mapped from SNOMED)
-    """
-    # Extract patient fields dynamically
     patient_id  = patient.get("id", "UNKNOWN")
     name        = patient.get("name", [{}])[0]
     given       = name.get("given", ["UNKNOWN"])[0]
@@ -174,23 +130,19 @@ def build_hl7_message(patient, snomed_code, snomed_display, icd_code):
     gender_fhir = patient.get("gender", "unknown")
     birth_date  = patient.get("birthDate", "19000101").replace("-", "")
 
-    # Address fields
     address     = patient.get("address", [{}])[0]
     street      = address.get("line", ["UNKNOWN"])[0]
     city        = address.get("city", "UNKNOWN")
     state       = address.get("state", "UNKNOWN")
     postal      = address.get("postalCode", "UNKNOWN")
 
-    # Map FHIR gender to HL7 gender code
     gender_map  = {"male": "M", "female": "F", "other": "O", "unknown": "U"}
     gender_hl7  = gender_map.get(gender_fhir, "U")
 
-    # Timestamp
     now         = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    print(f"\n{'='*60}")
     print("[Phase 5] Building HL7 ADT^A01 Message")
-    print(f"{'='*60}")
+
     print(f"  Patient ID    : {patient_id}")
     print(f"  Name          : {given} {family}")
     print(f"  DOB           : {birth_date}")
@@ -199,7 +151,6 @@ def build_hl7_message(patient, snomed_code, snomed_display, icd_code):
     print(f"  SNOMED        : {snomed_code} | {snomed_display}")
     print(f"  ICD-10        : {icd_code}")
 
-    # ── Build each segment manually (hl7apy-compatible pipe format) ─────
     msh = (
         f"MSH|^~\\&|OpenEMR|LudyHospital|PrimaryCare|System|{now}||"
         f"ADT^A01|MSG{now}|P|2.5"
@@ -233,10 +184,6 @@ def build_hl7_message(patient, snomed_code, snomed_display, icd_code):
 
     return hl7_message
 
-
-# ────────────────────────────────────────────────────────────
-# PHASE 6 — SAVE HL7 MESSAGE TO FILE
-# ────────────────────────────────────────────────────────────
 def save_hl7(hl7_message):
     output_path = Path(__file__).parent / "hl7_message.txt"
     with open(output_path, "w") as f:
@@ -244,10 +191,6 @@ def save_hl7(hl7_message):
     print(f"\n  HL7 message saved to: {output_path}")
     return output_path
 
-
-# ============================================================
-# MAIN PIPELINE
-# ============================================================
 if __name__ == "__main__":
 
     print("\n" + "="*60)
@@ -255,7 +198,6 @@ if __name__ == "__main__":
     print("  Flow: OpenEMR → Hermes (SNOMED→ICD) → HL7 ADT^A01")
     print("="*60)
 
-    # ── Phase 1: Locate David Abshire (same as Task 1) ────────────────
     patients = search_patient()
 
     selected_patient   = None
