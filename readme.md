@@ -71,7 +71,6 @@ This project demonstrates how healthcare data can be extracted, transformed, and
 - HTML, CSS, JavaScript  
 
 ---
-
 ## Project Structure
 
 ```
@@ -79,24 +78,35 @@ Project-Health-Info-Standards-Group-Two/
 │
 ├── src/
 │   ├── data/
+│   ├── __init__.py
+│   ├── access_token.py
+│   ├── authorization_code.py
+│   ├── hl7_message.txt
+│   ├── read_token.py
+│   ├── refresh_token.py
+│   ├── registration.py
 │   ├── task_1.py
 │   ├── task_2.py
 │   ├── task_3.py
 │   ├── task_4.py
 │   ├── task_5.py
-│   ├── main.py
 │
 ├── website/
-│   ├── index.html
-│   ├── etl.html
-│   ├── insights.html
-│   ├── about.html
-│   ├── team.html
-│   ├── style.css
 │   ├── images/
+│   ├── assets/
+│   ├── about.html
+│   ├── etl.html
+│   ├── etl_chart.png
+│   ├── graph.py
+│   ├── index.html
+│   ├── insights.html
+│   ├── style.css
+│   ├── team.html
 │
-├── README.md
+├── main.py
 ├── .gitignore
+├── readme.md
+```
 ```
 
 ## How to Run the Project
@@ -134,6 +144,11 @@ venv\Scripts\activate
 pip install
 requests
 hl7apy
+python-dotenv
+pandas
+numpy
+matplotlib
+sickit-learn
 json
 datetime
 uuid
