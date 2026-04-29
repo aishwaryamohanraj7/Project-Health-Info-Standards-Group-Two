@@ -2,9 +2,9 @@
     "resourceType": "Procedure",
     "text": {
         "status": "generated",
-        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Procedure: Spirometry \u2014 Status: finished \u2014 Performed: 2026-04-29T03:31:20+00:00</div>"
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Procedure: Plain X-ray of chest (procedure) \u2014 Status: completed \u2014 Performed: 2024-02-12T03:44:24+00:00</div>"
     },
-    "status": "finished",
+    "status": "completed",
     "category": {
         "coding": [
             {
@@ -19,16 +19,16 @@
         "coding": [
             {
                 "system": "http://snomed.info/sct",
-                "code": "127783003",
-                "display": "Spirometry"
+                "code": "399208008",
+                "display": "Plain X-ray of chest (procedure)"
             }
         ],
-        "text": "Spirometry"
+        "text": "Plain X-ray of chest (procedure)"
     },
     "subject": {
-        "reference": "Patient/12"
+        "reference": "Patient/258"
     },
-    "performedDateTime": "2026-04-29T03:31:20+00:00",
+    "performedDateTime": "2024-02-12T03:44:24+00:00",
     "performer": [
         {
             "actor": {
@@ -41,11 +41,11 @@
             "coding": [
                 {
                     "system": "http://snomed.info/sct",
-                    "code": "39607008",
-                    "display": "Lung structure"
+                    "code": "51185008",
+                    "display": "Thoracic structure (body structure)"
                 }
             ],
-            "text": "Lung structure"
+            "text": "Thoracic structure (body structure)"
         }
     ],
     "reasonCode": [
@@ -60,9 +60,14 @@
             "text": "Chronic obstructive lung disease"
         }
     ],
+    "followUp": [
+        {
+            "text": "Routine follow-up in 2 weeks"
+        }
+    ],
     "note": [
         {
-            "text": "Spirometry performed to assess pulmonary function. Results forwarded to Primary Care EHR."
+            "text": "Plain X-ray of chest performed. No abnormalities detected. Procedure completed successfully."
         }
     ]
 }
