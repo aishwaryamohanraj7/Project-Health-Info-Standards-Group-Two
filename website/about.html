@@ -12,6 +12,17 @@ body {
     color: white;
 }
 
+/* ===== MENU BUTTON ===== */
+#menuToggle {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
+}
+
 /* ===== HEADER ===== */
 .header {
     position: fixed;
@@ -21,6 +32,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
+    padding-left: 70px; /* space for ☰ */
     z-index: 999;
 
     background: rgba(2,6,23,0.6);
@@ -33,7 +45,6 @@ body {
     font-weight: bold;
 }
 
-/* ===== NAV RIGHT ===== */
 .nav-links a {
     color: white;
     margin-left: 25px;
@@ -42,17 +53,6 @@ body {
 
 .nav-links a:hover {
     color: #22c55e;
-}
-
-/* ===== MENU BUTTON ===== */
-#menuToggle {
-    position: fixed;
-    top: 18px;
-    left: 20px;
-    font-size: 26px;
-    cursor: pointer;
-    color: #22c55e;
-    z-index: 1100;
 }
 
 /* ===== SIDEBAR ===== */
@@ -110,7 +110,7 @@ body {
     padding: 120px 60px;
 }
 
-/* ===== CARD ===== */
+/* ===== CARDS ===== */
 .card {
     background: #0f172a;
     padding: 25px;
@@ -156,7 +156,59 @@ h2 {
     </div>
 </div>
 
+<!-- MAIN CONTENT -->
+<div class="main">
 
+    <div class="card">
+        <h2>Project Overview</h2>
+        <p>
+        This project demonstrates a healthcare ETL pipeline using FHIR APIs.
+        Data is extracted from OpenEMR, transformed using SNOMED CT, and loaded into an EHR system.
+        It also supports HL7 conversion for interoperability.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Objective</h2>
+        <ul>
+            <li>Enable healthcare data interoperability</li>
+            <li>Standardize clinical data</li>
+            <li>Build ETL pipeline</li>
+            <li>Support HL7 systems</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>ETL Workflow</h2>
+        <ul>
+            <li><b>Extract:</b> Retrieve patient data using FHIR API</li>
+            <li><b>Transform:</b> Clean and map SNOMED codes</li>
+            <li><b>Load:</b> Send processed data to EHR</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+/* ✅ AUTO CLOSE ON SCROLL */
+window.addEventListener("scroll", function () {
+    closeMenu();
+});
+</script>
+
+</body>
+</html>
 <body>
 
 <header>
@@ -165,14 +217,7 @@ h2 {
 <nav>
 <a href="index.html">Home</a>
 <a href="about.html">About</a>
-<a href="team.html">Team</a>
-<a href="etl.html">ETL</a>
-<a href="insights.html">Insights</a>
-</nav>
-</header>
-
-<div class="container">
-
+<
 <!-- OVERVIEW -->
 <div class="card">
 <h2> Project Overview</h2>
