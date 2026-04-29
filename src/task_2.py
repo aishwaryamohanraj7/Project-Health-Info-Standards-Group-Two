@@ -118,7 +118,6 @@ def get_child_concept(snomed_code):
 
     print(f"Child Concept Resolution - Parent SNOMED: {snomed_code}")
 
-    # ECL: <!conceptId  =  direct children of conceptId
     ecl_constraint = f"<!{snomed_code}"
     print(f"  ECL Constraint : {ecl_constraint}")
     print(f"  Endpoint       : GET /v1/snomed/search"
@@ -219,7 +218,7 @@ def create_patient_on_primary_care(openemr_patient_resource):
         ]
     }
 
-    print("Patient Transfer → Primary Care EHR")
+    print("Patient Transfer - Primary Care EHR")
     print(f"  Patient : {given[0]} {family} | Gender: {gender} | DOB: {birth_date}")
     print(f"  Address : {address_text}")
 
@@ -230,7 +229,7 @@ def create_patient_on_primary_care(openemr_patient_resource):
     )
     created    = response.json()
     patient_id = created.get("id")
-    print(f"  Success : New Primary Care Patient ID → {patient_id}")
+    print(f"  Success : New Primary Care Patient ID - {patient_id}")
 
     with open(data_dir / "task2_patient.json", "w") as f:
         json.dump(patient_payload, f, indent=4)

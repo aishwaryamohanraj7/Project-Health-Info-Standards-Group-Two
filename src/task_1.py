@@ -49,7 +49,7 @@ def search_patient():
     response = requests.get(url=url, headers=get_openemr_headers(), params=params)
     data = response.json()
     entries = data.get("entry", [])
-    print(f"Total individuals identified: {len(entries)}. Displaying top 10.")
+    print(f"Total individuals identified: {len(entries)}.")
 
     for i, entry in enumerate(entries[:10]):
         resource = entry["resource"]
@@ -202,7 +202,7 @@ def create_patient_on_primary_care(openemr_patient_resource):
     patient_id = created.get("id")
     print(f"Transfer successful. New Local ID assigned: {patient_id}")
 
-    with open(data_dir / "patient.json", "w") as f:
+    with open(data_dir / "task1_patient.json", "w") as f:
         json.dump(patient_payload, f, indent=4)
     print(f"Resource cached locally at: data/patient.json")
 
@@ -277,7 +277,7 @@ def create_condition_on_primary_care(primary_care_patient_id, parent_concept_id,
     condition_id = created.get("id")
     print(f"Creation acknowledged. New Condition ID assigned: {condition_id}")
 
-    with open(data_dir / "condition.json", "w") as f:
+    with open(data_dir / "task1_condition.json", "w") as f:
         json.dump(condition_payload, f, indent=4)
     print(f"Resource cached locally at: data/condition.json")
 
