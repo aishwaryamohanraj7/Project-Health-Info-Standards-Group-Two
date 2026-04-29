@@ -1,218 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>FHIR ETL Pipeline - Team</title>
+<title>About - FHIR ETL Pipeline</title>
 
 <style>
-
-/* GLOBAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #000814, #001d3d);
+    background: #020617;
     color: white;
 }
 
-/* HEADER  */
-header {
+/* ===== MENU BUTTON ===== */
+#menuToggle {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
+}
+
+/* ===== HEADER ===== */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    background: rgba(0,0,0,0.6);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    padding-left: 70px; /* space for ☰ */
+    z-index: 999;
+
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
 }
 
 .logo {
-    color: #00ff88;
+    color: #22c55e;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-nav a {
+.nav-links a {
     color: white;
-    margin-left: 20px;
+    margin-left: 25px;
     text-decoration: none;
 }
 
-nav a:hover {
-    color: #00ff88;
+.nav-links a:hover {
+    color: #22c55e;
 }
 
-/* ===== MENU BUTTON ===== */
-.menu-btn {
-    font-size: 24px;
-    cursor: pointer;
-    color: #00ff88;
-}
-
-/* DROPDOWN */
-.dropdown {
+/* ===== SIDEBAR ===== */
+.sidebar {
     position: fixed;
-    top: 70px;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(180deg, #022c22, #020617);
+    padding: 90px 20px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.active {
     left: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(14px);
-    padding: 30px 50px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-    opacity: 0;
-    transform: translateY(-20px);
-    pointer-events: none;
-    transition: 0.3s ease;
-    z-index: 9999;
 }
 
-.dropdown.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+.sidebar h2 {
+    color: #22c55e;
 }
 
-/* MENU BOX */
-.menu-box {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(12px);
-    padding: 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow:
-        0 0 20px rgba(0,255,136,0.15),
-        inset 0 0 10px rgba(255,255,255,0.05);
-}
-
-.menu-box h3 {
-    color: #00ff88;
-}
-
-.menu-box a {
+.sidebar a {
     display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
     color: white;
-    padding: 6px 0;
     text-decoration: none;
 }
 
-.menu-box a:hover {
-    color: #00ff88;
+.sidebar a:hover {
+    background: #22c55e;
+    color: black;
 }
 
-/*CONTENT*/
-.features {
-    padding: 40px;
-}
-
-.features h2 {
-    text-align: center;
-    color: #00ff88;
-}
-
-/* TABLE  */
-.team-table {
+/* ===== OVERLAY ===== */
+.overlay {
+    position: fixed;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 30px;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 900;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* ===== MAIN ===== */
+.main {
+    padding: 120px 60px;
+}
+
+/* ===== CARDS ===== */
+.card {
+    background: #0f172a;
+    padding: 25px;
     border-radius: 12px;
-    overflow: hidden;
+    margin-bottom: 25px;
 }
 
-/* HEADER */
-.team-table th {
-    padding: 15px;
-    background: rgba(0,255,136,0.15);
-    text-align: left;
+h2 {
+    color: #22c55e;
 }
-
-/* ROWS */
-.team-table td {
-    padding: 18px;
-}
-
-/* BASE ROW */
-.team-table tr {
-    background: rgba(255,255,255,0.05);
-    transition: 0.3s ease;
-}
-
-/* HOVER EFFECT*/
-.team-table tr:hover {
-    background: rgba(0,255,136,0.12);
-    transform: scale(1.01);
-    box-shadow: 0 0 20px rgba(0,255,136,0.25);
-}
-
-/* SELECTED ROW */
-.team-table tr.selected {
-    background: rgba(0,255,136,0.2);
-    box-shadow: 0 0 25px rgba(0,255,136,0.6);
-}
-
-/* ALT ROW */
-.team-table tr:nth-child(even) {
-    background: rgba(255,255,255,0.03);
-}
-
-/* LIST */
-ul {
-    margin: 0;
-    padding-left: 18px;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header>
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <h2 class="logo">FHIR ETL Pipeline</h2>
+<!-- MENU BUTTON -->
+<div id="menuToggle" onclick="openMenu()">☰</div>
 
-    <nav>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>FHIR ETL PIPELINE</h2>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="etl.html" onclick="closeMenu()">ETL</a>
+    <a href="insights.html" onclick="closeMenu()">Insights</a>
+    <a href="team.html" onclick="closeMenu()">Team</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">FHIR ETL Pipeline</div>
+
+    <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="team.html">Team</a>
         <a href="etl.html">ETL</a>
         <a href="insights.html">Insights</a>
-    </nav>
-</header>
-
-<!-- DROPDOWN -->
-<div id="dropdown" class="dropdown">
-
-    <div class="menu-box">
-        <h3> Home</h3>
-        <a href="index.html">Project Overview</a>
     </div>
-
-    <div class="menu-box">
-        <h3> ETL Pipeline</h3>
-        <a href="etl.html">Extraction</a>
-        <a href="etl.html">Transformation</a>
-        <a href="etl.html">Loading</a>
-        <a href="etl.html">Five Tasks</a>
-    </div>
-
-    <div class="menu-box">
-        <h3> Insights</h3>
-        <a href="insights.html">Key Insights</a>
-        <a href="insights.html">Challenges</a>
-        <a href="insights.html">Lessons Learned</a>
-    </div>
-
-    <div class="menu-box">
-        <h3> Team</h3>
-        <a href="team.html">Team Contribution</a>
-    </div>
-
-    <div class="menu-box">
-        <h3> About</h3>
-        <a href="about.html">Presentation Content</a>
-    </div>
-
 </div>
+
+
+
+
+<!-- SCRIPT -->
+<script>
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+/* ✅ AUTO CLOSE ON SCROLL */
+window.addEventListener("scroll", function () {
+    closeMenu();
+});
+</script>
+
+</body>
+</html>
 <body>
 
 <header>
@@ -323,40 +289,6 @@ The pipeline also supports HL7 v2 conversion for legacy system interoperability.
 </div>
 
 </div>
-    const dropdown = document.getElementById("dropdown");
-
-function toggleMenu() {
-    dropdown.classList.toggle("active");
-}
-
-/* AUTO CLOSE */
-document.querySelectorAll(".dropdown a").forEach(link => {
-    link.addEventListener("click", () => {
-        dropdown.classList.remove("active");
-    });
-});
-
-/* CLICK OUTSIDE */
-document.addEventListener("click", function(e) {
-    const menuBtn = document.querySelector(".menu-btn");
-
-    if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
-        dropdown.classList.remove("active");
-    }
-});
-
-/* ROW SELECTION  */
-const rows = document.querySelectorAll("#teamTable tr");
-
-rows.forEach((row, index) => {
-    if (index === 0) return;
-
-    row.addEventListener("click", () => {
-        rows.forEach(r => r.classList.remove("selected"));
-        row.classList.add("selected");
-    });
-});
-
 
 </body>
 </html>
