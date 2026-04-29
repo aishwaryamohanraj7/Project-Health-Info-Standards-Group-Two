@@ -32,9 +32,7 @@ def search_patient():
         "gender": SEARCH_GENDER
     }
 
-    print(f"\n{'='*60}")
-    print("[Phase 1] Patient Discovery — OpenEMR")
-    print(f"{'='*60}")
+    print("Patient Discovery — OpenEMR")
     print(f"  Request : GET /Patient?given={SEARCH_GIVEN}&family={SEARCH_FAMILY}&gender={SEARCH_GENDER}")
 
     response = requests.get(url=url, headers=get_openemr_headers(), params=params)
@@ -53,9 +51,7 @@ def get_patient_conditions(patient_id):
     url    = f"{OPENEMR_BASE}/Condition"
     params = {"patient": patient_id}
 
-    print(f"\n{'='*60}")
-    print(f"[Phase 2] Condition Extraction — Patient ID: {patient_id}")
-    print(f"{'='*60}")
+    print(f"Condition Extraction — Patient ID: {patient_id}")
 
     response = requests.get(url=url, headers=get_openemr_headers(), params=params)
     entries  = response.json().get("entry", [])
@@ -94,13 +90,13 @@ def search_snomed_by_text(search_term):
 
     concept_id     = items[0].get("conceptId") or items[0].get("id")
     preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
-    print(f"  [Hermes] Matched concept : {concept_id} | {preferred_term}")
+    print(f" [Hermes] Matched concept : {concept_id} | {preferred_term}")
 
     return concept_id, preferred_term
 
 def snomed_to_icd(snomed_code):
 
-    print(f"[Phase 4] SNOMED → ICD-10 Mapping")
+    print(f" SNOMED → ICD-10 Mapping")
     print(f"  Endpoint : GET /v1/snomed/concepts/{snomed_code}/map/447562003")
 
     response = requests.get(
@@ -141,7 +137,7 @@ def build_hl7_message(patient, snomed_code, snomed_display, icd_code):
 
     now         = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    print("[Phase 5] Building HL7 ADT^A01 Message")
+    print("Building HL7 ADT^A01 Message")
 
     print(f"  Patient ID    : {patient_id}")
     print(f"  Name          : {given} {family}")
@@ -193,10 +189,8 @@ def save_hl7(hl7_message):
 
 if __name__ == "__main__":
 
-    print("\n" + "="*60)
-    print("  TASK 5 — HL7 ADT MESSAGE PIPELINE")
+    print("  TASK 5 - HL7 ADT MESSAGE PIPELINE")
     print("  Flow: OpenEMR → Hermes (SNOMED→ICD) → HL7 ADT^A01")
-    print("="*60)
 
     patients = search_patient()
 
@@ -216,12 +210,10 @@ if __name__ == "__main__":
         print(f"\n  Evaluating: {candidate_name.get('given', [''])[0]} "
               f"{candidate_name.get('family', '')} (ID: {candidate_id})")
 
-        # ── Phase 2: Pull conditions ───────────────────────────────────
         conds = get_patient_conditions(candidate_id)
         if not conds:
             continue
 
-        # ── Find COPD from condition list (same as Task 1) ────────────
         for entry in conds:
             r       = entry["resource"]
             codings = r.get("code", {}).get("coding", [])
@@ -249,10 +241,8 @@ if __name__ == "__main__":
         print("\n[FATAL] Could not locate the specified patient/condition.")
         exit(1)
 
-    # ── Phase 4: Map SNOMED → ICD-10 via Hermes ───────────────────────
     icd_code = snomed_to_icd(snomed_code)
 
-    # ── Phase 5: Build HL7 ADT^A01 message ────────────────────────────
     hl7_message = build_hl7_message(
         patient        = selected_patient,
         snomed_code    = snomed_code,
@@ -260,22 +250,16 @@ if __name__ == "__main__":
         icd_code       = icd_code
     )
 
-    print(f"\n{'='*60}")
-    print("[Phase 5] HL7 ADT^A01 Message Output")
-    print(f"{'='*60}")
+    print("HL7 ADT^A01 Message Output")
     print(hl7_message)
 
-    # ── Phase 6: Save to file ─────────────────────────────────────────
     saved_path = save_hl7(hl7_message)
 
-    # ── Final Summary ─────────────────────────────────────────────────
     p_name  = selected_patient.get("name", [{}])[0]
     p_given = p_name.get("given", [""])[0]
     p_family= p_name.get("family", "")
 
-    print(f"\n{'='*60}")
-    print("           TASK 5 — EXECUTION SUMMARY")
-    print(f"{'='*60}")
+    print("EXECUTION SUMMARY")
     print(f"\n  SOURCE (OpenEMR)")
     print(f"    Patient      : {p_given} {p_family}  (ID: {openemr_patient_id})")
     print(f"    Condition    : {snomed_display}")
@@ -289,6 +273,4 @@ if __name__ == "__main__":
     print(f"    Message Type : ADT^A01")
     print(f"    Segments     : MSH, PID, PV1, DG1")
     print(f"    Saved To     : {saved_path}")
-    print(f"\n{'='*60}")
-    print("  Pipeline complete.")
-    print(f"{'='*60}\n")
+    print("Pipeline complete.")
