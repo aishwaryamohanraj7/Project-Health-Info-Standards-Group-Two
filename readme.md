@@ -142,9 +142,10 @@ venv\Scripts\activate
 ---
 
 ### 3. Install Dependencies
-
+In Terminal run "pip install -r requiredpackages.txt   "
 ```bash
-pip install
+List of Packages:
+
 requests
 hl7apy
 python-dotenv
@@ -155,6 +156,7 @@ sickit-learn
 json
 datetime
 uuid
+
 All dependencies are listed in requiredpackages.txt
 ```
 
