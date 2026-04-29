@@ -131,7 +131,13 @@ venv\Scripts\activate
 ### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install
+requests
+hl7apy
+json
+datetime
+uuid
+All dependencies are listed in requirements.txt
 ```
 
 ---
