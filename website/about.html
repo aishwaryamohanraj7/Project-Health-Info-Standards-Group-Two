@@ -323,6 +323,40 @@ The pipeline also supports HL7 v2 conversion for legacy system interoperability.
 </div>
 
 </div>
+    const dropdown = document.getElementById("dropdown");
+
+function toggleMenu() {
+    dropdown.classList.toggle("active");
+}
+
+/* AUTO CLOSE */
+document.querySelectorAll(".dropdown a").forEach(link => {
+    link.addEventListener("click", () => {
+        dropdown.classList.remove("active");
+    });
+});
+
+/* CLICK OUTSIDE */
+document.addEventListener("click", function(e) {
+    const menuBtn = document.querySelector(".menu-btn");
+
+    if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+        dropdown.classList.remove("active");
+    }
+});
+
+/* ROW SELECTION  */
+const rows = document.querySelectorAll("#teamTable tr");
+
+rows.forEach((row, index) => {
+    if (index === 0) return;
+
+    row.addEventListener("click", () => {
+        rows.forEach(r => r.classList.remove("selected"));
+        row.classList.add("selected");
+    });
+});
+
 
 </body>
 </html>
