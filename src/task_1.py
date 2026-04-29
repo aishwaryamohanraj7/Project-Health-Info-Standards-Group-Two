@@ -2,16 +2,13 @@ import json
 import requests
 from pathlib import Path
 
-# Endpoint Configurations
 OPENEMR_BASE = "https://in-info-web20.luddy.indianapolis.iu.edu/apis/default/fhir"
 HERMES_BASE = "http://159.203.121.13:8080/v1/snomed"
 PRIMARY_CARE_BASE = "http://159.203.105.138:8080/fhir"
 
-#FHIR Profiles
 PATIENT_PROFILE = "http://example.org/StructureDefinition/my-patient-profile"
 CONDITION_PROFILE = "http://example.org/StructureDefinition/my-condition-profile"
 
-#Patient Criteria
 SEARCH_GENDER = "male"
 SEARCH_GIVEN = "David"
 SEARCH_FAMILY = "Abshire"
@@ -20,7 +17,6 @@ data_dir = Path(__file__).parent / "data"
 data_dir.mkdir(exist_ok=True)
 
 def get_access_token():
-    """Extracts the authorization token from the local JSON file."""
     with open(data_dir / "access_token.json", "r") as f:
         return json.load(f).get("access_token")
 
