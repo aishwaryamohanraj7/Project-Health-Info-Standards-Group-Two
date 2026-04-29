@@ -2,75 +2,160 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> FHIR ETL Pipeline - About</title>
+<title>About - FHIR ETL Pipeline</title>
 
 <style>
-
 body {
-    margin:0;
-    font-family:Arial;
-    background:#020617;
-    color:white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
 }
 
-/* HEADER */
-header {
-    display:flex;
-    justify-content:space-between;
-    padding:20px 40px;
+/* ===== HEADER ===== */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    z-index: 999;
+
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(12px);
 }
 
-header h2 {
-    color:#22c55e;
+.logo {
+    color: #22c55e;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-nav a {
-    margin-left:20px;
-    color:white;
-    text-decoration:none;
+/* ===== NAV RIGHT ===== */
+.nav-links a {
+    color: white;
+    margin-left: 25px;
+    text-decoration: none;
 }
 
-nav a:hover {
-    color:#22c55e;
+.nav-links a:hover {
+    color: #22c55e;
 }
 
-/* CONTENT */
-.container {
-    padding:40px;
+/* ===== MENU BUTTON ===== */
+#menuToggle {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
 }
 
-/* CARDS */
+/* ===== SIDEBAR ===== */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(180deg, #022c22, #020617);
+    padding: 90px 20px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar h2 {
+    color: #22c55e;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #22c55e;
+    color: black;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 900;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* ===== MAIN ===== */
+.main {
+    padding: 120px 60px;
+}
+
+/* ===== CARD ===== */
 .card {
-    background:#0f172a;
-    padding:25px;
-    margin-bottom:25px;
-    border-radius:15px;
-    box-shadow:0 0 25px rgba(34,197,94,0.15);
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
 }
 
-.card h2 {
-    color:#22c55e;
-    margin-bottom:10px;
+h2 {
+    color: #22c55e;
 }
-
-ul {
-    padding-left:20px;
-}
-
-li {
-    margin-bottom:8px;
-    color:#cbd5e1;
-}
-
-/* GRID */
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-    gap:20px;
-}
-
 </style>
 </head>
+
+<body>
+
+<!-- MENU BUTTON -->
+<div id="menuToggle" onclick="openMenu()">☰</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>FHIR ETL PIPELINE</h2>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="etl.html" onclick="closeMenu()">ETL</a>
+    <a href="insights.html" onclick="closeMenu()">Insights</a>
+    <a href="team.html" onclick="closeMenu()">Team</a>
+    <a href="about.html" onclick="closeMenu()">About</a>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">FHIR ETL Pipeline</div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </div>
+</div>
+
 
 <body>
 
