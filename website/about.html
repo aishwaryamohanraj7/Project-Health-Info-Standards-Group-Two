@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>About - FHIR ETL Pipeline</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* MENU BUTTON */
+#menuToggle {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
+}
+
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+    padding-left: 65px;
+
+    background: rgba(2,6,23,0.75);
+    backdrop-filter: blur(12px);
+
+    z-index: 999;
+    box-sizing: border-box;
+}
+
+/* LOGO */
+.logo {
+    color: #22c55e;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    gap: 18px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #22c55e;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(180deg, #022c22, #020617);
+    padding: 90px 20px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
+    color: white;
+    text-decoration: none;
+}
+
+/* OVERLAY */
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 900;
+}
+
+.overlay.active {
+    display: block;
+}
+
+/* MAIN */
+.main {
+    padding: 120px 60px;
+}
+
+/* CARDS */
+.card {
+    background: #0f172a;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    color: #22c55e;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<div id="menuToggle" onclick="openMenu()">☰</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <h2>FHIR ETL PIPELINE</h2>
+    <a href="index.html">Home</a>
+    <a href="etl.html">ETL</a>
+    <a href="insights.html">Insights</a>
+    <a href="team.html">Team</a>
+    <a href="about.html">About</a>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">FHIR ETL Pipeline</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </div>
+</div>
+
+
+</div>
+
+<script>
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+
+window.addEventListener("scroll", closeMenu);
+</script>
+
+</body>
+</html>
+<!-- OVERVIEW -->
+<div class="card">
+<h2> Project Overview</h2>
+<p>
+This project demonstrates a healthcare ETL pipeline using FHIR APIs.
+Data is extracted from OpenEMR, transformed using SNOMED CT, and loaded into a Primary Care EHR system.
+The pipeline also supports HL7 v2 conversion for legacy system interoperability.
+</p>
+</div>
+
+<!-- OBJECTIVE -->
+<div class="card">
+<h2> Objective</h2>
+<ul>
+<li>Enable healthcare data interoperability</li>
+<li>Standardize clinical data using SNOMED CT</li>
+<li>Build an end-to-end ETL pipeline</li>
+<li>Support legacy systems using HL7 v2</li>
+</ul>
+</div>
+
+<!-- ETL FLOW -->
+<div class="card">
+<h2> ETL Workflow</h2>
+
+<ul>
+<li><b>Extract:</b> Retrieve patient data using FHIR API</li>
+<li><b>Transform:</b> Clean data and map SNOMED codes</li>
+<li><b>Load:</b> Send processed data to target EHR</li>
+</ul>
+
+<!--IMAGE -->
+<div style="text-align:center; margin-top:20px;">
+<img src="images/pipeline.png" style="
+    width:100%;
+    max-width:800px;
+    border-radius:12px;
+    box-shadow:0 0 25px rgba(34,197,94,0.25);
+">
+</div>
+
+</div>
+
+<!-- TASKS -->
+<div class="card">
+<h2> Implementation Tasks</h2>
+
+<div class="grid">
+
+<div>
+<h3>Task 1</h3>
+<p>Patient extraction</p>
+</div>
+
+<div>
+<h3>Task 2</h3>
+<p>Condition + SNOMED mapping</p>
+</div>
+
+<div>
+<h3>Task 3</h3>
+<p>Observation (Blood Pressure)</p>
+</div>
+
+<div>
+<h3>Task 4</h3>
+<p>Procedure (Chest X-ray)</p>
+</div>
+
+<div>
+<h3>Task 5</h3>
+<p>HL7 Message Generation</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- TECHNOLOGY -->
+<div class="card">
+<h2> Technologies Used</h2>
+<ul>
+<li>Python</li>
+<li>FHIR API</li>
+<li>SNOMED CT</li>
+<li>HL7 v2</li>
+<li>HL7apy</li>
+<li>GitHub Pages</li>
+</ul>
+</div>
+
+<!-- OUTCOME -->
+<div class="card">
+<h2> Outcome</h2>
+<ul>
+<li>Successfully built ETL pipeline</li>
+<li>Achieved data standardization</li>
+<li>Enabled interoperability</li>
+<li>Generated HL7 messages</li>
+</ul>
+</div>
+
+</div>
+
+</body>
+</html>

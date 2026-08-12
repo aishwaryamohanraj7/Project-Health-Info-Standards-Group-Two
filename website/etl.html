@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FHIR ETL Pipeline - ETL</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #020617;
+    color: white;
+}
+
+/*MENU BUTTON*/
+#menuToggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
+}
+    font-size: 26px;
+    cursor: pointer;
+    color: #22c55e;
+    z-index: 1100;
+}
+
+/*OVERLAY*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    display: none;
+    z-index: 900;
+}
+.overlay.active {
+    display: block;
+}
+
+/*NAVBAR*/
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px 0 70px;
+    z-index: 999;
+
+    /*glossy glass */
+    background: rgba(2,6,23,0.6);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid rgba(34,197,94,0.2);
+    box-shadow: 0 4px 25px rgba(34,197,94,0.15);
+
+    overflow: hidden;
+}
+
+/* TITLE */
+.nav-left {
+    font-size: 22px;
+    font-weight: bold;
+    color: #22c55e;
+    white-space: nowrap;
+}
+
+/* RIGHT LINKS */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    margin-left: auto;
+}
+
+.nav-right a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.nav-right a:hover {
+    color: #22c55e;
+    text-shadow: 0 0 6px #22c55e;
+}
+
+/*SIDEBAR*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: linear-gradient(180deg, #022c22, #020617);
+    padding: 90px 20px;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+/*SIDEBAR LINKS*/
+.sidebar h2 {
+    color: #22c55e;
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #22c55e;
+    color: black;
+}
+
+.sidebar a.active {
+    background: #22c55e;
+    color: black;
+}
+
+/*ETL TOP BAR(GLOSSY)*/
+.etl-bar {
+    margin-top: 80px;
+    padding: 15px 20px;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+
+    background: rgba(2,44,34,0.45);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(34,197,94,0.2);
+    box-shadow: 0 4px 20px rgba(34,197,94,0.15);
+}
+
+.etl-bar a {
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: 1px solid #22c55e;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+.etl-bar a:hover {
+    background: #22c55e;
+    color: black;
+}
+
+.etl-bar a.active {
+    background: #22c55e;
+    color: black;
+}
+
+/*MAIN*/
+.main {
+    padding: 40px 60px;
+}
+
+/*TASK*/
+.task {
+    display: none;
+}
+
+.task.active {
+    display: block;
+}
+
+.task-box {
+    background: #0f172a;
+    padding: 30px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+/*CODE BLOCK*/
+.code-box {
+    margin-top: 20px;
+    border-radius: 14px;
+    padding: 18px;
+    overflow-x: auto;
+
+    background: linear-gradient(145deg, #020617, #020617);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(34,197,94,0.4);
+
+    box-shadow:
+        0 0 25px rgba(34,197,94,0.25),
+        inset 0 0 12px rgba(34,197,94,0.15);
+}
+
+/* CODE TEXT */
+.code-box pre {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #22c55e;
+    font-family: "Courier New", monospace;
+}
+
+/*OUTPUT BOX*/
+.output-box {
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 10px;
+
+    background: rgba(34,197,94,0.08);
+    border-left: 4px solid #22c55e;
+
+    color: #d1fae5;
+    font-weight: 500;
+}
+
+/* OPTIONAL TITLE */
+.code-title {
+    margin-top: 25px;
+    color: #22c55e;
+    font-weight: bold;
+}
+    <script>
+function openMenu() {
+    document.getElementById("sidebar").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("sidebar").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+}
+</script>
+</style>
+</head>
+
+<body>
+
+<!--MENU BUTTON -->
+<div id="menuToggle" onclick="openMenu()">☰</div>
+
+<!--OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
+<!--NAVBAR -->
+<header class="top-nav">
+
+    <div class="nav-left">FHIR ETL Pipeline</div>
+
+    <div class="nav-right">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="etl.html">ETL</a>
+        <a href="insights.html">Insights</a>
+    </div>
+
+</header>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+
+    <h2>FHIR ETL PIPELINE</h2>
+
+    <a href="index.html" onclick="closeMenu()">Home</a>
+    <a href="etl.html" onclick="closeMenu()"> ETL</a>
+    <a href="insights.html" onclick="closeMenu()"> Insights</a>
+    <a href="team.html" onclick="closeMenu()"> Team</a>
+    <a href="about.html" onclick="closeMenu()"> About</a>
+
+</div>
+
+<!-- ETL BAR -->
+<div class="etl-bar">
+
+    <a href="#" onclick="showTask(event,'extract')" class="active"> Extract</a>
+    <a href="#" onclick="showTask(event,'transform')"> Transform</a>
+    <a href="#" onclick="showTask(event,'load')"> Load</a>
+
+    <a href="#" onclick="showTask(event,'task1')">Task 1</a>
+    <a href="#" onclick="showTask(event,'task2')">Task 2</a>
+    <a href="#" onclick="showTask(event,'task3')">Task 3</a>
+    <a href="#" onclick="showTask(event,'task4')">Task 4</a>
+    <a href="#" onclick="showTask(event,'task5')">Task 5</a>
+
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+
+
+<!-- EXTRACT -->
+<div id="extract" class="task task-box">
+<h1> Extract Phase</h1>
+
+<p>
+The extraction phase retrieves raw healthcare data from the OpenEMR system using FHIR APIs.
+This step is critical because it ensures that all patient-related information is collected in a structured format.
+</p>
+
+<ul>
+<li>Established connection to OpenEMR FHIR server</li>
+<li>Authenticated API requests using access tokens</li>
+<li>Fetched Patient resources using HTTP GET requests</li>
+<li>Handled JSON response parsing</li>
+<li>Filtered relevant patient data using query parameters</li>
+<li>Validated API response status and structure</li>
+</ul>
+
+<h3 class="code-title">Code</h3>
+
+<div class="code-box">
+<pre><code>
+import requests
+
+def get_access_token():
+    """Extracts the authorization token from the local JSON file."""
+    with open(data_dir / "access_token.json", "r") as f:
+        return json.load(f).get("access_token")
+
+
+def get_openemr_headers():
+    return {
+        "Authorization": f"Bearer {get_access_token()}",
+        "Accept": "application/json"
+    }
+
+
+def get_primary_care_headers():
+    return {
+        "Content-Type": "application/fhir+json",
+        "Accept": "application/fhir+json"
+    }
+</code></pre>
+</div>
+
+<div class="output-box">
+
+<p><b>Outcome:</b> Successfully retrieved structured patient data for further processing.</p>
+    </div>
+
+<div style="margin-top:25px; text-align:center;">
+
+    <img src="images/pipeline.png" alt="ETL Pipeline Diagram" style="
+        display:block;
+        margin:0 auto;
+        width:100%;
+        max-width:900px;
+        border-radius:14px;
+
+        /* glossy glass look */
+        background: rgba(255,255,255,0.03);
+        backdrop-filter: blur(12px);
+        padding:14px;
+
+        /* glow */
+        box-shadow:
+            0 0 35px rgba(34,197,94,0.35),
+            inset 0 0 15px rgba(255,255,255,0.06);
+
+        /* adapt light image to dark theme */
+        filter: invert(1) hue-rotate(180deg) contrast(1.1);
+
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    "
+
+    onmouseover="
+        this.style.transform='scale(1.04)';
+        this.style.boxShadow='0 0 45px rgba(34,197,94,0.5), inset 0 0 20px rgba(255,255,255,0.08)';
+    "
+
+    onmouseout="
+        this.style.transform='scale(1)';
+        this.style.boxShadow='0 0 35px rgba(34,197,94,0.35), inset 0 0 15px rgba(255,255,255,0.06)';
+    "
+    >
+
+    <p style="margin-top:10px; font-size:13px; color:#94a3b8;">
+        End-to-end ETL pipeline: Extraction → Transformation → Loading with FHIR & HL7 interoperability
+    </p>
+
+</div>
+</div>
+
+<!-- TRANSFORM -->
+<div id="transform" class="task task-box">
+<h1> Transform Phase</h1>
+
+<p>
+In this phase, raw FHIR data is cleaned, standardized, and enriched using SNOMED CT terminology.
+This ensures interoperability and semantic consistency.
+</p>
+
+<ul>
+<li>Removed incomplete or inconsistent data</li>
+<li>Mapped clinical conditions using SNOMED CT codes</li>
+<li>Created parent-child relationships for diseases</li>
+<li>Structured JSON into standardized format</li>
+<li>Prepared data for downstream systems</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+def search_snomed_by_text(search_term):
+    """
+    Resolve a free-text clinical string to a SNOMED CT concept via Hermes.
+    Constraint '<404684003' limits results to Clinical Findings.
+    Returns: (conceptId, preferredTerm)
+    """
+    print(f"\n  [Hermes] Text search: '{search_term}'")
+    response = requests.get(
+        f"{HERMES_BASE}/search",
+        params={"s": search_term, "constraint": "<404684003", "maxHits": 1}
+    )
+    data  = response.json()
+    items = data if isinstance(data, list) else data.get("items", [])
+
+    if not items:
+        print("  [Hermes] No match found.")
+        return None, None
+
+    concept_id     = items[0].get("conceptId") or items[0].get("id")
+    preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
+
+    print(f"  [Hermes] Matched concept : {concept_id} | {preferred_term}")
+    print("\n  [=== Raw Hermes JSON Payload ===]")
+    print(json.dumps(data, indent=4))
+    print("  [=]\n")
+
+    return concept_id, preferred_term
+</code></pre>
+</div>
+<div class="output-box">
+<p><b>Outcome:</b> Data transformed into clinically meaningful and standardized format.</p>
+
+</div>
+    </div>
+
+
+<!-- LOAD -->
+<div id="load" class="task task-box">
+<h1> Load Phase</h1>
+
+<p>
+The load phase inserts transformed data into the target EHR system, ensuring accessibility and interoperability.
+</p>
+
+<ul>
+<li>Used HTTP POST requests to send data</li>
+<li>Ensured compliance with FHIR resource structure</li>
+<li>Validated response from target system</li>
+<li>Handled success and error cases</li>
+<li>Stored processed data for clinical use</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+response = requests.post(
+        url=f"{PRIMARY_CARE_BASE}/Patient",
+        headers=get_primary_care_headers(),
+        json=patient_payload
+    )
+    created = response.json()
+    patient_id = created.get("id")
+    print(f"Transfer successful. New Local ID assigned: {patient_id}")
+
+    with open(data_dir / "patient.json", "w") as f:
+        json.dump(patient_payload, f, indent=4)
+    print(f"Resource cached locally at: data/patient.json")
+
+    with open(data_dir / "task1_patient_id.json", "w") as f:
+        json.dump({"patient_id": patient_id}, f, indent=4)
+
+    return patient_id, patient_payload
+</code></pre>
+</div>
+<div class="output-box">
+
+<p><b>Outcome:</b> Data successfully stored in target system.</p>
+    </div>
+</div>
+
+<!-- TASK 1 -->
+<div id="task1" class="task task-box active">
+<h1>Task 1: Patient Extraction and Parent SNOMED</h1>
+
+<ul>
+<li>Retrieved patient data from OpenEMR</li>
+<li>Extracted patient identifiers,conditions and demographics</li>
+<li>Validated JSON structure</li>
+<li>Identified patient with COPD</li>
+<li>Retrived the parent SNOMED concept via Hermes</li>
+<li>Created the patient with Parent concept details on the primary care EHR FHIR server</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+def search_patient():
+    """
+    Queries OpenEMR to locate a specific individual based on predefined demographics.
+    Returns: A list of matching Patient resources from the FHIR Bundle.
+    """
+    url = f"{OPENEMR_BASE}/Patient"
+    params = {
+        "given": SEARCH_GIVEN,
+        "family": SEARCH_FAMILY,
+        "gender": SEARCH_GENDER
+    }
+
+    print(f"\n[Phase 1] Executing Patient Discovery")
+    print(f"Request URI: GET /Patient?given={SEARCH_GIVEN}&family={SEARCH_FAMILY}&gender={SEARCH_GENDER}")
+    print(f"Awaiting: FHIR Bundle containing candidate profiles.")
+
+    response = requests.get(url=url, headers=get_openemr_headers(), params=params)
+    data = response.json()
+    entries = data.get("entry", [])
+    print(f"Total individuals identified: {len(entries)}. Displaying top 10.")
+
+    for i, entry in enumerate(entries[:10]):
+        resource = entry["resource"]
+        patient_id = resource.get("id")
+        name = resource.get("name", [{}])[0]
+        given = name.get("given", [""])[0]
+        family = name.get("family", "")
+        gender_val = resource.get("gender", "unknown")
+        dob = resource.get("birthDate", "unknown")
+        deceased = resource.get("deceasedBoolean") or resource.get("deceasedDateTime")
+        print(f"  [{i}] Record ID: {patient_id} | Individual: {given} {family} | Sex: {gender_val} | Born: {dob} | Deceased Status: {deceased}")
+
+    return entries
+</code></pre>
+</div>
+<div class="output-box">
+
+<p><b>Output:</b> Patient successfully identified, extracted and updaed. </p>
+    <img src="images/T%201%20pt%20details.png">
+    <img src="images/t%201%20parent.png">
+    </div>
+</div>
+
+<!-- TASK 2 -->
+<div id="task2" class="task task-box">
+<h1>Task 2: Child Condition Mapping</h1>
+
+<ul>
+<li>Using the same patient and retrived the patient from OpenEMR</li>
+<li>Retrived the child condition for COPD using SNOMED CT via Hermes</li>
+<li>Identified related child conditions</li>
+<li>Established hierarchical relationships</li>
+<li>Ensured clinical terminology consistency</li>
+<li>Created the patient with child concept details on the primary care EHR FHIR server</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+def search_snomed_by_text(search_term):
+    """
+    Resolve a free-text clinical string to a SNOMED CT concept via Hermes.
+    Constraint '<404684003' limits results to Clinical Findings.
+    Returns: (conceptId, preferredTerm)
+    """
+    print(f"\n  [Hermes] Text search: '{search_term}'")
+    response = requests.get(
+        f"{HERMES_BASE}/search",
+        params={"s": search_term, "constraint": "<404684003", "maxHits": 1}
+    )
+    data  = response.json()
+    items = data if isinstance(data, list) else data.get("items", [])
+
+    if not items:
+        print("  [Hermes] No match found.")
+        return None, None
+
+    concept_id     = items[0].get("conceptId") or items[0].get("id")
+    preferred_term = items[0].get("preferredTerm") or items[0].get("term", search_term)
+
+    print(f"  [Hermes] Matched concept : {concept_id} | {preferred_term}")
+    print("\n  [=== Raw Hermes JSON Payload ===]")
+    print(json.dumps(data, indent=4))
+    print("  [==]\n")
+
+    return concept_id, preferred_term
+
+print(parent, "->", children)
+</code></pre>
+</div>
+<div class="output-box">
+
+<p><b>Output:</b> Condition hierarchy created successfully.</p>
+    <img src="images/t%202%20child.png">
+    </div>
+</div>
+
+<!-- TASK 3 -->
+<div id="task3" class="task task-box">
+<h1>Task 3: BP Observation</h1>
+
+<ul>
+<li>Created a Blood pressure FHIR observation for the existing patient on the Primary Care EHR</li>
+<li>Added blood pressure values</li>
+<li>Used FHIR Observation resource format</li>
+<li>Validated measurement data</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+BP_PANEL_CODE     = "55284-4"
+BP_SYSTOLIC_CODE  = "8480-6"
+BP_DIASTOLIC_CODE = "8462-4"
+LOINC_SYSTEM      = "http://loinc.org"
+UCUM_SYSTEM       = "http://unitsofmeasure.org"
+
+# SNOMED body site — Left arm  368209003
+SNOMED_SYSTEM     = "http://snomed.info/sct"
+BODY_SITE_CODE    = "368208006"
+BODY_SITE_DISPLAY = "Left arm"
+
+# Interpretation code system
+INTERP_SYSTEM = "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"
+</code></pre>
+</div>
+<div class="output-box">
+
+<p><b>Output:</b> Observation data successfully recorded.</p>
+    <img src="images/T%203%20obbp.png">
+    </div>
+</div>
+
+<!-- TASK 4 -->
+<div id="task4" class="task task-box">
+<h1>Task 4:Chest x-ray Procedure</h1>
+
+<ul>
+<li>Created a medical procedure (Chest X-ray) for the same patient and post it to the primary care EHR</li>
+<li>Used FHIR Procedure resource</li>
+<li>Stored procedure status and details</li>
+<li>Validated procedure data structure</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+procedure = {
+    "name": "Chest X-ray",
+    "status": "completed"
+}
+
+print(procedure)
+</code></pre>
+</div>
+<div class="output-box">
+
+<p><b>Output:</b> Procedure successfully recorded.</p>
+    <img src="images/task%204%20procedure.png">
+    <img src="images/radiology%20workflow.png">
+    </div>
+</div>
+
+<!-- TASK 5 -->
+<div id="task5" class="task task-box">
+<h1>Task 5: HL7 Message</h1>
+
+<ul>
+<li>Retrived the patient and condition from the Open EMR</li>
+<li>Mapped the SNOMED code to ICD-10</li>
+<li>Converted FHIR data into HL7 v2 format</li>
+<li>Generated MSH and PID segments</li>
+<li>Ensured compatibility with legacy systems</li>
+<li>Exported HL7 message as text file</li>
+<li>Generated an HL7 ADT_A01 message using hl7apy for interoperability</li>
+</ul>
+
+<div class="code-box">
+<pre><code>
+MSH|^~\&|OpenEMR|LudyHospital|PrimaryCare|System|20260428002841||ADT^A01|MSG20260428002841|P|2.5
+PID|1||9d03b032-3e4f-4ddb-b385-55a3f8a6d4f2^^^OpenEMR^MR||Abshire^David^^^||19960929|M|||393 Cole Knoll Unit 63^^Malden^Massachusetts^02155^USA
+PV1|1|O|Clinic^Room1^Bed1|||12345^Abshire^David^^^Dr||||||||||V20260428002841
+OBX|1|NM|55284-4^Blood pressure^LN||120/80|mm[Hg]|90-120/60-80||||F|||20260428002841
+DG1|1||J44.9^Chronic obstructive pulmonary disease^I10|Chronic obstructive pulmonary disease|20260428002841|A
+</code></pre>
+</div>
+
+<div class="output-box">
+<p><b>Output:</b> HL7 message generated and ready for transmission.</p>
+    <img src="images/t%205%20hl7.png">
+    <img src="images/hl7%201.png">
+    <img src="images/hl7%202.png">
+
+</div>
+
+
+</div>
+
+<script>
+function openMenu(){
+document.getElementById("sidebar").classList.add("active");
+document.getElementById("overlay").classList.add("active");
+}
+function closeMenu(){
+document.getElementById("sidebar").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
+}
+function showTask(e,id){
+document.querySelectorAll(".task").forEach(t=>t.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.querySelectorAll(".sidebar a").forEach(a=>a.classList.remove("active"));
+e.target.classList.add("active");
+closeMenu();
+}
+</script>
+
+</body>
+</html>
